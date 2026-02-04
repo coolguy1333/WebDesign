@@ -1,0 +1,51 @@
+.rainbow-text {
+    background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet, red);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    /* Set a larger background size to allow movement */
+    background-size: 400% 100%;
+    /* Apply the animation */
+    animation: rainbow_animation 8s linear infinite;
+    /* Optional: Add basic styling for visibility */
+    font-size: 48px;
+    font-weight: bold;
+}
+
+/* Define the animation keyframes */
+@keyframes rainbow_animation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 400% 0; /* Moves the background across the text */
+    }
+}
+
+body {
+    background: lightblue;
+}
+
+h1 {
+    font: bold 48px "Comic Sans MS", "Comic Sans";
+}
+
+h2 {
+    font: bold 32px "Comic Sans MS", "Comic Sans";
+}
+
+h3 {
+    font: bold 28px "Comic Sans MS", "Comic Sans";
+}
+
+p {
+    font: small-caps bold 16px "Comic Sans MS", "Comic Sans";
+}
+
+ul {
+  font: small-caps bold 16px "Comic Sans MS", "Comic Sans";
+}
+
+ol {
+  font: small-caps bold 16px "Comic Sans MS", "Comic Sans";
+}
