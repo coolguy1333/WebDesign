@@ -1,0 +1,48 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: #0f172a; /* dark blue */
+  color: #e5e7eb;
+  line-height: 1.6;
+}
+
+header {
+  background-color: #020617;
+  padding: 20px;
+  text-align: center;
+  border-bottom: 3px solid #facc15; /* gold */
+}
+
+header h1 {
+  margin: 0;
+  color: #3b82f6; /* blue */
+  font-size: 1.8rem;
+}
+
+main {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #020617;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  border-top: 1px solid #1e293b;
+}
+
+a {
+  color: #facc15;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
