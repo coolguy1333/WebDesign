@@ -2,3 +2,21 @@ body{
     background-image: url(./images/greyback.jpg);
     margin: 0px;
 }
+
+main, footer{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 80px;
+}
+
+h1{
+    font-size: 28pt;
+}
+
+h2{
+    font-size: 24pt;
+}
+
+p, li{
+    font-size: 16pt;
+}
