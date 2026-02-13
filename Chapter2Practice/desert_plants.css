@@ -1,3 +1,7 @@
+html{
+    scroll-behavior: smooth;
+}
+
 body{
     background-image: url("./images/greyback.jpg");
     margin: 0px;
@@ -10,15 +14,20 @@ main{
 }
 
 h1{
-    font-size: 28pt;
+    font-size: 44pt;
+    color: rgb(44, 44, 99);
 }
 
 h2{
     font-size: 32pt;
 }
 
-p, li{
+p, li, a{
     font-size: 18pt;
+}
+
+.header-image{
+    width: 100%;
 }
 
 .plant-card{
