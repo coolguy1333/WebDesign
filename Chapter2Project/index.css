@@ -34,15 +34,19 @@ p, li, a{
 }
 
 .web-card{
+    background-color: rgb(88, 88, 255);
+    box-shadow: 12.5px 12.5px 12.5px rgb(137, 137, 255), 25px 25px 25px rgb(255, 187, 187);
+    border-radius: 25px;
     display: flex;
+    margin-bottom: 35px;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
 
 .web-card-header{
-    padding: 10px 0px;
-    margin: 0px;
+    padding: 25px 0px;
+    margin-left: 50px;
     width: 100%;
 }
 
@@ -55,6 +59,7 @@ p, li, a{
 
 .web-card-info{
     width: 60%;
+    margin-left: 50px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -62,12 +67,14 @@ p, li, a{
 
 .web-card-image{
     width: 40%;
+    margin-left: 50px;
     margin: auto;
     padding: 0px 20px;
 }
 
 .web-card-footer{
+    color: black;
     width: 100%;
+    margin-left: 50px;
     padding: 10px 0px;
-    margin: 0px;
 }
