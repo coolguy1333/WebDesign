@@ -1,81 +1,86 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Entertainment</title>
+    <link rel="stylesheet" href="index.css">
+</head>
 
-<html>
-    <head>
-        <title>Entertainment</title>
-        <link rel="stylesheet" href="index.css">
-    </head>
-    
-    <body>
-        <header>
-            <a><h1>Entertainment</h1></a>
-            <a href="./index.html"><h3>To Academic Links</h3></a>
-        </header>
+<body>
+    <header>
+        <h1>Entertainment</h1>
+        <a href="./index.html">Go to Academic Links</a>
+    </header>
 
-        <main>
-            <h2>Entertainment Websights</h2>
-            <ul>
-                <li><a href="#youtube">Youtube</a></li>
-                <li><a href="#coolmathgames">Cool Math Games</a></li>
-                <li><a href="#chess">Chess</a></li>
-                <li><a href="#discord">Discord</a></li>
-            </ul>
-            
-            <hr>
+    <main>
+        <h2>Entertainment Websites</h2>
 
-            <div class="web-card">
-                <h2 class="web-card-header" id="youtube">Youtube</h2>
+        <ul>
+            <li><a href="#youtube">YouTube</a></li>
+            <li><a href="#coolmathgames">Cool Math Games</a></li>
+            <li><a href="#chess">Chess.com</a></li>
+            <li><a href="#discord">Discord</a></li>
+        </ul>
 
-                <div class="web-card-body">
-                    <div class="web-card-info">
-                        <p>YouTube is the world’s largest online video-sharing platform where users can discover, watch, and upload content ranging from educational tutorials to entertainment.</p>                    
-                    </div>
-                    <a href=https://www.youtube.com><img class="web-card-image" src="./images/youtube.png"/></a>
+        <!-- YouTube -->
+        <div class="web-card">
+            <h2 class="web-card-header" id="youtube">YouTube</h2>
+
+            <div class="web-card-body">
+                <div class="web-card-info">
+                    <p>YouTube is a video-sharing platform where users can watch educational and entertainment content.</p>
                 </div>
-                <a class="web-card-footer" href="#">Top of page</a>
+                <a href="https://www.youtube.com" target="_blank" rel="noopener">
+                    <img class="web-card-image" src="./images/youtube.png" alt="YouTube">
+                </a>
             </div>
+        </div>
 
-            <hr>
+        <!-- Cool Math Games -->
+        <div class="web-card">
+            <h2 class="web-card-header" id="coolmathgames">Cool Math Games</h2>
 
-            <div class="web-card">
-                <h2 class="web-card-header" id="coolmathgames">Cool Math Games</h2>
+            <div class="web-card-body">
+                <a href="https://www.coolmathgames.com" target="_blank" rel="noopener">
+                    <img class="web-card-image" src="./images/coolmathgames.png" alt="Cool Math Games">
+                </a>
 
-                <div class="web-card-body">
-                    <a href=https://www.coolmathgames.com><img class="web-card-image" src="./images/coolmathgames.png"/></a>
-                    <div class="web-card-info">
-                        <p>Coolmath Games is a popular online browser-based gaming platform launched in 1997, designed as a "brain-training" site for all ages where logic, strategy, and thinking meet fun.</p>                    
-                    </div>
+                <div class="web-card-info">
+                    <p>Cool Math Games is a browser-based platform with logic and strategy games designed to be fun and educational.</p>
                 </div>
-                <a class="web-card-footer" href="#">Top of page</a>
             </div>
+        </div>
 
-            <hr>
+        <!-- Chess -->
+        <div class="web-card">
+            <h2 class="web-card-header" id="chess">Chess.com</h2>
 
-            <div class="web-card">
-                <h2 class="web-card-header" id="chess">Chess</h2>
-
-                <div class="web-card-body">
-                    <div class="web-card-info">
-                        <p>Chess.com is the world's largest online chess platform, with over 90 million users and 10 million daily games.</p>                    
-                    </div>
-                    <a href=https://www.chess.com><img class="web-card-image" src="./images/chess.png"/></a>
+            <div class="web-card-body">
+                <div class="web-card-info">
+                    <p>Chess.com is an online platform where users can play chess, solve puzzles, and learn strategies.</p>
                 </div>
-                <a class="web-card-footer" href="#">Top of page</a>
+                <a href="https://www.chess.com" target="_blank" rel="noopener">
+                    <img class="web-card-image" src="./images/chess.png" alt="Chess.com">
+                </a>
             </div>
+        </div>
 
-            <hr>
+        <!-- Discord -->
+        <div class="web-card">
+            <h2 class="web-card-header" id="discord">Discord</h2>
 
-            <div class="web-card">
-                <h2 class="web-card-header" id="discord">Discord</h2>
+            <div class="web-card-body">
+                <a href="https://www.discord.com" target="_blank" rel="noopener">
+                    <img class="web-card-image" src="./images/discord.png" alt="Discord">
+                </a>
 
-                <div class="web-card-body">
-                    <a href=https://www.discord.com><img class="web-card-image" src="./images/discord.png"/></a>
-                    <div class="web-card-info">
-                        <p>Discord is a leading VoIP, video, and text chat platform, originally designed for gamers but now widely used for diverse, topic-based communities.</p>                    
-                    </div>
+                <div class="web-card-info">
+                    <p>Discord is a communication platform offering text, voice, and video chat for communities and friends.</p>
                 </div>
-                <a class="web-card-footer" href="#">Top of page</a>
-            </div>  
-        </main>
-    </body>
+            </div>
+        </div>
+
+    </main>
+    <a href="#" id="topButton">↑ Top</a>
+</body>
 </html>
