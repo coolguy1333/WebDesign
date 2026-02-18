@@ -217,26 +217,19 @@ hr {
   border-radius: 12px;
   padding: 12px;
 }
-/* --- Google Calendar: fill available space --- */
+/* --- Google Calendar: full width of card --- */
 .calendar-embed {
   margin-top: 12px;
-  border: 1px solid #1e293b;
+  width: 100%;
   border-radius: 12px;
   overflow: hidden;
   background: #020617;
-  width: 100%;
 }
 
 .calendar-embed iframe {
-  width: 100%;
-  height: clamp(600px, 75vh, 1100px);
-  border: 0;
   display: block;
-}
-
-/* If you want it even bigger, use 85vh */
-@media (max-width: 480px) {
-  .calendar-embed iframe {
-    height: clamp(520px, 70vh, 900px);
-  }
+  width: 100%;
+  height: 80vh;     /* fills most of the screen height */
+  min-height: 650px;
+  border: 0;
 }
