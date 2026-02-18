@@ -46,6 +46,7 @@ a {
 a:hover {
   text-decoration: underline;
 }
+
 /* --- Navigation --- */
 .top-nav {
   display: flex;
@@ -55,12 +56,21 @@ a:hover {
   margin-top: 12px;
 }
 
+/* Make nav links match the buttons */
 .top-nav a {
   display: inline-block;
-  padding: 8px 12px;
-  border-radius: 10px;
-  border: 1px solid #1e293b;
-  background: #0b1220;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #facc15;
+  background: #111827;
+  color: #facc15;
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.top-nav a:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
 }
 
 .top-nav a.active {
@@ -109,11 +119,6 @@ hr {
 .status-value {
   font-size: 1.1rem;
   font-weight: 700;
-}
-
-.status-sub {
-  margin-top: 4px;
-  font-size: 0.95rem;
 }
 
 .muted {

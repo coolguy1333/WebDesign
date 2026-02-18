@@ -125,70 +125,81 @@
     </footer>
 
     <script>
-  const host = "play.mhsit.club";
+      const REFRESH_MS = 15000;
+      const TIMEOUT_MS = 8000;
 
-  function setBadge(el, state, text) {
-    if (!el) return;
-    el.classList.remove("ok", "bad", "muted");
+      function setBadge(el, state, text) {
+        if (!el) return;
+        el.classList.remove("ok", "bad", "muted");
 
-    if (state === true) {
-      el.textContent = text || "Online";
-      el.classList.add("ok");
-    } else if (state === false) {
-      el.textContent = text || "Offline";
-      el.classList.add("bad");
-    } else {
-      el.textContent = text || "Unavailable";
-      el.classList.add("muted");
-    }
-  }
-
-  async function fetchJavaAndPlayers() {
-    const statusEl = document.getElementById("java-status");
-    const overallEl = document.getElementById("overall-players");
-
-    try {
-      const res = await fetch("https://api.mcsrvstat.us/2/" + host, { cache: "no-store" });
-      const data = await res.json();
-
-      const online = Boolean(data && data.online);
-      setBadge(statusEl, online);
-
-      // Use Java player count as the single "overall" count.
-      if (online && data.players && typeof data.players.online === "number") {
-        const max = (typeof data.players.max === "number") ? data.players.max : null;
-        const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
-        setBadge(overallEl, true, playersText);
-      } else if (online) {
-        setBadge(overallEl, true, "Online");
-      } else {
-        setBadge(overallEl, false, "Offline");
+        if (state === true) {
+          el.textContent = text || "Online";
+          el.classList.add("ok");
+        } else if (state === false) {
+          el.textContent = text || "Offline";
+          el.classList.add("bad");
+        } else {
+          el.textContent = text || "Unavailable";
+          el.classList.add("muted");
+        }
       }
-    } catch (e) {
-      setBadge(statusEl, null);
-      setBadge(overallEl, null);
-    }
-  }
 
-  async function fetchBedrockStatus() {
-    const statusEl = document.getElementById("bedrock-status");
+      async function fetchJsonWithTimeout(url) {
+        const controller = new AbortController();
+        const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-    try {
-      const res = await fetch("https://api.mcsrvstat.us/bedrock/2/" + host, { cache: "no-store" });
-      const data = await res.json();
-      const online = Boolean(data && data.online);
-      setBadge(statusEl, online);
-    } catch (e) {
-      setBadge(statusEl, null);
-    }
-  }
+        try {
+          const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return await res.json();
+        } finally {
+          clearTimeout(t);
+        }
+      }
 
-  async function refresh() {
-    await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
-  }
+      async function fetchJavaAndPlayers() {
+        const statusEl = document.getElementById("java-status");
+        const overallEl = document.getElementById("overall-players");
 
-  refresh();
-  setInterval(refresh, 30000);
-</script>
+        try {
+          const data = await fetchJsonWithTimeout(`/api/java?t=${Date.now()}`);
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+
+          // Unified overall player count (Java players)
+          if (online && data.players && typeof data.players.online === "number") {
+            const max = (typeof data.players.max === "number") ? data.players.max : null;
+            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
+            setBadge(overallEl, true, playersText);
+          } else if (online) {
+            setBadge(overallEl, true, "Online");
+          } else {
+            setBadge(overallEl, false, "Offline");
+          }
+        } catch (e) {
+          setBadge(statusEl, null, "Unavailable");
+          setBadge(overallEl, null, "Unavailable");
+        }
+      }
+
+      async function fetchBedrockStatus() {
+        const statusEl = document.getElementById("bedrock-status");
+
+        try {
+          const data = await fetchJsonWithTimeout(`/api/bedrock?t=${Date.now()}`);
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+        } catch (e) {
+          setBadge(statusEl, null, "Unavailable");
+        }
+      }
+
+      async function refresh() {
+        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
+      }
+
+      refresh();
+      setInterval(refresh, REFRESH_MS);
+    </script>
   </body>
 </html>
