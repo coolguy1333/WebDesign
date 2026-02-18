@@ -1,7 +1,4 @@
-/* ---------- Base / Reset-ish ---------- */
 * { box-sizing: border-box; }
-
-html, body { height: 100%; }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -9,16 +6,8 @@ body {
   background-color: #0f172a;
   color: #e5e7eb;
   line-height: 1.6;
-  -webkit-text-size-adjust: 100%;
-  text-rendering: optimizeLegibility;
 }
 
-img, video, canvas, svg { max-width: 100%; height: auto; }
-
-a { color: #facc15; text-decoration: none; }
-a:hover { text-decoration: underline; }
-
-/* ---------- Layout ---------- */
 header {
   background-color: #020617;
   padding: 20px 16px;
@@ -33,12 +22,20 @@ header h1 {
 }
 
 main {
-  max-width: 980px;
+  max-width: 1000px;
   margin: 24px auto;
   padding: 0 16px 24px;
 }
 
-/* ---------- Nav ---------- */
+footer {
+  text-align: center;
+  padding: 15px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  border-top: 1px solid #1e293b;
+}
+
+/* Navigation */
 .top-nav {
   display: flex;
   justify-content: center;
@@ -48,9 +45,6 @@ main {
 }
 
 .top-nav a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #facc15;
@@ -58,30 +52,11 @@ main {
   color: #facc15;
   text-decoration: none;
   font-weight: 700;
-  white-space: nowrap;
 }
 
-.top-nav a:hover {
-  text-decoration: none;
-  filter: brightness(1.06);
-}
+.top-nav a:hover { filter: brightness(1.06); }
 
-.top-nav a.active { border-color: #facc15; }
-
-/* ---------- Typography helpers ---------- */
-h2, h3 { margin-top: 0; }
-p { margin: 0 0 1em; }
-
-.muted { color: #9ca3af; }
-.small { font-size: 0.9rem; }
-
-.mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-  word-break: break-word;
-}
-
-/* ---------- Cards ---------- */
+/* Cards */
 .card {
   background: #0b1220;
   border: 1px solid #1e293b;
@@ -97,12 +72,18 @@ p { margin: 0 0 1em; }
   padding: 12px;
 }
 
-/* ---------- Status grid ---------- */
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+/* Status */
 .status-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
-  margin-top: 10px;
 }
 
 .status-item {
@@ -112,21 +93,14 @@ p { margin: 0 0 1em; }
   padding: 12px;
 }
 
-.status-title { font-weight: 700; margin-bottom: 6px; }
-.status-value { font-size: 1.1rem; font-weight: 700; }
-
 .ok { color: #22c55e; }
 .bad { color: #ef4444; }
+.muted { color: #9ca3af; }
+.mono { font-family: monospace; }
 
-/* ---------- Lists ---------- */
-.feature-list { margin: 10px 0 0 18px; }
-.feature-list li { margin: 6px 0; }
-
-/* ---------- Buttons ---------- */
+/* Buttons */
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #facc15;
@@ -134,12 +108,6 @@ p { margin: 0 0 1em; }
   color: #facc15;
   text-decoration: none;
   font-weight: 700;
-  margin: 6px 10px 0 0;
-}
-
-.button:hover {
-  text-decoration: none;
-  filter: brightness(1.06);
 }
 
 .button-outline {
@@ -148,94 +116,27 @@ p { margin: 0 0 1em; }
   background: #0b1220;
 }
 
-/* ---------- Tables (mobile safe) ---------- */
-.simple-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  overflow: hidden;
-  display: block;            /* enables horizontal scroll on small screens */
-  max-width: 100%;
-}
-
-.simple-table thead, .simple-table tbody, .simple-table tr {
-  display: table;
-  width: 100%;
-  table-layout: fixed;
-}
-
-.simple-table th,
-.simple-table td {
-  text-align: left;
-  padding: 10px 12px;
-  border-bottom: 1px solid #1e293b;
-  word-wrap: break-word;
-}
-
-.simple-table thead th {
-  color: #e5e7eb;
-  background: #0b1220;
-}
-
-.simple-table tbody tr:hover { background: #0b1220; }
-
-/* ---------- Split layout ---------- */
-.split {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 12px;
-}
-
-/* ---------- Google Calendar responsive ---------- */
+/* Google Calendar scaling */
 .calendar-embed {
   margin-top: 12px;
   border: 1px solid #1e293b;
   border-radius: 12px;
   overflow: hidden;
   background: #020617;
+  width: 100%;
 }
 
-.calendar-frame {
-  position: relative;
+.calendar-embed iframe {
   width: 100%;
-  aspect-ratio: 16 / 10;   /* scales cleanly on all screens */
-}
-
-.calendar-frame iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  height: 75vh;
+  min-height: 500px;
   border: 0;
   display: block;
 }
 
-/* Slightly taller on narrow phones */
-@media (max-width: 560px) {
-  .calendar-frame {
-    aspect-ratio: 4 / 5;
+@media (max-width: 480px) {
+  .calendar-embed iframe {
+    height: 65vh;
+    min-height: 420px;
   }
-}
-
-/* ---------- Footer ---------- */
-footer {
-  text-align: center;
-  padding: 15px 16px;
-  font-size: 0.9rem;
-  color: #9ca3af;
-  border-top: 1px solid #1e293b;
-}
-
-/* ---------- Small screens ---------- */
-@media (max-width: 560px) {
-  header { padding: 18px 12px; }
-  main { padding: 0 12px 22px; }
-
-  .split { grid-template-columns: 1fr; }
-  .button { width: 100%; margin-right: 0; }
-  .top-nav a { width: 100%; }
-  .calendar-embed iframe { height: 640px; }
 }
