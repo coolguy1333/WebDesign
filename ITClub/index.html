@@ -1,203 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>MHS IT Club</title>
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <header>
-      <h1>MHS IT Club</h1>
-      <nav class="top-nav" aria-label="Main navigation">
-        <a href="minecraft.html">Minecraft Server</a>
-        <a class="active" href="index.html">Home</a>
-        <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MHS IT Club</title>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-    <main>
-      <section class="card" id="minecraft">
-        <h2>Minecraft Server</h2>
-        <p class="muted">
-          Club server for building, experimenting, and hanging out. Works on <strong>Java</strong> and <strong>Bedrock</strong>.
-        </p>
+<body>
+  <header>
+    <h1>MHS IT Club</h1>
+    <nav class="top-nav" aria-label="Main navigation">
+      <a href="minecraft.html">Minecraft Server</a>
+      <a class="active" href="index.html">Home</a>
+      <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+    </nav>
+  </header>
 
-        <p>
-          <strong>Server Address:</strong><br>
-          <span class="mono">play.mhsit.club</span>
-        </p>
+  <main>
 
-        <div class="status-grid" aria-label="Server status">
-          <div class="status-item">
-            <div class="status-title">Overall players</div>
-            <div class="status-value" id="overall-players">Checking…</div>
-          </div>
+    <!-- Minecraft Section -->
+    <section class="card" id="minecraft">
+      <h2>Minecraft Server</h2>
 
-          <div class="status-item">
-            <div class="status-title">Java</div>
-            <div class="status-value" id="java-status">Checking…</div>
-          </div>
+      <p class="muted">
+        Club server for building, experimenting, and hanging out.
+        Works on <strong>Java</strong> and <strong>Bedrock</strong>.
+      </p>
 
-          <div class="status-item">
-            <div class="status-title">Bedrock</div>
-            <div class="status-value" id="bedrock-status">Checking…</div>
-          </div>
+      <p>
+        <strong>Server Address:</strong><br>
+        <span class="mono">play.mhsit.club</span>
+      </p>
+
+      <div class="status-grid">
+        <div class="status-item">
+          <div class="status-title">Overall players</div>
+          <div class="status-value" id="overall-players">Checking…</div>
         </div>
 
-        <p class="small muted">
-          Bedrock default port is usually <strong>19132</strong>. If yours asks, use address <span class="mono">play.mhsit.club</span> and port <strong>19132</strong>.
-        </p>
-
-        <p>
-          <a class="button" href="minecraft.html">Server details</a>
-          <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Join Discord</a>
-        </p>
-      </section>
-
-      <section class="card" id="about">
-        <h2>About</h2>
-        <p>
-          MHS IT Club is for students who want to learn more about programming, computers, and how real systems work.
-          Beginners are welcome.
-        </p>
-      </section>
-
-      <section class="card" id="meetings">
-        <h2>Meetings</h2>
-        <p class="muted">
-          All meetings are online. This section pulls directly from Google Calendar (agenda view).
-        </p>
-
-        <!-- Optional: a simple "Time" one-column table header (agenda below is the real source of truth) -->
-        <table class="simple-table" aria-label="Meeting times">
-          <tbody>
-            <tr>
-              <td class="muted">See agenda below.</td>
-            </tr>
-          </tbody>
-        </table>
-        
-        <div class="calendar-embed" aria-label="Google Calendar agenda">
-          <div class="calendar-frame">
-            <iframe
-              title="MHS IT Club Calendar (Agenda)"
-              src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=AGENDA&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0"
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade">
-            </iframe>
-          </div>
+        <div class="status-item">
+          <div class="status-title">Java</div>
+          <div class="status-value" id="java-status">Checking…</div>
         </div>
-      </section>
 
-      <section class="card" id="what-we-do">
-        <h2>What we do</h2>
-        <ul class="feature-list">
-          <li><strong>Programming:</strong> Python, C/C++, web basics, and tooling.</li>
-          <li><strong>Projects:</strong> small apps, automation scripts, websites, and hardware experiments.</li>
-          <li><strong>IT skills:</strong> Linux basics, networking fundamentals, and troubleshooting.</li>
-          <li><strong>Community:</strong> learn together, share resources, and build cool stuff.</li>
-        </ul>
-      </section>
+        <div class="status-item">
+          <div class="status-title">Bedrock</div>
+          <div class="status-value" id="bedrock-status">Checking…</div>
+        </div>
+      </div>
 
-      <section class="card" id="resources">
-        <h2>Resources</h2>
-        <ul class="feature-list">
-          <li><a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a> (announcements, help, and planning)</li>
-          <li><a href="minecraft.html">Minecraft server page</a> (how to join + live status)</li>
-        </ul>
-      </section>
+      <p class="small muted">
+        Bedrock port: <strong>19132</strong>
+      </p>
 
-      <section class="card" id="contact">
-        <h2>Contact</h2>
-        <p>
-          Email:<br>
-          <a href="mailto:chris@minecartchris.cc">chris@minecartchris.cc</a><br>
-          <a href="mailto:finglaws@stu.masd.k12.wi.us">finglaws@stu.masd.k12.wi.us</a>
-        </p>
-      </section>
-    </main>
+      <p>
+        <a class="button" href="minecraft.html">Server details</a>
+        <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank">Join Discord</a>
+      </p>
+    </section>
 
-    <footer>
-      © 2026 MHS IT Club · <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
-    </footer>
+    <!-- Meetings Section -->
+    <section class="card" id="meetings">
+      <h2>Meetings</h2>
 
-    <script>
-      const REFRESH_MS = 15000;
-      const TIMEOUT_MS = 8000;
+      <p class="muted">
+        All meetings are online. This calendar updates automatically.
+      </p>
 
-      function setBadge(el, state, text) {
-        if (!el) return;
-        el.classList.remove("ok", "bad", "muted");
+      <div class="calendar-embed">
+        <iframe
+          title="MHS IT Club Calendar (Agenda)"
+          src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=AGENDA&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+    </section>
 
-        if (state === true) {
-          el.textContent = text || "Online";
-          el.classList.add("ok");
-        } else if (state === false) {
-          el.textContent = text || "Offline";
-          el.classList.add("bad");
+  </main>
+
+  <footer>
+    © 2026 MHS IT Club ·
+    <a href="https://discord.gg/ex3BMp4W" target="_blank">Discord</a>
+  </footer>
+
+  <script>
+    const REFRESH_MS = 15000;
+    const TIMEOUT_MS = 8000;
+
+    function setBadge(el, state, text) {
+      if (!el) return;
+      el.classList.remove("ok", "bad", "muted");
+
+      if (state === true) {
+        el.textContent = text || "Online";
+        el.classList.add("ok");
+      } else if (state === false) {
+        el.textContent = text || "Offline";
+        el.classList.add("bad");
+      } else {
+        el.textContent = text || "Unavailable";
+        el.classList.add("muted");
+      }
+    }
+
+    async function fetchJsonWithTimeout(url) {
+      const controller = new AbortController();
+      const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
+
+      try {
+        const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        return await res.json();
+      } finally {
+        clearTimeout(t);
+      }
+    }
+
+    async function refresh() {
+      try {
+        const java = await fetchJsonWithTimeout(`/api/java?t=${Date.now()}`);
+        const bedrock = await fetchJsonWithTimeout(`/api/bedrock?t=${Date.now()}`);
+
+        setBadge(document.getElementById("java-status"), java.online);
+        setBadge(document.getElementById("bedrock-status"), bedrock.online);
+
+        if (java.online && java.players) {
+          setBadge(
+            document.getElementById("overall-players"),
+            true,
+            `${java.players.online} / ${java.players.max}`
+          );
         } else {
-          el.textContent = text || "Unavailable";
-          el.classList.add("muted");
+          setBadge(document.getElementById("overall-players"), false);
         }
-      }
 
-      async function fetchJsonWithTimeout(url) {
-        const controller = new AbortController();
-        const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
-
-        try {
-          const res = await fetch(url, { cache: "no-store", signal: controller.signal });
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          return await res.json();
-        } finally {
-          clearTimeout(t);
-        }
-      }
-
-      async function fetchJavaAndPlayers() {
-        const statusEl = document.getElementById("java-status");
-        const overallEl = document.getElementById("overall-players");
-
-        try {
-          const data = await fetchJsonWithTimeout(`/api/java?t=${Date.now()}`);
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
-
-          // Unified overall player count (Java players)
-          if (online && data.players && typeof data.players.online === "number") {
-            const max = (typeof data.players.max === "number") ? data.players.max : null;
-            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
-            setBadge(overallEl, true, playersText);
-          } else if (online) {
-            setBadge(overallEl, true, "Online");
-          } else {
-            setBadge(overallEl, false, "Offline");
-          }
-        } catch (e) {
-          setBadge(statusEl, null, "Unavailable");
-          setBadge(overallEl, null, "Unavailable");
-        }
-      }
-
-      async function fetchBedrockStatus() {
-        const statusEl = document.getElementById("bedrock-status");
-
-        try {
-          const data = await fetchJsonWithTimeout(`/api/bedrock?t=${Date.now()}`);
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
-        } catch (e) {
-          setBadge(statusEl, null, "Unavailable");
-        }
-      }
-
-      async function refresh() {
-        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
-      }
-
-      refresh();
-      setInterval(refresh, REFRESH_MS);
-    </script>
-  </body>
-</html>
+      } catch {
+        setBadge(document.getElementById("java-status"), null);
+        setBadge(document.getElementById("bedrock-status"), null);
+        setBa
