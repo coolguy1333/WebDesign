@@ -1,64 +1,59 @@
+/* ---------- Base / Reset-ish ---------- */
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  background-color: #0f172a; /* dark blue */
+  background-color: #0f172a;
   color: #e5e7eb;
   line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
 }
 
-header {
-  background-color: #020617;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 3px solid #facc15; /* gold */
-}
-
-header h1 {
-  margin: 0;
-  color: #3b82f6; /* blue */
-  font-size: 1.8rem;
-}
-
-main {
-  max-width: 800px;
-  margin: 30px auto;
-  padding: 20px;
-  background-color: #020617;
-}
-
-p {
-  margin-bottom: 1em;
-}
-
-footer {
-  text-align: center;
-  padding: 15px;
-  font-size: 0.9rem;
-  color: #9ca3af;
-  border-top: 1px solid #1e293b;
-}
+img, video, canvas, svg { max-width: 100%; height: auto; }
 
 a {
   color: #facc15;
   text-decoration: none;
 }
+a:hover { text-decoration: underline; }
 
-a:hover {
-  text-decoration: underline;
+/* ---------- Layout ---------- */
+header {
+  background-color: #020617;
+  padding: 20px 16px;
+  text-align: center;
+  border-bottom: 3px solid #facc15;
 }
 
-/* --- Navigation --- */
+header h1 {
+  margin: 0;
+  color: #3b82f6;
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+}
+
+main {
+  max-width: 980px;
+  margin: 24px auto;
+  padding: 0 16px 24px;
+}
+
+/* ---------- Nav ---------- */
 .top-nav {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  gap: 12px;
   flex-wrap: wrap;
   margin-top: 12px;
 }
 
-/* Make nav links match the buttons */
 .top-nav a {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #facc15;
@@ -66,6 +61,7 @@ a:hover {
   color: #facc15;
   text-decoration: none;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .top-nav a:hover {
@@ -77,18 +73,18 @@ a:hover {
   border-color: #facc15;
 }
 
-/* --- Headings / separators --- */
-h2, h3 {
-  margin-top: 0;
+/* ---------- Typography helpers ---------- */
+h2, h3 { margin-top: 0; }
+p { margin: 0 0 1em; }
+.muted { color: #9ca3af; }
+.small { font-size: 0.9rem; }
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
+  word-break: break-word;
 }
 
-hr {
-  border: none;
-  border-top: 1px solid #1e293b;
-  margin: 22px 0;
-}
-
-/* --- Cards / status --- */
+/* ---------- Cards ---------- */
 .card {
   background: #0b1220;
   border: 1px solid #1e293b;
@@ -97,6 +93,14 @@ hr {
   margin: 16px 0;
 }
 
+.card-inner {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* ---------- Status grid ---------- */
 .status-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -111,47 +115,21 @@ hr {
   padding: 12px;
 }
 
-.status-title {
-  font-weight: 700;
-  margin-bottom: 6px;
-}
+.status-title { font-weight: 700; margin-bottom: 6px; }
+.status-value { font-size: 1.1rem; font-weight: 700; }
 
-.status-value {
-  font-size: 1.1rem;
-  font-weight: 700;
-}
+.ok { color: #22c55e; }
+.bad { color: #ef4444; }
 
-.muted {
-  color: #9ca3af;
-}
+/* ---------- Lists ---------- */
+.feature-list { margin: 10px 0 0 18px; }
+.feature-list li { margin: 6px 0; }
 
-.small {
-  font-size: 0.9rem;
-}
-
-.mono {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.ok {
-  color: #22c55e;
-}
-
-.bad {
-  color: #ef4444;
-}
-
-.feature-list {
-  margin: 10px 0 0 18px;
-}
-
-.feature-list li {
-  margin: 6px 0;
-}
-
-/* --- Buttons / tables / layout helpers --- */
+/* ---------- Buttons ---------- */
 .button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 10px 14px;
   border-radius: 12px;
   border: 1px solid #facc15;
@@ -159,8 +137,7 @@ hr {
   color: #facc15;
   text-decoration: none;
   font-weight: 700;
-  margin-right: 10px;
-  margin-top: 6px;
+  margin: 6px 10px 0 0;
 }
 
 .button:hover {
@@ -174,13 +151,22 @@ hr {
   background: #0b1220;
 }
 
+/* ---------- Tables (mobile safe) ---------- */
 .simple-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 10px;
-  overflow: hidden;
   border: 1px solid #1e293b;
   border-radius: 12px;
+  overflow: hidden;
+  display: block;           /* enables horizontal scroll on small screens */
+  max-width: 100%;
+}
+
+.simple-table thead, .simple-table tbody, .simple-table tr {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
 }
 
 .simple-table th,
@@ -188,6 +174,7 @@ hr {
   text-align: left;
   padding: 10px 12px;
   border-bottom: 1px solid #1e293b;
+  word-wrap: break-word;
 }
 
 .simple-table thead th {
@@ -195,20 +182,37 @@ hr {
   background: #0b1220;
 }
 
-.simple-table tbody tr:hover {
-  background: #0b1220;
+.simple-table tbody tr:hover { background: #0b1220; }
+
+/* Wrap table if needed */
+.table-wrap {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
+/* ---------- Split layout ---------- */
 .split {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 12px;
 }
 
-.card-inner {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 12px;
+/* ---------- Footer ---------- */
+footer {
+  text-align: center;
+  padding: 15px 16px;
+  font-size: 0.9rem;
+  color: #9ca3af;
+  border-top: 1px solid #1e293b;
+}
+
+/* ---------- Small screens ---------- */
+@media (max-width: 560px) {
+  header { padding: 18px 12px; }
+  main { padding: 0 12px 22px; }
+
+  .split { grid-template-columns: 1fr; }     /* stack the join cards */
+  .button { width: 100%; margin-right: 0; }  /* buttons full width */
+  .top-nav a { width: 100%; }                /* nav full width */
 }
