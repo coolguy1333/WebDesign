@@ -66,30 +66,35 @@
       <section class="card" id="meetings">
         <h2>Meetings</h2>
         <p class="muted">
-          Times and locations can change. Check Discord for the most current announcements.
+          All meetings are online. This section pulls directly from Google Calendar (agenda view).
         </p>
 
-        <table class="simple-table" aria-label="Meeting schedule">
+        <!-- Optional: a simple "Time" one-column table header (agenda below is the real source of truth) -->
+        <table class="simple-table" aria-label="Meeting times">
           <thead>
             <tr>
-              <th>When</th>
-              <th>What</th>
-              <th>Where</th>
+              <th>Time</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Weekly on Thursday</td>
-              <td>Project work / fun</td>
-              <td>Online</td>
-            </tr>
-            <tr>
-              <td>Optional</td>
-              <td>Minecraft build night</td>
-              <td>Online</td>
+              <td class="muted">See agenda below.</td>
             </tr>
           </tbody>
         </table>
+
+        <div class="calendar-embed" aria-label="Google Calendar agenda">
+          <iframe
+            title="MHS IT Club Calendar (Agenda)"
+            src="PASTE_YOUR_GOOGLE_CALENDAR_EMBED_URL_HERE"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+
+        <p class="small muted">
+          To enable this: Google Calendar → Settings → Integrate calendar → copy the iframe <span class="mono">src</span> into the URL above.
+        </p>
       </section>
 
       <section class="card" id="what-we-do">
