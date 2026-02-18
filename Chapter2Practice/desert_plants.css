@@ -1,93 +1,69 @@
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
-  background: #0f172a;
-  color: #e5e7eb;
+html{
+    scroll-behavior: smooth;
 }
 
-header {
-  background: #020617;
-  padding: 20px;
-  text-align: center;
-  border-bottom: 3px solid #facc15;
+body{
+    background-image: url("./images/greyback.jpg");
+    margin: 0px;
 }
 
-h1 {
-  margin: 0;
-  color: #3b82f6;
+main{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 80px;
 }
 
-main {
-  max-width: 900px;
-  margin: 30px auto;
-  padding: 20px;
+h1{
+    font-size: 44pt;
+    color: rgb(44, 44, 99);
 }
 
-.card {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 14px;
-  padding: 20px;
-  margin-bottom: 25px;
+h2{
+    font-size: 32pt;
 }
 
-.nav {
-  margin-top: 15px;
+p, li, a{
+    font-size: 18pt;
 }
 
-.button {
-  display: inline-block;
-  padding: 10px 16px;
-  border-radius: 10px;
-  background: #111827;
-  border: 1px solid #1e293b;
-  color: #facc15;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 5px;
-  transition: 0.2s;
+.header-image{
+    width: 100%;
 }
 
-.button:hover {
-  background: #1f2937;
+.plant-card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
 }
 
-.button.active {
-  border-color: #facc15;
+.plant-card-header{
+    padding: 10px 0px;
+    margin: 0px;
+    width: 100%;
 }
 
-.button-row {
-  margin-top: 15px;
+.plant-card-body{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: row;
 }
 
-.status-grid {
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 15px;
+.plant-card-info{
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.status-box {
-  background: #111827;
-  padding: 15px;
-  border-radius: 10px;
-  border: 1px solid #1e293b;
-  min-width: 150px;
-  text-align: center;
+.plant-card-image{
+    margin: auto;
+    padding: 0px 20px;
 }
 
-.online {
-  color: #22c55e;
-}
-
-.offline {
-  color: #ef4444;
-}
-
-footer {
-  text-align: center;
-  padding: 15px;
-  border-top: 1px solid #1e293b;
-  font-size: 0.9rem;
-  color: #9ca3af;
+.plant-card-footer{
+    width: 100%;
+    padding: 10px 0px;
+    margin: 0px;
 }
