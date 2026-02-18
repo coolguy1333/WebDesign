@@ -46,3 +46,91 @@ a {
 a:hover {
   text-decoration: underline;
 }
+/* --- Navigation --- */
+.top-nav {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+/* Nav links reuse the same .button styles for consistent sizing/shape */
+.top-nav .button {
+  margin: 0;
+}
+
+.top-nav .button.active {
+  border-color: #facc15;
+  background: #111827;
+  color: #facc15;
+}
+
+/* --- Headings / separators --- */
+h2, h3 {
+  margin-top: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #1e293b;
+  margin: 22px 0;
+}
+
+/* --- Cards / status --- */
+.card {
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.status-item {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.status-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.status-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.status-sub {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.muted {
+  color: #9ca3af;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.ok {
+  color: #22c55e;
+}
+
+.bad {
+  color: #ef4444;
+}
