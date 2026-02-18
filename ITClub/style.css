@@ -1,30 +1,33 @@
-* { box-sizing: border-box; }
-
 body {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0;
-  background-color: #0f172a;
+  background-color: #0f172a; /* dark blue */
   color: #e5e7eb;
   line-height: 1.6;
 }
 
 header {
   background-color: #020617;
-  padding: 20px 16px;
+  padding: 20px;
   text-align: center;
-  border-bottom: 3px solid #facc15;
+  border-bottom: 3px solid #facc15; /* gold */
 }
 
 header h1 {
   margin: 0;
-  color: #3b82f6;
-  font-size: clamp(1.4rem, 2.2vw, 1.9rem);
+  color: #3b82f6; /* blue */
+  font-size: 1.8rem;
 }
 
 main {
-  max-width: 1000px;
-  margin: 24px auto;
-  padding: 0 16px 24px;
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #020617;
+}
+
+p {
+  margin-bottom: 1em;
 }
 
 footer {
@@ -35,71 +38,26 @@ footer {
   border-top: 1px solid #1e293b;
 }
 
-/* Navigation */
+a {
+  color: #facc15;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* --- Navigation --- */
 .top-nav {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 14px;
   flex-wrap: wrap;
   margin-top: 12px;
 }
 
+/* Make nav links match the buttons */
 .top-nav a {
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid #facc15;
-  background: #111827;
-  color: #facc15;
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.top-nav a:hover { filter: brightness(1.06); }
-
-/* Cards */
-.card {
-  background: #0b1220;
-  border: 1px solid #1e293b;
-  border-radius: 14px;
-  padding: 16px;
-  margin: 16px 0;
-}
-
-.card-inner {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.split {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 12px;
-  margin-top: 12px;
-}
-
-/* Status */
-.status-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 12px;
-}
-
-.status-item {
-  background: #020617;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 12px;
-}
-
-.ok { color: #22c55e; }
-.bad { color: #ef4444; }
-.muted { color: #9ca3af; }
-.mono { font-family: monospace; }
-
-/* Buttons */
-.button {
   display: inline-block;
   padding: 10px 14px;
   border-radius: 12px;
@@ -110,13 +68,157 @@ footer {
   font-weight: 700;
 }
 
+.top-nav a:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
+}
+
+.top-nav a.active {
+  border-color: #facc15;
+}
+
+/* --- Headings / separators --- */
+h2, h3 {
+  margin-top: 0;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #1e293b;
+  margin: 22px 0;
+}
+
+/* --- Cards / status --- */
+.card {
+  background: #0b1220;
+  border: 1px solid #1e293b;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.status-item {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.status-title {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.status-value {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.status-sub {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.muted {
+  color: #9ca3af;
+}
+
+.small {
+  font-size: 0.9rem;
+}
+
+.mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.ok {
+  color: #22c55e;
+}
+
+.bad {
+  color: #ef4444;
+}
+
+.feature-list {
+  margin: 10px 0 0 18px;
+}
+
+.feature-list li {
+  margin: 6px 0;
+}
+
+/* --- Buttons / tables / layout helpers --- */
+.button {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #facc15;
+  background: #111827;
+  color: #facc15;
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: 10px;
+  margin-top: 6px;
+}
+
+.button:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
+}
+
 .button-outline {
   border-color: #1e293b;
   color: #e5e7eb;
   background: #0b1220;
 }
 
-/* Google Calendar scaling */
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+}
+
+.simple-table th,
+.simple-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.simple-table thead th {
+  color: #e5e7eb;
+  background: #0b1220;
+}
+
+.simple-table tbody tr:hover {
+  background: #0b1220;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.card-inner {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+/* --- Google Calendar: scale to available space --- */
 .calendar-embed {
   margin-top: 12px;
   border: 1px solid #1e293b;
@@ -128,15 +230,16 @@ footer {
 
 .calendar-embed iframe {
   width: 100%;
-  height: 75vh;
-  min-height: 500px;
+  height: 75vh;      /* uses available viewport height */
+  min-height: 520px; /* keeps it readable */
   border: 0;
   display: block;
 }
 
+/* Smaller phones */
 @media (max-width: 480px) {
   .calendar-embed iframe {
     height: 65vh;
-    min-height: 420px;
+    min-height: 440px;
   }
 }
