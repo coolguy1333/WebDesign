@@ -139,4 +139,12 @@
       } catch {
         setBadge(document.getElementById("java-status"), null);
         setBadge(document.getElementById("bedrock-status"), null);
-        setBa
+        setBadge(document.getElementById("overall-players"), null);
+      }
+    }
+
+    refresh();
+    setInterval(refresh, REFRESH_MS);
+  </script>
+</body>
+</html>
