@@ -39,7 +39,9 @@
         </div>
 
         <p>
-          <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord (announcements + help)</a>
+          <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">
+            Discord (announcements + help)
+          </a>
         </p>
       </section>
 
@@ -128,7 +130,6 @@
           const online = Boolean(data && data.online);
           setBadge(statusEl, online);
 
-          // Unified overall player count (Java players)
           if (online && data.players && typeof data.players.online === "number") {
             const max = (typeof data.players.max === "number") ? data.players.max : null;
             const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
