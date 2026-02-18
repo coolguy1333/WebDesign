@@ -55,15 +55,16 @@ a:hover {
   margin-top: 12px;
 }
 
-/* Nav links reuse the same .button styles for consistent sizing/shape */
-.top-nav .button {
-  margin: 0;
+.top-nav a {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  background: #0b1220;
 }
 
-.top-nav .button.active {
+.top-nav a.active {
   border-color: #facc15;
-  background: #111827;
-  color: #facc15;
 }
 
 /* --- Headings / separators --- */
@@ -133,4 +134,76 @@ hr {
 
 .bad {
   color: #ef4444;
+}
+
+.feature-list {
+  margin: 10px 0 0 18px;
+}
+
+.feature-list li {
+  margin: 6px 0;
+}
+
+/* --- Buttons / tables / layout helpers --- */
+.button {
+  display: inline-block;
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid #facc15;
+  background: #111827;
+  color: #facc15;
+  text-decoration: none;
+  font-weight: 700;
+  margin-right: 10px;
+  margin-top: 6px;
+}
+
+.button:hover {
+  text-decoration: none;
+  filter: brightness(1.06);
+}
+
+.button-outline {
+  border-color: #1e293b;
+  color: #e5e7eb;
+  background: #0b1220;
+}
+
+.simple-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  overflow: hidden;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+}
+
+.simple-table th,
+.simple-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #1e293b;
+}
+
+.simple-table thead th {
+  color: #e5e7eb;
+  background: #0b1220;
+}
+
+.simple-table tbody tr:hover {
+  background: #0b1220;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.card-inner {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  padding: 12px;
 }

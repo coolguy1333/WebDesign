@@ -10,9 +10,9 @@
     <header>
       <h1>MHS IT Club</h1>
       <nav class="top-nav" aria-label="Main navigation">
-        <a class="button button-outline" href="index.html">Home</a>
-        <a class="button active" href="minecraft.html">Minecraft Server</a>
-        <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+        <a class="active" href="minecraft.html">Minecraft Server</a>
+        <a href="index.html">Home</a>
+        <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
       </nav>
     </header>
 
@@ -39,7 +39,7 @@
         </div>
 
         <p>
-          <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Join Discord (announcements + help)</a>
+          <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord (announcements + help)</a>
         </p>
       </section>
 
@@ -55,9 +55,6 @@
 
       <section class="card">
         <h2>Live server status</h2>
-        <p class="muted small">
-          Refreshes every 30 seconds.
-        </p>
 
         <div class="status-grid" aria-label="Server status">
           <div class="status-item">
@@ -90,70 +87,70 @@
     </footer>
 
     <script>
-      const host = "play.mhsit.club";
+  const host = "play.mhsit.club";
 
-      function setBadge(el, state, text) {
-        if (!el) return;
-        el.classList.remove("ok", "bad", "muted");
+  function setBadge(el, state, text) {
+    if (!el) return;
+    el.classList.remove("ok", "bad", "muted");
 
-        if (state === true) {
-          el.textContent = text || "Online";
-          el.classList.add("ok");
-        } else if (state === false) {
-          el.textContent = text || "Offline";
-          el.classList.add("bad");
-        } else {
-          el.textContent = text || "Unavailable";
-          el.classList.add("muted");
-        }
+    if (state === true) {
+      el.textContent = text || "Online";
+      el.classList.add("ok");
+    } else if (state === false) {
+      el.textContent = text || "Offline";
+      el.classList.add("bad");
+    } else {
+      el.textContent = text || "Unavailable";
+      el.classList.add("muted");
+    }
+  }
+
+  async function fetchJavaAndPlayers() {
+    const statusEl = document.getElementById("java-status");
+    const overallEl = document.getElementById("overall-players");
+
+    try {
+      const res = await fetch("https://api.mcsrvstat.us/2/" + host, { cache: "no-store" });
+      const data = await res.json();
+
+      const online = Boolean(data && data.online);
+      setBadge(statusEl, online);
+
+      // Use Java player count as the single "overall" count.
+      if (online && data.players && typeof data.players.online === "number") {
+        const max = (typeof data.players.max === "number") ? data.players.max : null;
+        const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
+        setBadge(overallEl, true, playersText);
+      } else if (online) {
+        setBadge(overallEl, true, "Online");
+      } else {
+        setBadge(overallEl, false, "Offline");
       }
+    } catch (e) {
+      setBadge(statusEl, null);
+      setBadge(overallEl, null);
+    }
+  }
 
-      async function fetchJavaAndPlayers() {
-        const statusEl = document.getElementById("java-status");
-        const overallEl = document.getElementById("overall-players");
+  async function fetchBedrockStatus() {
+    const statusEl = document.getElementById("bedrock-status");
 
-        try {
-          const res = await fetch("https://api.mcsrvstat.us/2/" + host, { cache: "no-store" });
-          const data = await res.json();
+    try {
+      const res = await fetch("https://api.mcsrvstat.us/bedrock/2/" + host, { cache: "no-store" });
+      const data = await res.json();
+      const online = Boolean(data && data.online);
+      setBadge(statusEl, online);
+    } catch (e) {
+      setBadge(statusEl, null);
+    }
+  }
 
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
+  async function refresh() {
+    await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
+  }
 
-          // Use Java player count as the single "overall" count.
-          if (online && data.players && typeof data.players.online === "number") {
-            const max = (typeof data.players.max === "number") ? data.players.max : null;
-            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
-            setBadge(overallEl, true, playersText);
-          } else if (online) {
-            setBadge(overallEl, true, "Online");
-          } else {
-            setBadge(overallEl, false, "Offline");
-          }
-        } catch (e) {
-          setBadge(statusEl, null);
-          setBadge(overallEl, null);
-        }
-      }
-
-      async function fetchBedrockStatus() {
-        const statusEl = document.getElementById("bedrock-status");
-
-        try {
-          const res = await fetch("https://api.mcsrvstat.us/bedrock/2/" + host, { cache: "no-store" });
-          const data = await res.json();
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
-        } catch (e) {
-          setBadge(statusEl, null);
-        }
-      }
-
-      async function refresh() {
-        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
-      }
-
-      refresh();
-      setInterval(refresh, 30000);
-    </script>
+  refresh();
+  setInterval(refresh, 30000);
+</script>
   </body>
 </html>
