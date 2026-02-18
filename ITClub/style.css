@@ -217,27 +217,22 @@ hr {
   border-radius: 12px;
   padding: 12px;
 }
-/* Force Google Calendar embed to fill the card */
-.calendar-embed,
-.calendar-embed * {
-  max-width: none !important;
-}
-
+/* --- Dark themed Google Calendar embed --- */
 .calendar-embed {
   width: 100% !important;
-  display: block !important;
   margin-top: 12px;
+  background: #020617;
   border: 1px solid #1e293b;
   border-radius: 12px;
   overflow: hidden;
-  background: #020617;
 }
 
 .calendar-embed iframe {
-  display: block !important;
+  display: block;
   width: 100% !important;
-  min-width: 100% !important;
   height: 80vh;
   min-height: 650px;
   border: 0;
+  background: #020617;
 }
+
