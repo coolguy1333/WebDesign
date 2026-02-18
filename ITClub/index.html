@@ -1,46 +1,194 @@
 <!DOCTYPE html>
-
-<link rel="stylesheet" href="style.css">
-
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MHS IT Club</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
       <h1>MHS IT Club</h1>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a class="button" href="minecraft.html">Minecraft Server</a>
+        <a class="button button-outline active" href="index.html">Home</a>
+        <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+      </nav>
     </header>
 
     <main>
-      <p>This is a temporary website for the MHS IT Club.</p>
+      <section class="card" id="minecraft">
+        <h2>Minecraft Server</h2>
+        <p class="muted">
+          Club server for building, experimenting, and hanging out. Works on <strong>Java</strong> and <strong>Bedrock</strong>.
+        </p>
 
-      <p>
-        Here at IT Club, we strive to teach students about programming
-        and computers in any way we can.
-      </p>
+        <p>
+          <strong>Server Address:</strong><br>
+          <span class="mono">play.mhsit.club</span>
+        </p>
 
-      <p>
-        Since MHS does not offer the kind of IT classes we are interested in,
-        we decided to start this club ourselves.
-      </p>
+        <div class="status-grid" aria-label="Server status">
+          <div class="status-item">
+            <div class="status-title">Overall players</div>
+            <div class="status-value" id="overall-players">Checking…</div>
+          </div>
 
-      <p>
-        Our goal is to teach programming in more depth, whether that’s
-        C, Python, or even Rust. At the end of the day, we’re here to learn
-        and have fun.
-      </p>
+          <div class="status-item">
+            <div class="status-title">Java</div>
+            <div class="status-value" id="java-status">Checking…</div>
+          </div>
 
-      <p>
-        Soon we will have a schedule posted so everyone knows what’s
-        happening over the next 30 days.
-      </p>
+          <div class="status-item">
+            <div class="status-title">Bedrock</div>
+            <div class="status-value" id="bedrock-status">Checking…</div>
+          </div>
+        </div>
 
-      <p>
-        If you have any questions, feel free to email:<br>
-        <a href="mailto:chris@minecartchris.cc">chris@minecartchris.cc</a><br>
-        <a href="mailto:finglaws@stu.masd.k12.wi.us">finglaws@stu.masd.k12.wi.us</a>
-      </p>
+        <p class="small muted">
+          Bedrock default port is usually <strong>19132</strong>. If yours asks, use address <span class="mono">play.mhsit.club</span> and port <strong>19132</strong>.
+        </p>
+
+        <p>
+          <a class="button" href="minecraft.html">Server details</a>
+          <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        </p>
+      </section>
+
+      <section class="card" id="about">
+        <h2>About</h2>
+        <p>
+          MHS IT Club is for students who want to learn more about programming, computers, and how real systems work.
+          Beginners are welcome.
+        </p>
+      </section>
+
+      <section class="card" id="meetings">
+        <h2>Meetings</h2>
+        <p class="muted">
+          Times and locations can change. Check Discord for the most current announcements.
+        </p>
+
+        <table class="simple-table" aria-label="Meeting schedule">
+          <thead>
+            <tr>
+              <th>When</th>
+              <th>What</th>
+              <th>Where</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Weekly (TBD)</td>
+              <td>Project work / lessons</td>
+              <td>TBD</td>
+            </tr>
+            <tr>
+              <td>Optional</td>
+              <td>Minecraft build night</td>
+              <td>Online</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section class="card" id="what-we-do">
+        <h2>What we do</h2>
+        <ul class="feature-list">
+          <li><strong>Programming:</strong> Python, C/C++, web basics, and tooling.</li>
+          <li><strong>Projects:</strong> small apps, automation scripts, websites, and hardware experiments.</li>
+          <li><strong>IT skills:</strong> Linux basics, networking fundamentals, and troubleshooting.</li>
+          <li><strong>Community:</strong> learn together, share resources, and build cool stuff.</li>
+        </ul>
+      </section>
+
+      <section class="card" id="resources">
+        <h2>Resources</h2>
+        <ul class="feature-list">
+          <li><a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a> (announcements, help, and planning)</li>
+          <li><a href="minecraft.html">Minecraft server page</a> (how to join + live status)</li>
+        </ul>
+      </section>
+
+      <section class="card" id="contact">
+        <h2>Contact</h2>
+        <p>
+          Email:<br>
+          <a href="mailto:chris@minecartchris.cc">chris@minecartchris.cc</a><br>
+          <a href="mailto:finglaws@stu.masd.k12.wi.us">finglaws@stu.masd.k12.wi.us</a>
+        </p>
+      </section>
     </main>
+
+    <footer>
+      © 2026 MHS IT Club · <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+    </footer>
+
+    <script>
+      const host = "play.mhsit.club";
+
+      function setBadge(el, state, text) {
+        if (!el) return;
+        el.classList.remove("ok", "bad", "muted");
+
+        if (state === true) {
+          el.textContent = text || "Online";
+          el.classList.add("ok");
+        } else if (state === false) {
+          el.textContent = text || "Offline";
+          el.classList.add("bad");
+        } else {
+          el.textContent = text || "Unavailable";
+          el.classList.add("muted");
+        }
+      }
+
+      async function fetchJavaAndPlayers() {
+        const statusEl = document.getElementById("java-status");
+        const overallEl = document.getElementById("overall-players");
+
+        try {
+          const res = await fetch("https://api.mcsrvstat.us/2/" + host, { cache: "no-store" });
+          const data = await res.json();
+
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+
+          // Use Java player count as the single "overall" count.
+          if (online && data.players && typeof data.players.online === "number") {
+            const max = (typeof data.players.max === "number") ? data.players.max : null;
+            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
+            setBadge(overallEl, true, playersText);
+          } else if (online) {
+            setBadge(overallEl, true, "Online");
+          } else {
+            setBadge(overallEl, false, "Offline");
+          }
+        } catch (e) {
+          setBadge(statusEl, null);
+          setBadge(overallEl, null);
+        }
+      }
+
+      async function fetchBedrockStatus() {
+        const statusEl = document.getElementById("bedrock-status");
+
+        try {
+          const res = await fetch("https://api.mcsrvstat.us/bedrock/2/" + host, { cache: "no-store" });
+          const data = await res.json();
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+        } catch (e) {
+          setBadge(statusEl, null);
+        }
+      }
+
+      async function refresh() {
+        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
+      }
+
+      refresh();
+      setInterval(refresh, 30000);
+    </script>
   </body>
 </html>
