@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MHS IT Club - Minecraft</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>MHS IT Club</h1>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a class="button button-outline" href="index.html">Home</a>
+        <a class="button active" href="minecraft.html">Minecraft Server</a>
+        <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Join the server</h2>
+
+        <p>
+          <strong>Server Address:</strong><br>
+          <span class="mono">play.mhsit.club</span>
+        </p>
+
+        <div class="split">
+          <div class="card-inner">
+            <h3>Java Edition</h3>
+            <p class="muted">Multiplayer → Add Server → enter the address above.</p>
+          </div>
+          <div class="card-inner">
+            <h3>Bedrock Edition</h3>
+            <p class="muted">
+              Add Server → Address: <span class="mono">play.mhsit.club</span> · Port: <strong>19132</strong>
+            </p>
+          </div>
+        </div>
+
+        <p>
+          <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Join Discord (announcements + help)</a>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Rules</h2>
+        <ul class="feature-list">
+          <li>No griefing, stealing, or cheating.</li>
+          <li>Be respectful in chat and voice.</li>
+          <li>Ask before major edits to someone else’s build.</li>
+          <li>Keep builds school-appropriate.</li>
+        </ul>
+      </section>
+
+      <section class="card">
+        <h2>Live server status</h2>
+        <p class="muted small">
+          Refreshes every 30 seconds.
+        </p>
+
+        <div class="status-grid" aria-label="Server status">
+          <div class="status-item">
+            <div class="status-title">Overall players</div>
+            <div class="status-value" id="overall-players">Checking…</div>
+          </div>
+
+          <div class="status-item">
+            <div class="status-title">Java</div>
+            <div class="status-value" id="java-status">Checking…</div>
+          </div>
+
+          <div class="status-item">
+            <div class="status-title">Bedrock</div>
+            <div class="status-value" id="bedrock-status">Checking…</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Need help connecting?</h2>
+        <p class="muted">
+          Post a screenshot of the error message in Discord and include whether you're on Java or Bedrock.
+        </p>
+      </section>
+    </main>
+
+    <footer>
+      © 2026 MHS IT Club · <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+    </footer>
+
+    <script>
+      const host = "play.mhsit.club";
+
+      function setBadge(el, state, text) {
+        if (!el) return;
+        el.classList.remove("ok", "bad", "muted");
+
+        if (state === true) {
+          el.textContent = text || "Online";
+          el.classList.add("ok");
+        } else if (state === false) {
+          el.textContent = text || "Offline";
+          el.classList.add("bad");
+        } else {
+          el.textContent = text || "Unavailable";
+          el.classList.add("muted");
+        }
+      }
+
+      async function fetchJavaAndPlayers() {
+        const statusEl = document.getElementById("java-status");
+        const overallEl = document.getElementById("overall-players");
+
+        try {
+          const res = await fetch("https://api.mcsrvstat.us/2/" + host, { cache: "no-store" });
+          const data = await res.json();
+
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+
+          // Use Java player count as the single "overall" count.
+          if (online && data.players && typeof data.players.online === "number") {
+            const max = (typeof data.players.max === "number") ? data.players.max : null;
+            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
+            setBadge(overallEl, true, playersText);
+          } else if (online) {
+            setBadge(overallEl, true, "Online");
+          } else {
+            setBadge(overallEl, false, "Offline");
+          }
+        } catch (e) {
+          setBadge(statusEl, null);
+          setBadge(overallEl, null);
+        }
+      }
+
+      async function fetchBedrockStatus() {
+        const statusEl = document.getElementById("bedrock-status");
+
+        try {
+          const res = await fetch("https://api.mcsrvstat.us/bedrock/2/" + host, { cache: "no-store" });
+          const data = await res.json();
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+        } catch (e) {
+          setBadge(statusEl, null);
+        }
+      }
+
+      async function refresh() {
+        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
+      }
+
+      refresh();
+      setInterval(refresh, 30000);
+    </script>
+  </body>
+</html>
