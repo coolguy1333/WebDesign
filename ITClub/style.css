@@ -1,3 +1,4 @@
+/* ---------- Base / Reset-ish ---------- */
 * { box-sizing: border-box; }
 
 html, body { height: 100%; }
@@ -14,10 +15,7 @@ body {
 
 img, video, canvas, svg { max-width: 100%; height: auto; }
 
-a {
-  color: #facc15;
-  text-decoration: none;
-}
+a { color: #facc15; text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ---------- Layout ---------- */
@@ -68,15 +66,15 @@ main {
   filter: brightness(1.06);
 }
 
-.top-nav a.active {
-  border-color: #facc15;
-}
+.top-nav a.active { border-color: #facc15; }
 
-/* ---------- Type ---------- */
+/* ---------- Typography helpers ---------- */
 h2, h3 { margin-top: 0; }
 p { margin: 0 0 1em; }
+
 .muted { color: #9ca3af; }
 .small { font-size: 0.9rem; }
+
 .mono {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
     "Liberation Mono", "Courier New", monospace;
@@ -150,7 +148,7 @@ p { margin: 0 0 1em; }
   background: #0b1220;
 }
 
-/* ---------- Tables ---------- */
+/* ---------- Tables (mobile safe) ---------- */
 .simple-table {
   width: 100%;
   border-collapse: collapse;
@@ -158,7 +156,7 @@ p { margin: 0 0 1em; }
   border: 1px solid #1e293b;
   border-radius: 12px;
   overflow: hidden;
-  display: block;
+  display: block;            /* enables horizontal scroll on small screens */
   max-width: 100%;
 }
 
@@ -183,16 +181,28 @@ p { margin: 0 0 1em; }
 
 .simple-table tbody tr:hover { background: #0b1220; }
 
-.table-wrap {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
+/* ---------- Split layout ---------- */
 .split {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
   margin-top: 12px;
+}
+
+/* ---------- Google Calendar embed ---------- */
+.calendar-embed {
+  margin-top: 12px;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #020617;
+}
+
+.calendar-embed iframe {
+  width: 100%;
+  height: 520px;
+  border: 0;
+  display: block;
 }
 
 /* ---------- Footer ---------- */
@@ -212,4 +222,5 @@ footer {
   .split { grid-template-columns: 1fr; }
   .button { width: 100%; margin-right: 0; }
   .top-nav a { width: 100%; }
+  .calendar-embed iframe { height: 640px; }
 }
