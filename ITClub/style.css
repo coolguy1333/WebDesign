@@ -15,7 +15,7 @@ a {
 }
 a:hover { text-decoration: underline; }
 
-/* Header (integrated logo + nav) */
+/* Header */
 header {
   background-color: #020617;
   border-bottom: 3px solid #facc15; /* gold */
@@ -23,7 +23,7 @@ header {
 }
 
 .header-inner {
-  max-width: 85%;
+  max-width: 75%;
   margin: 0 auto;
   padding: 20px;
   display: flex;
@@ -47,7 +47,7 @@ header {
 
 /* Main container */
 main {
-  max-width: 85%;
+  max-width: 75%;
   margin: 30px auto;
   padding: 20px;
   background-color: #020617;
@@ -179,7 +179,7 @@ footer {
   background: #020617;
 }
 
-/* Calendar (full width in card) */
+/* Calendar */
 .calendar-embed,
 .calendar-embed * {
   max-width: none !important;
