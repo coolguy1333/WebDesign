@@ -4,39 +4,41 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MHS IT Club</title>
+
     <link rel="icon" href="./images/favicon2.png" type="image/png">
     <link rel="stylesheet" href="style.css">
   </head>
+
   <body>
     <header>
-      <h1>MHS IT Club</h1>
-      <nav class="top-nav" aria-label="Main navigation">
-        <a href="/minecraft">Minecraft Server</a>
-        <a class="active" href="/">Home</a>
-        <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
-      </nav>
+      <div class="header-inner">
+        <a class="brand" href="/" aria-label="MHS IT Club Home">
+          <img src="./images/logo.png" alt="MHS IT Club Logo" class="site-logo">
+        </a>
+
+        <nav class="top-nav" aria-label="Main navigation">
+          <a href="/minecraft">Minecraft Server</a>
+          <a class="active" href="/">Home</a>
+          <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+        </nav>
+      </div>
     </header>
 
     <main>
       <section class="card" id="minecraft">
         <h2>Minecraft Server</h2>
         <p class="muted">
-          A school-wide server for building, experimenting, hanging out, and having fun! Works on <strong>Java</strong> and <strong>Bedrock</strong>.
-        </p>
-    <main>
-
-      <section class="card">
-        <h2>Minecraft Server</h2>
-        <p class="muted">
-          Works on <strong>Java</strong> and <strong>Bedrock</strong>.
+          Club server for building, experimenting, and hanging out. Works on <strong>Java</strong> and <strong>Bedrock</strong>.
         </p>
 
-        <p><strong>Server Address:</strong><br>
-        <span class="mono">play.mhsit.club</span></p>
+        <p>
+          <strong>Server Address:</strong><br>
+          <span class="mono">play.mhsit.club</span>
+        </p>
 
-        <div class="status-grid">
+        <div class="status-grid" aria-label="Server status">
           <div class="status-item">
-            <div class="status-title">Overall Players</div>
+            <div class="status-title">Overall players</div>
             <div class="status-value" id="overall-players">Checking…</div>
           </div>
 
@@ -51,9 +53,22 @@
           </div>
         </div>
 
+        <p class="small muted">
+          Bedrock default port is usually <strong>19132</strong>. If yours asks, use address
+          <span class="mono">play.mhsit.club</span> and port <strong>19132</strong>.
+        </p>
+
+        <p class="button-row">
+          <a class="button" href="/minecraft">Server details</a>
+          <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Join Discord</a>
+        </p>
+      </section>
+
+      <section class="card" id="about">
+        <h2>About</h2>
         <p>
-          <a class="button" href="/minecraft">Server Details</a>
-          <a class="button button-outline" href="https://discord.gg/ex3BMp4W" target="_blank">Join Discord</a>
+          MHS IT Club is for students who want to learn more about programming, computers, and how real systems work.
+          Beginners are welcome.
         </p>
       </section>
 
@@ -67,15 +82,17 @@
         </ul>
       </section>
 
+      <!-- Calendar (below What we do) -->
       <section class="card" id="meetings">
         <h2>Meetings</h2>
         <p class="muted">
           All meetings are online. This calendar updates automatically.
         </p>
+
         <div class="calendar-embed" aria-label="Google Calendar">
           <iframe
             title="MHS IT Club Calendar"
-            src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=MONTH&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0"
+            src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=MONTH&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0&bgcolor=%23020617"
             loading="lazy"
             referrerpolicy="no-referrer-when-downgrade">
           </iframe>
@@ -85,49 +102,108 @@
       <section class="card" id="resources">
         <h2>Resources</h2>
         <ul class="feature-list">
-          <li><a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a> (announcements, help, and planning)</li>
-          <li><a href="minecraft.html">Minecraft server page</a> (how to join + live status)</li>
+          <li>
+            <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+            (announcements, help, and planning)
+          </li>
+          <li>
+            <a href="/minecraft">Minecraft server page</a>
+            (how to join + live status)
+          </li>
         </ul>
       </section>
 
-</main>
+      <section class="card" id="contact">
+        <h2>Contact</h2>
+        <p>
+          Email:<br>
+          <a href="mailto:chris@minecartchris.cc">chris@minecartchris.cc</a><br>
+          <a href="mailto:finglaws@stu.masd.k12.wi.us">finglaws@stu.masd.k12.wi.us</a>
+        </p>
+      </section>
+    </main>
 
-<footer>
-  © 2026 MHS IT Club · <a href="https://discord.gg/ex3BMp4W" target="_blank">Discord</a>
-</footer>
+    <footer>
+      © 2026 MHS IT Club ·
+      <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+    </footer>
 
-<script>
-const REFRESH_MS = 15000;
+    <script>
+      const REFRESH_MS = 15000;
+      const TIMEOUT_MS = 8000;
 
-function setBadge(el, state, text) {
-  el.classList.remove("ok","bad","muted");
-  if (state === true) { el.textContent = text || "Online"; el.classList.add("ok"); }
-  else if (state === false) { el.textContent = text || "Offline"; el.classList.add("bad"); }
-  else { el.textContent = "Unavailable"; el.classList.add("muted"); }
-}
+      function setBadge(el, state, text) {
+        if (!el) return;
+        el.classList.remove("ok", "bad", "muted");
 
-async function refresh() {
-  try {
-    const j = await fetch("/api/java?t=" + Date.now()).then(r => r.json());
-    const b = await fetch("/api/bedrock?t=" + Date.now()).then(r => r.json());
+        if (state === true) {
+          el.textContent = text || "Online";
+          el.classList.add("ok");
+        } else if (state === false) {
+          el.textContent = text || "Offline";
+          el.classList.add("bad");
+        } else {
+          el.textContent = text || "Unavailable";
+          el.classList.add("muted");
+        }
+      }
 
-    setBadge(document.getElementById("java-status"), j.online);
-    setBadge(document.getElementById("bedrock-status"), b.online);
+      async function fetchJsonWithTimeout(url) {
+        const controller = new AbortController();
+        const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
 
-    if (j.online && j.players)
-      setBadge(document.getElementById("overall-players"), true, j.players.online + " / " + j.players.max);
-    else
-      setBadge(document.getElementById("overall-players"), j.online);
-  } catch {
-    setBadge(document.getElementById("java-status"), null);
-    setBadge(document.getElementById("bedrock-status"), null);
-    setBadge(document.getElementById("overall-players"), null);
-  }
-}
+        try {
+          const res = await fetch(url, { cache: "no-store", signal: controller.signal });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return await res.json();
+        } finally {
+          clearTimeout(t);
+        }
+      }
 
-refresh();
-setInterval(refresh, REFRESH_MS);
-</script>
+      async function fetchJavaAndPlayers() {
+        const statusEl = document.getElementById("java-status");
+        const overallEl = document.getElementById("overall-players");
 
-</body>
+        try {
+          const data = await fetchJsonWithTimeout(`/api/java?t=${Date.now()}`);
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+
+          // Unified overall player count (Java players)
+          if (online && data.players && typeof data.players.online === "number") {
+            const max = (typeof data.players.max === "number") ? data.players.max : null;
+            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
+            setBadge(overallEl, true, playersText);
+          } else if (online) {
+            setBadge(overallEl, true, "Online");
+          } else {
+            setBadge(overallEl, false, "Offline");
+          }
+        } catch (e) {
+          setBadge(statusEl, null, "Unavailable");
+          setBadge(overallEl, null, "Unavailable");
+        }
+      }
+
+      async function fetchBedrockStatus() {
+        const statusEl = document.getElementById("bedrock-status");
+
+        try {
+          const data = await fetchJsonWithTimeout(`/api/bedrock?t=${Date.now()}`);
+          const online = Boolean(data && data.online);
+          setBadge(statusEl, online);
+        } catch (e) {
+          setBadge(statusEl, null, "Unavailable");
+        }
+      }
+
+      async function refresh() {
+        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
+      }
+
+      refresh();
+      setInterval(refresh, REFRESH_MS);
+    </script>
+  </body>
 </html>
