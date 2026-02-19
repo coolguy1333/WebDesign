@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MHS IT Club - Minecraft</title>
+    <link rel="icon" href="./images/favicon2.png" type="image/png">
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header>
       <h1>MHS IT Club</h1>
       <nav class="top-nav" aria-label="Main navigation">
-        <a class="active" href="minecraft.html">Minecraft Server</a>
-        <a href="index.html">Home</a>
+        <a class="active" href="/minecraft">Minecraft Server</a>
+        <a href="/">Home</a>
         <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
       </nav>
     </header>
@@ -37,7 +38,7 @@
             </p>
           </div>
         </div>
-
+        
         <p>
           <a class="button" href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord (announcements + help)</a>
         </p>
@@ -46,10 +47,9 @@
       <section class="card">
         <h2>Rules</h2>
         <ul class="feature-list">
-          <li>No griefing, stealing, or cheating.</li>
+          <li>No griefing or cheating.</li>
           <li>Be respectful in chat and voice.</li>
-          <li>Ask before major edits to someone else’s build.</li>
-          <li>Keep builds school-appropriate.</li>
+          <li>Keep builds appropriate.</li>
         </ul>
       </section>
 
@@ -128,7 +128,6 @@
           const online = Boolean(data && data.online);
           setBadge(statusEl, online);
 
-          // Unified overall player count (Java players)
           if (online && data.players && typeof data.players.online === "number") {
             const max = (typeof data.players.max === "number") ? data.players.max : null;
             const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;

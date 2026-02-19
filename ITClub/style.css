@@ -121,6 +121,11 @@ hr {
   font-weight: 700;
 }
 
+.status-sub {
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
 .muted {
   color: #9ca3af;
 }
@@ -212,3 +217,22 @@ hr {
   border-radius: 12px;
   padding: 12px;
 }
+/* --- Dark themed Google Calendar embed --- */
+.calendar-embed {
+  width: 100% !important;
+  margin-top: 12px;
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.calendar-embed iframe {
+  display: block;
+  width: 100% !important;
+  height: 80vh;
+  min-height: 650px;
+  border: 0;
+  background: #020617;
+}
+

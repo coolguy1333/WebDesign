@@ -5,7 +5,7 @@ html {
 body {
     background-image: url("./images/background.png");
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: "Comic Sans MS", "Comic Sans";
 }
 
 /* ===== LAYOUT ===== */
@@ -20,6 +20,13 @@ main {
 header {
     text-align: center;
     margin: 40px 0 20px 0;
+}
+
+hr{
+    height: 4px; 
+    border: none; 
+    background-color: #002741; 
+    width: 90%;
 }
 
 /* ===== TEXT ===== */
@@ -61,7 +68,7 @@ a:hover {
 
 .web-card {
     background-color: rgba(67, 67, 255, 0.5);
-    box-shadow: 5px 5px 15px rgba(1,1,1,0.2);
+    box-shadow: 10px 10px 25px rgba(1,1,1,0.3);
     border-radius: 25px;
     display: flex;
     flex-direction: column;
@@ -95,7 +102,7 @@ a:hover {
 .web-card-image {
     width: 280px;
     height: auto;
-    border-radius: 15px;
+    border-radius: 25px;
     flex-shrink: 0;
 }
 

@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>MHS IT Club</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MHS IT Club</title>
+    <link rel="icon" href="./images/favicon2.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+      <h1>MHS IT Club</h1>
+      <nav class="top-nav" aria-label="Main navigation">
+        <a href="/minecraft">Minecraft Server</a>
+        <a class="active" href="/">Home</a>
+        <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
+      </nav>
+    </header>
 
-<header>
-  <div class="header-inner">
-    <img src="./images/logo.png" alt="MHS IT Club Logo" class="site-logo">
-    <nav class="top-nav">
-      <a href="/minecraft">Minecraft Server</a>
-      <a class="active" href="/">Home</a>
-      <a href="https://discord.gg/ex3BMp4W" target="_blank">Discord</a>
-    </nav>
-  </div>
-</header>
+    <main>
+      <section class="card" id="minecraft">
+        <h2>Minecraft Server</h2>
+        <p class="muted">
+          A school-wide server for building, experimenting, hanging out, and having fun! Works on <strong>Java</strong> and <strong>Bedrock</strong>.
+        </p>
 
 <main>
 
@@ -53,32 +58,38 @@
   </p>
 </section>
 
-<section class="card">
-  <h2>About</h2>
-  <p>MHS IT Club is for students interested in programming, systems, and real-world IT skills.</p>
-</section>
+      <section class="card" id="what-we-do">
+        <h2>What we do</h2>
+        <ul class="feature-list">
+          <li><strong>Programming:</strong> Python, C/C++, web basics, and tooling.</li>
+          <li><strong>Projects:</strong> small apps, automation scripts, websites, and hardware experiments.</li>
+          <li><strong>IT skills:</strong> Linux basics, networking fundamentals, and troubleshooting.</li>
+          <li><strong>Community:</strong> learn together, share resources, and build cool stuff.</li>
+        </ul>
+      </section>
 
-<section class="card">
-  <h2>What we do</h2>
-  <ul class="feature-list">
-    <li>Programming (Python, C/C++, Web)</li>
-    <li>Projects & automation</li>
-    <li>Linux & networking basics</li>
-    <li>Collaborative builds</li>
-  </ul>
-</section>
+      <section class="card" id="meetings">
+        <h2>Meetings</h2>
+        <p class="muted">
+          All meetings are online. This calendar updates automatically.
+        </p>
+        <div class="calendar-embed" aria-label="Google Calendar">
+          <iframe
+            title="MHS IT Club Calendar"
+            src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=MONTH&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </section>
 
-<section class="card">
-  <h2>Meetings</h2>
-  <p class="muted">All meetings are online. Calendar updates automatically.</p>
-
-  <div class="calendar-embed">
-    <iframe
-      src="https://calendar.google.com/calendar/embed?src=0a8f741060f1b0390913f97be2dee26c0476b08a47bbb615ef88bb0e29572b38%40group.calendar.google.com&ctz=America%2FChicago&mode=MONTH&showTitle=0&showTabs=0&showPrint=0&showCalendars=0&showTz=0&bgcolor=%23020617"
-      loading="lazy">
-    </iframe>
-  </div>
-</section>
+      <section class="card" id="resources">
+        <h2>Resources</h2>
+        <ul class="feature-list">
+          <li><a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a> (announcements, help, and planning)</li>
+          <li><a href="minecraft.html">Minecraft server page</a> (how to join + live status)</li>
+        </ul>
+      </section>
 
 </main>
 
