@@ -61,7 +61,7 @@ a:hover {
 
 .web-card {
     background-color: rgba(67, 67, 255, 0.5);
-    box-shadow: 5px 5px 15px rgba(1,1,1,0.2);
+    box-shadow: 10px 10px 25px rgba(1,1,1,0.2);
     border-radius: 25px;
     display: flex;
     flex-direction: column;
