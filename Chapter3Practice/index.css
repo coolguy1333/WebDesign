@@ -1,0 +1,30 @@
+body{
+    margin: 0px;
+}
+
+.header-links{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+    margin: 20px auto;
+}
+
+.header-link{
+    font-size: 28px;
+    text-decoration: none;
+    padding: 20px 40px;
+    background-color: rgb(17, 98, 7);
+    color: white;
+    border-radius: 10px;
+    min-width: 200px;
+    text-align: center;
+    box-shadow: 10px 10px 10px rgb(7, 58, 0);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.header-link:hover{
+    padding: 22px 42px;
+    background-color: rgb(24, 202, 7);
+}
