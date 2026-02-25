@@ -8,8 +8,6 @@ body {
     font-family: "Comic Sans MS", "Comic Sans";
 }
 
-/* ===== LAYOUT ===== */
-
 main {
     display: flex;
     flex-direction: column;
@@ -28,8 +26,6 @@ hr{
     background-color: #002741; 
     width: 90%;
 }
-
-/* ===== TEXT ===== */
 
 h1 {
     font-size: 52pt;
@@ -64,7 +60,13 @@ a:hover {
     text-decoration: underline;
 }
 
-/* ===== CARD ===== */
+.nav{
+    padding: 10px;
+    background-color: rgba(67, 67, 255, 0.5);
+    box-shadow: 10px 10px 25px rgba(1,1,1,0.3);
+    border-radius: 10px;
+    margin: 15px 15px;
+}
 
 .web-card {
     background-color: rgba(67, 67, 255, 0.5);
@@ -105,8 +107,6 @@ a:hover {
     border-radius: 25px;
     flex-shrink: 0;
 }
-
-/* ===== TOP BUTTON ===== */
 
 #topButton {
     position: fixed;

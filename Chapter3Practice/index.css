@@ -1,5 +1,7 @@
 body{
     margin: 0px;
+    font-size: 24px;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .header-links{
@@ -12,7 +14,6 @@ body{
 }
 
 .header-link{
-    font-size: 28px;
     text-decoration: none;
     padding: 20px 40px;
     background-color: rgb(17, 98, 7);
@@ -21,10 +22,37 @@ body{
     min-width: 200px;
     text-align: center;
     box-shadow: 10px 10px 10px rgb(7, 58, 0);
-    font-family: 'Courier New', Courier, monospace;
 }
 
 .header-link:hover{
     padding: 22px 42px;
     background-color: rgb(24, 202, 7);
+}
+
+.grid{
+    width: 80%;
+    display: grid;
+    margin: 40px auto;
+    grid-template-columns: repeat(2, 1fr);
+    text-align: center;
+}
+
+.grid-header{
+    grid-column: 1 / 3;
+    background-color: black;
+    color: white;
+    padding: 20px 0px;
+    border: 3px solid black;
+}
+
+.column-header{
+    background-color: rgb(17, 98, 7);
+    color: white;
+    padding: 20px 0px;
+    border: 3px solid black;
+}
+
+.grid-cell{
+    padding: 20px 0px;
+    border: 3px solid black;
 }
