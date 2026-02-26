@@ -148,11 +148,51 @@ a:hover {
     border: 2px solid black;
 }
 
-.yellow{ background-color:#fff200; border:2px solid black; padding:30px 0;}
-.blue{ background-color:#2e75b6; border:2px solid black; padding:30px 0; color:white;}
-.red{ background-color:#ff0000; border:2px solid black; padding:30px 0; color:white;}
-.pink{ background-color:#ff00cc; border:2px solid black; padding:30px 0;}
-.green{ background-color:#00b050; border:2px solid black; padding:30px 0;}
-.orange{ background-color:#ed7d31; border:2px solid black; padding:30px 0;}
-.purple{ background-color:#b57edc; border:2px solid black; padding:30px 0;}
-.silver{ background-color:#a6a6a6; border:2px solid black; padding:30px 0;}
+.yellow{ 
+    background-color:#fff200; 
+    border:2px solid black; 
+    padding:30px 0;
+}
+
+.blue{ 
+    background-color:#2e75b6; 
+    border:2px solid black; 
+    padding:30px 0; color:white;
+}
+
+.red{ 
+    background-color:#ff0000; 
+    border:2px solid black; 
+    padding:30px 0; 
+    color:white;
+}
+
+.pink{ 
+    background-color:#ff00cc; 
+    border:2px solid black; 
+    padding:30px 0;
+}
+
+.green{ 
+    background-color:#00b050; 
+    border:2px solid black; 
+    padding:30px 0;
+}
+
+.orange{ 
+    background-color:#ed7d31; 
+    border:2px solid black; 
+    padding:30px 0;
+}
+
+.purple{ 
+    background-color:#b57edc; 
+    border:2px solid black; 
+    padding:30px 0;
+}
+
+.silver{ 
+    background-color:#a6a6a6; 
+    border:2px solid black; 
+    padding:30px 0;
+}
