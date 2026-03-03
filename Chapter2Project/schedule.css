@@ -89,49 +89,44 @@ a:hover {
 }
 
 .schedule{
-    width: 98%;
+    width: 95%;
     margin: 30px auto;
     display: grid;
-    grid-template-columns: 1.2fr repeat(4, 1fr) 1.1fr 1.1fr;
+    grid-template-columns: 4fr 1.25fr 6fr 6fr 6fr 6fr 1.25fr 4fr 4fr;
+    grid-template-rows: 3fr 4fr 4fr 1fr 3fr 3fr 4fr 4fr 4fr;
     font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     text-align: center;
-    border-collapse: collapse;
-}
-
-.schedule{
-    width: 100%;
-    margin: 30px auto;
-    display: grid;
-    grid-template-columns: 3fr 1fr 6fr 6fr 6fr 6fr 1fr 3fr 3fr;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: bold;
-    text-align: center;
+    font-size: 24px;
+    border: 2px solid black;
 }
 
 .side-header{
+    align-content: center;
     background-color: white;
     border: 2px solid black;
-    padding: 20px 10px;
+    padding: 10px 5px;
     font-size: 24px;
 }
 
 .top{
+    align-content: center;
     background-color: white;
     border: 2px solid black;
-    padding: 20px 0;
+    padding: 10px 0;
     font-size: 24px;
 }
 
 .time{
     background-color: white;
     border: 2px solid black;
-    padding: 18px 5px;
-    font-size: 18px;
+    padding: 8px 5px;
+    font-size: 22px;
+    align-content: center;
 }
 
-.advisory{    
-    background-color: white;
+.time-number{
+    font-weight: normal;
     font-size: 18px;
 }
 
@@ -141,16 +136,17 @@ a:hover {
     border-right: 2px solid black;
 }
 
-.mtv-grid{
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+.horizontal-divider{
+    background-color: #bfbfbf;
+    border: 2px solid black;
 }
 
 .mtv{
-    background-color: #d9d9d9;
+    align-content: center;
+    background-color: #ffffff;
     border: 2px solid black;
     padding: 6px;
+    font-size: 18px;
 }
 
 .gray-fill{
@@ -158,51 +154,79 @@ a:hover {
     border: 2px solid black;
 }
 
+.class{
+    align-content: center;
+    border:2px solid black; 
+    padding:10px 0;
+}
+
+.class-type{
+    font-weight: normal;
+    font-size: 14px;
+}
+
 .yellow{ 
     background-color:#fff200; 
-    border:2px solid black; 
-    padding:30px 0;
 }
 
 .blue{ 
     background-color:#2e75b6; 
-    border:2px solid black; 
-    padding:30px 0; color:white;
 }
 
 .red{ 
     background-color:#ff0000; 
-    border:2px solid black; 
-    padding:30px 0; 
-    color:white;
 }
 
 .pink{ 
-    background-color:#ff00cc; 
-    border:2px solid black; 
-    padding:30px 0;
+    background-color:#e000b3; 
 }
 
 .green{ 
     background-color:#00b050; 
-    border:2px solid black; 
-    padding:30px 0;
 }
 
 .orange{ 
     background-color:#ed7d31; 
-    border:2px solid black; 
-    padding:30px 0;
 }
 
 .purple{ 
     background-color:#b57edc; 
-    border:2px solid black; 
-    padding:30px 0;
 }
 
 .silver{ 
     background-color:#a6a6a6; 
-    border:2px solid black; 
-    padding:30px 0;
+}
+
+mark{
+    
+}
+
+.lunch{
+    width: 75%;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: 1fr repeat(3, 2fr);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    text-align: center;
+    font-size: 24px;
+    border: 2px solid black;
+}
+
+.lunch-header{
+    align-content: center;
+    background-color: white;
+    border: 2px solid black;
+    padding: 10px 0;
+    font-size: 18px;
+    font-size: bold;
+}
+
+.lunch-time{
+    align-content: center;
+    background-color: white;
+    border: 2px solid black;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: normal;
 }
