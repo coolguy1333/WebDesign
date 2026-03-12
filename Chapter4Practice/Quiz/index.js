@@ -6,5 +6,20 @@ document.getElementById("carPartQuiz").addEventListener("submit",
         let rim = 0;
         let exhaustPipe = 0;
         let sparkPlug = 0;
+
+        stateOfMatterResult = document.getElementById("stateOfMatter").ariaValueMax
+        if(stateOfMatterResult == "solid"){
+            rim++;
+            frontRightFender++;
+        }
+        if(stateOfMatterResult == "Liquid"){
+            rearAxle++;
+        }
+        if(stateOfMatterResult == "Gas"){
+            exhaustPipe++;
+        }
+        if(stateOfMatterResult == "Whatever a NeeDoh is"){
+            sparkPlug++;
+        }
     }
 )
