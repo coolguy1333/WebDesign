@@ -21,5 +21,22 @@ document.getElementById("carPartQuiz").addEventListener("submit",
         if(stateOfMatterResult == "Whatever a NeeDoh is"){
             sparkPlug++;
         }
+
+
+
+        bedtimeResult = document.getElementById("bedtime").ariaValueMax
+        if(stateOfMatterResult == "solid"){
+            rim++;
+            frontRightFender++;
+        }
+        if(stateOfMatterResult == "Liquid"){
+            rearAxle++;
+        }
+        if(stateOfMatterResult == "Gas"){
+            exhaustPipe++;
+        }
+        if(stateOfMatterResult == "Whatever a NeeDoh is"){
+            sparkPlug++;
+        }
     }
 )
