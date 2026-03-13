@@ -24,7 +24,11 @@ document.getElementById("carPartQuiz").addEventListener("submit",
         }
        
         bedtimeResult = document.getElementById("bedtime").value;
+        bedtimeHours = (Number)(bedtimeResult.split(":")[0]);
+        bedtimeMinutes = (Number)(bedtimeResult.split(":")[1]);
 
         gameQuizResult = document.getElementById("gameQuiz").value;
+
+
     }
 )
