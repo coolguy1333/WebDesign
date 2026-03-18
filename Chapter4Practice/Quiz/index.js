@@ -121,11 +121,16 @@ document.getElementById("carPartQuiz").addEventListener("submit",
             && sparkPlug >= exhaustPipe
             && sparkPlug >= rearAxle
         ){
-            winner.push("Spark Plug")
+            winner.push("Spark Pluh")
         }
        
         winningIndex = Math.floor(Math.random() * winner.length)
         actualWinner = winner[winningIndex]
-        console.log(actualWinner)
+
+        console.log(winner)
+
+        document.getElementById("resultParagraph").textContent = actualWinner
+
+        //solid, no time, batman, barb, all 4
     }
 )
