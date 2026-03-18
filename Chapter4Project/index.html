@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Buzzfeed Quiz</title>
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <header>
+            <h1>Press the button!</h1>
+            <p style="font-size: 10px">or else</p>
+        </header>
+        <main>
+            <form id="carPartQuiz">
+                <label for="stateOfMatter">What state of matter are you in?
+                <select id="stateOfMatter">
+                    <option>Solid</option>
+                    <option>Liquid</option>
+                    <option>Gas</option>
+                    <option>Whatever a NeeDoh is</option>
+                </select>
+                </label>
+                <br>
+
+                <label for="bedtime">When did you go to bed last night?
+                <input id="bedtime" type="time">
+                </label>
+                <br>
+
+                <label for="gameQuiz">Which one is a video game?
+                <input id="gameQuiz" list="gameQuizList">
+                <datalist id="gameQuizList">
+                    <option value="Spotify">
+                    <option value="Minecraft">
+                    <option value="The Weather App">
+                    <option value="Batman's Guide to Being Cool">
+                    <option value="Grown Ups 2">
+                </datalist>
+                </label>
+                <br>
+
+                <p>Which teacher do you feel you are most like?</p>
+                    <input type="radio" id="marzahl" name="teacher">
+                    <label for="marzahl">Marzahl</label><br>                    
+                    <input type="radio" id="steffes" name="teacher"> <!-- disabled="true" -->
+                    <label for="steffes">Steffes</label><br>
+                    <input type="radio" id="dubz" name="teacher"> <!-- disabled="true" -->
+                    <label for="dubz">Dubz</label><br>
+                    <input type="radio" id="barb" name="teacher"> <!-- disabled="true" -->
+                    <label for="barb">Barb</label>
+                <br>
+
+                <p>Select the pizza toppings you enjoy</p>
+                    <input type="checkbox" id="pepperoni" name="pizza">
+                    <label for="pepperoni">Pepperoni</label><br>
+                    <input type="checkbox" id="pineapple" name="pizza">
+                    <label for="pineapple">Pineapple</label><br>         
+                    <input type="checkbox" id="apple" name="pizza">
+                    <label for="apple">Apple</label><br>
+                    <input type="checkbox" id="sausage" name="pizza">
+                    <label for="sausage">Sausage</label><br>
+                <br>
+
+                <button type="submit">Button text</button>
+            </form>
+
+            <p id="resultParagraph"></p>
+
+        </main>
+        <script src="index.js"></script>
+    </body>
+</html>
