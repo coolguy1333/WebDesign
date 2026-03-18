@@ -88,49 +88,44 @@ document.getElementById("carPartQuiz").addEventListener("submit",
         }
 
         winner = [];
-        if(rearAxle >= frontRightFender 
-            && rearAxle >= rim 
+        if(rearAxle >= frontRightFender
+            && rearAxle >= rim
             && rearAxle >= exhaustPipe
             && rearAxle >= sparkPlug
-        )
-        {
+        ){
             winner.push("Rear Axle")
         }
-        winner = [];
-        if(frontRightFender >= rearAxle 
-            && frontRightFender >= rim 
+        if(frontRightFender >= rearAxle
+            && frontRightFender >= rim
             && frontRightFender >= exhaustPipe
             && frontRightFender >= sparkPlug
-        )
-        {
+        ){
             winner.push("Front Right Fender")
         }
-        winner = [];
-        if(rim >= frontRightFender 
-            && rim >= rearAxle 
+        if(rim >= frontRightFender
+            && rim >= rearAxle
             && rim >= exhaustPipe
             && rim >= sparkPlug
-        )
-        {
+        ){
             winner.push("Rim")
         }
-        winner = [];
-        if(exhaustPipe >= frontRightFender 
-            && exhaustPipe >= rim 
+        if(exhaustPipe >= frontRightFender
+            && exhaustPipe >= rim
             && exhaustPipe >= rearAxle
             && exhaustPipe >= sparkPlug
-        )
-        {
+        ){
             winner.push("Exhaust Pipe")
         }
-        winner = [];
-        if(sparkPlug >= frontRightFender 
-            && sparkPlug >= rim 
+        if(sparkPlug >= frontRightFender
+            && sparkPlug >= rim
             && sparkPlug >= exhaustPipe
             && sparkPlug >= rearAxle
-        )
-        {
+        ){
             winner.push("Spark Plug")
         }
+       
+        winningIndex = Math.floor(Math.random() * winner.length)
+        actualWinner = winner[winningIndex]
+        console.log(actualWinner)
     }
 )
