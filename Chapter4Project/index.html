@@ -1,70 +1,60 @@
 <!DOCTYPE html>
-
 <html>
     <head>
-        <title>Buzzfeed Quiz</title>
+        <title>Minecraft Server Application</title>
         <link rel="stylesheet" href="index.css">
     </head>
     <body>
         <header>
-            <h1>Press the button!</h1>
-            <p style="font-size: 10px">or else</p>
+            <h1>Minecraft Server Application</h1>
+            <p style="font-size: 16px; font-weight: normal;">Fill this out to join the world!</p>
+            <br><br>
         </header>
         <main>
-            <form id="carPartQuiz">
-                <label for="stateOfMatter">What state of matter are you in?
-                <select id="stateOfMatter">
-                    <option>Solid</option>
-                    <option>Liquid</option>
-                    <option>Gas</option>
-                    <option>Whatever a NeeDoh is</option>
+            <form id="mcApplication">
+                <p>Minecraft Username:</p>
+                <label for="mcUsername">
+                    <input type="text" id="mcUsername" placeholder= "ex. Steve123" required>
+                </label>
+                <br><br>
+                
+
+                <p>What is your experience level?</p>
+                <label for="expLevel">
+                <select id="expLevel">
+                    <option>Newbie (Just started)</option>
+                    <option>Casual (I know the basics)</option>
+                    <option>Pro (I speedrun or redstone)</option>
+                    <option>Hermit (I live in caves and build megabases)</option>
                 </select>
                 </label>
-                <br>
+                <br><br>
 
-                <label for="bedtime">When did you go to bed last night?
-                <input id="bedtime" type="time">
-                </label>
-                <br>
+                <p>What is your preferred playstyle?</p>
+                <input type="radio" id="survival" name="playstyle" value="survival">
+                <label for="survival">Survival / Building</label><br>                    
+                <input type="radio" id="pvp" name="playstyle" value="pvp">
+                <label for="pvp">PvP / Combat</label><br>
+                <input type="radio" id="creative" name="playstyle" value="creative">
+                <label for="creative">Creative Mode Only</label>
+                <br><br>
 
-                <label for="gameQuiz">Which one is a video game?
-                <input id="gameQuiz" list="gameQuizList">
-                <datalist id="gameQuizList">
-                    <option value="Spotify">
-                    <option value="Minecraft">
-                    <option value="The Weather App">
-                    <option value="Batman's Guide to Being Cool">
-                    <option value="Grown Ups 2">
-                </datalist>
-                </label>
-                <br>
+                <p>Select your skills:</p>
+                <input type="checkbox" id="redstone" name="skills">
+                <label for="redstone">Redstone Engineering</label><br>
+                <input type="checkbox" id="building" name="skills">
+                <label for="building">Interior Design/Building</label><br>         
+                <input type="checkbox" id="farming" name="skills">
+                <label for="farming">Auto-Farming</label><br>
+                <input type="checkbox" id="mining" name="skills">
+                <label for="mining">Strip Mining</label>
+                <br><br>
 
-                <p>Which teacher do you feel you are most like?</p>
-                    <input type="radio" id="marzahl" name="teacher">
-                    <label for="marzahl">Marzahl</label><br>                    
-                    <input type="radio" id="steffes" name="teacher"> <!-- disabled="true" -->
-                    <label for="steffes">Steffes</label><br>
-                    <input type="radio" id="dubz" name="teacher"> <!-- disabled="true" -->
-                    <label for="dubz">Dubz</label><br>
-                    <input type="radio" id="barb" name="teacher"> <!-- disabled="true" -->
-                    <label for="barb">Barb</label>
-                <br>
-
-                <p>Select the pizza toppings you enjoy</p>
-                    <input type="checkbox" id="pepperoni" name="pizza">
-                    <label for="pepperoni">Pepperoni</label><br>
-                    <input type="checkbox" id="pineapple" name="pizza">
-                    <label for="pineapple">Pineapple</label><br>         
-                    <input type="checkbox" id="apple" name="pizza">
-                    <label for="apple">Apple</label><br>
-                    <input type="checkbox" id="sausage" name="pizza">
-                    <label for="sausage">Sausage</label><br>
-                <br>
-
-                <button type="submit">Button text</button>
+                <button type="submit">Submit Application</button>
+                <br><br>
             </form>
 
-            <p id="resultParagraph"></p>
+            <p id="resultParagraph" style="font-size:32px; font-weight:bold;"></p>
 
         </main>
         <script src="index.js"></script>
