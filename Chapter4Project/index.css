@@ -1,9 +1,11 @@
-@import url('https://fonts.cdnfonts.com/css/minecraft-3');
+@import url('https://fonts.cdnfonts.com/css/minecraft-3'); 
+/* @import url(https://fonts.cdnfonts.com/css/redacted-script); */
 
 html{
     background-color: #8FCA5C;
     text-align: center;
     font-family: 'Minecraft', sans-serif;
+    /* font-family: 'Redacted Script', sans-serif; */
 }
 
 h1{
