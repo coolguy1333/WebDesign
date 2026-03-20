@@ -12,6 +12,9 @@ document.getElementById("mcApplication").addEventListener("submit", (event) => {
         never++ 
         join++
     };
+    if (expLevel.includes("Casual+")){
+        join++
+    };
     if (expLevel.includes("Pro")){
         join++
     };
@@ -31,13 +34,11 @@ document.getElementById("mcApplication").addEventListener("submit", (event) => {
         never += 2;
     }
 
-    // 4. Skills Logic (Checkboxes)
     if (document.getElementById("redstone").checked) join += 2;
     if (document.getElementById("building").checked) never++;
     if (document.getElementById("farming").checked) join++;
     if (document.getElementById("mining").checked) never += 2;
 
-    // 5. Determine the "Winner" (Suggested Role)
     winner = [];
     if (join >= never) {
         winner.push("You've been accepted to the server");
