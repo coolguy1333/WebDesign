@@ -1,0 +1,14 @@
+.guessArea{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    width: min-content;
+    margin: auto;
+}
+
+.guessLetter{
+    border: 2px solid black;
+    margin: 10px 5px;
+    height: 40px;
+    width: 40px;
+}
