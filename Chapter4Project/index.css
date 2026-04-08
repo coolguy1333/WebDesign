@@ -1,0 +1,22 @@
+@import url('https://fonts.cdnfonts.com/css/minecraft-3'); 
+/* @import url(https://fonts.cdnfonts.com/css/redacted-script); */
+
+html{
+    background-color: #8FCA5C;
+    text-align: center;
+    font-family: 'Minecraft', sans-serif;
+    /* font-family: 'Redacted Script', sans-serif; */
+}
+
+h1{
+    font-size: 42px;
+}
+
+p{
+    font-size: 24px;
+    font-weight: 700; 
+}
+
+label{
+    font-size: 18px;
+}

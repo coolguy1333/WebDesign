@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Repeatedly Opening Windows</title>
+</head>
+<body>
+
+<button onclick="startOpeningWindows()">Start Opening Windows</button>
+<p>Click the button to start the process. Be aware that modern browsers may block pop-ups, so you might need to allow them for this page.</p>
+<!-- Triggered by user click to avoid being blocked by popup blockers -->
+<button onclick="openFullWindow()">Open Standalone Window</button>
+
+<script>
+function openFullWindow() {
+  const url = "https://example.com";
+  const windowName = "_blank";
+  
+  // These "features" force the browser to open a new window instead of a tab
+  const features = "width=800,height=600,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes";
+  
+  window.open(url, windowName, features);
+}
+</script>
+
+
+</body>
+</html>
