@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Server Cost Calculator</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background: #111; color: #eee; }
+h1 { text-align: center; }
+label { display: block; margin-top: 10px; }
+input, select { margin-top: 5px; padding: 5px; width: 220px; }
+button { margin-top: 15px; padding: 10px 15px; background: #0078ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+button:hover { background: #005fcc; }
+.result { margin-top: 20px; padding: 15px; background: #222; border-radius: 8px; }
+</style>
+</head>
+<body>
+<h1>Server Cost Calculator</h1>
+
+<label>Cores (max 16):</label>
+<input type="number" id="cores" value="1" min="1" max="16">
+
+<label>RAM (GB, max 48):</label>
+<input type="number" id="ram" value="2" min="2" max="48">
+
+<label>Storage Type:</label>
+<select id="storageType">
+  <option value="0">HDD (max 4000 GB)</option>
+  <option value="1">SSD (max 2000 GB)</option>
+  <option value="2">NVMe (max 1000 GB)</option>
+</select>
+
+<label>Storage Amount (GB):</label>
+<input type="number" id="storage" value="8" min="8" max="4000">
+
+<label>Download Bandwidth (Mbps, max 500):</label>
+<input type="number" id="bandwidth" value="10" min="10" max="500">
+
+<label>Backup Frequency:</label>
+<select id="backup">
+  <option value="0">None</option>
+  <option value="1">Monthly</option>
+  <option value="2">Biweekly</option>
+  <option value="3">Weekly</option>
+  <option value="4">Daily</option>
+  <option value="5">Hourly</option>
+  <option value="6">Every 30 min</option>
+</select>
+
+<label>Number of backups to retain (max 14):</label>
+<input type="number" id="backupCount" value="1" min="1" max="14">
+
+<label>Extra Features:</label>
+<input type="checkbox" id="monitoringPanel"> Monitoring & Control Panel (+$2.5/mo)<br>
+
+<button onclick="calculate()">Calculate Cost</button>
+
+<div class="result" id="result"></div>
+
+<script>
+const BASE_COST = 4;
+const BASE_CORE_COST = 1;
+const BASE_RAM_COST = 1;
+const BASE_BANDWIDTH_COST = 0.05;
+const BASE_STORAGE_COST = 0.075;
+
+const BASE_BACKUP_COST = 80;
+const MAX_STORAGE = 4000;
+const CONTROL_PANEL_COST = 2.5;
+
+function calculate() {
+  let cores = parseInt(document.getElementById('cores').value);
+  let ram = parseInt(document.getElementById('ram').value);
+  let storage = parseInt(document.getElementById('storage').value);
+  let bandwidth = parseInt(document.getElementById('bandwidth').value);
+  let storageType = parseInt(document.getElementById('storageType').value);
+  let backupOption = parseInt(document.getElementById('backup').value);
+  let backupCount = parseInt(document.getElementById('backupCount').value);
+
+  // limits
+  cores = Math.min(Math.max(1, cores), 16);
+  ram = Math.min(Math.max(2, ram), 48);
+  bandwidth = Math.min(Math.max(10, bandwidth), 500);
+  backupCount = Math.min(Math.max(1, backupCount), 14);
+
+  if (storageType === 0) storage = Math.min(storage, 4000);
+  if (storageType === 1) storage = Math.min(storage, 2000);
+  if (storageType === 2) storage = Math.min(storage, 1000);
+  storage = Math.max(8, storage);
+
+  const upload = Math.floor(bandwidth / 2);
+
+  let storageCostMultiplier = 1;
+  if (storageType === 1) storageCostMultiplier = 2;
+  if (storageType === 2) storageCostMultiplier = 4;
+
+  let ramCost = ram * (BASE_RAM_COST * 1.025);
+  let coreCost = cores * (BASE_CORE_COST * 1.065);
+  let storageCost = (storage - 8) * (BASE_STORAGE_COST * 1.01) * storageCostMultiplier;
+  let bandwidthCost = bandwidth * (BASE_BANDWIDTH_COST * 1.025);
+
+  // FIXED backup logic (incremental, not exploding)
+  let backupCost = 0;
+  if (backupOption !== 0) {
+    let storageFactor = storage / MAX_STORAGE;
+    let increment = BASE_BACKUP_COST * storageFactor;
+
+    for (let i = 1; i <= backupCount; i++) {
+      backupCost += increment;
+
+      if (i < 4) {
+        increment *= 2.05;
+      } else {
+        increment *= 2.015;
+      }
+    }
+  }
+
+  let total = BASE_COST + ramCost + coreCost + storageCost + bandwidthCost + backupCost;
+
+  if (document.getElementById('monitoringPanel').checked) {
+    total += CONTROL_PANEL_COST;
+  }
+
+  total = Math.floor(total * 100) / 100;
+  backupCost = Math.floor(backupCost * 100) / 100;
+
+  let annualCost = Math.floor(total * 12 * 0.9 * 100) / 100;
+
+  const backupNames = ["None","Monthly","Biweekly","Weekly","Daily","Hourly","Every 30 min"];
+
+  document.getElementById('result').innerHTML = `
+    <strong>Total Monthly Cost:</strong> $${total}<br>
+    <strong>Total Annual Cost (10% discount):</strong> $${annualCost}<br>
+    Cores: ${cores}<br>
+    RAM: ${ram} GB<br>
+    Storage: ${storage} GB (${storageType === 0 ? "HDD" : storageType === 1 ? "SSD" : "NVMe"})<br>
+    Bandwidth: ${bandwidth} Mbps down / ${upload} Mbps up<br>
+    Backup Frequency: ${backupNames[backupOption]}<br>
+    Number of backups retained: ${backupCount}<br>
+    Backup Cost: $${backupCost}<br>
+    ${document.getElementById('monitoringPanel').checked ? "Includes monitoring & control panel ($2.5)<br>" : ""}
+  `;
+}
+</script>
+</body>
+</html>
