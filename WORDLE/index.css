@@ -8,7 +8,36 @@
 
 .guessLetter{
     border: 2px solid black;
-    margin: 10px 5px;
-    height: 40px;
-    width: 40px;
+    border-radius: 5px;
+    margin: 7px 7px;
+    height: 60px;
+    width: 60px;
+}
+
+.letterSection{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    width: 80%;
+}
+
+.letterRow{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 5px;
+}
+
+.letterButton{
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    min-width: 40px;
+    padding: 12px 12px;
+    margin: 5px;
+}
+
+.letterButton:hover{
+    background-color: gainsboro;
 }
