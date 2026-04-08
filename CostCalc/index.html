@@ -1,92 +1,606 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Server Cost Calculator</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Server Pricing Calculator</title>
 <style>
-body { font-family: Arial, sans-serif; margin: 20px; background: #111; color: #eee; }
-h1 { text-align: center; }
-label { display: block; margin-top: 10px; }
-input, select { margin-top: 5px; padding: 5px; width: 220px; }
-button { margin-top: 15px; padding: 10px 15px; background: #0078ff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-button:hover { background: #005fcc; }
-.result { margin-top: 20px; padding: 15px; background: #222; border-radius: 8px; }
+  :root {
+    --bg: #0b1020;
+    --panel: #121933;
+    --panel-2: #182142;
+    --text: #edf2ff;
+    --muted: #aab6d3;
+    --line: #2a3563;
+    --accent: #5ea0ff;
+    --accent-2: #7dc4ff;
+    --good: #42d392;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:
+      radial-gradient(circle at top, #15214a 0%, #0b1020 45%),
+      var(--bg);
+    color: var(--text);
+  }
+
+  .wrap {
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 28px 18px 40px;
+  }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 26px;
+  }
+
+  .hero h1 {
+    margin: 0 0 8px;
+    font-size: 2.2rem;
+  }
+
+  .hero p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 1rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 20px;
+  }
+
+  .panel {
+    background: rgba(18, 25, 51, 0.92);
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.28);
+  }
+
+  .panel h2 {
+    margin: 0 0 16px;
+    font-size: 1.15rem;
+  }
+
+  .section-title {
+    margin: 20px 0 10px;
+    font-size: 0.95rem;
+    color: var(--accent-2);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0,1fr));
+    gap: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 0.92rem;
+    margin-bottom: 6px;
+    color: var(--muted);
+  }
+
+  input[type="number"],
+  select,
+  input[type="range"] {
+    width: 100%;
+  }
+
+  input[type="number"],
+  select {
+    background: var(--panel-2);
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 10px 12px;
+    font-size: 0.96rem;
+  }
+
+  input[type="checkbox"] {
+    transform: scale(1.1);
+    margin-right: 8px;
+  }
+
+  .check-row {
+    display: flex;
+    align-items: center;
+    color: var(--text);
+    min-height: 42px;
+    padding: 10px 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+  }
+
+  .wide {
+    grid-column: 1 / -1;
+  }
+
+  .range-wrap {
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .range-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+    font-size: 0.94rem;
+  }
+
+  .range-value {
+    color: var(--good);
+    font-weight: bold;
+  }
+
+  input[type="range"] {
+    accent-color: var(--accent);
+  }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+    flex-wrap: wrap;
+  }
+
+  button {
+    border: none;
+    border-radius: 10px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-size: 0.96rem;
+    font-weight: bold;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #081224;
+  }
+
+  .btn-primary:hover {
+    background: #80b8ff;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--line);
+  }
+
+  .summary-card {
+    background: linear-gradient(180deg, rgba(94,160,255,0.16), rgba(125,196,255,0.06));
+    border: 1px solid #3656a3;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 16px;
+  }
+
+  .summary-card h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+  }
+
+  .price-main {
+    font-size: 2.4rem;
+    font-weight: bold;
+    margin: 4px 0;
+  }
+
+  .price-sub {
+    color: var(--muted);
+    font-size: 0.95rem;
+  }
+
+  .annual {
+    margin-top: 10px;
+    color: var(--good);
+    font-weight: bold;
+  }
+
+  .line-items {
+    display: grid;
+    gap: 8px;
+    margin-top: 12px;
+  }
+
+  .line-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 12px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    font-size: 0.94rem;
+  }
+
+  .line-item span:last-child {
+    font-weight: bold;
+  }
+
+  .detail-box {
+    margin-top: 16px;
+    padding: 14px;
+    background: var(--panel-2);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+  }
+
+  .detail-box h3 {
+    margin: 0 0 10px;
+    font-size: 1rem;
+  }
+
+  .detail-list {
+    display: grid;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.94rem;
+  }
+
+  .badge-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+  }
+
+  .badge {
+    background: #1d2a56;
+    border: 1px solid #314685;
+    color: #cfe0ff;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+  }
+
+  .preset-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .preset-btn {
+    background: #1a2550;
+    color: var(--text);
+    border: 1px solid var(--line);
+    padding: 8px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.88rem;
+  }
+
+  .preset-btn:hover {
+    border-color: var(--accent);
+  }
+
+  @media (max-width: 980px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .form-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .price-main {
+      font-size: 2rem;
+    }
+  }
 </style>
 </head>
 <body>
-<h1>Server Cost Calculator</h1>
+<div class="wrap">
+  <div class="hero">
+    <h1>Server Pricing Calculator</h1>
+    <p>Estimate cost, apply margin, and show a client-ready monthly and annual price.</p>
+  </div>
 
-<label>Cores (max 16):</label>
-<input type="number" id="cores" value="1" min="1" max="16">
+  <div class="grid">
+    <div class="panel">
+      <h2>Configuration</h2>
 
-<label>RAM (GB, max 48):</label>
-<input type="number" id="ram" value="2" min="2" max="48">
+      <div class="section-title">Presets</div>
+      <div class="preset-row">
+        <button class="preset-btn" type="button" onclick="applyPreset('budget')">Budget</button>
+        <button class="preset-btn" type="button" onclick="applyPreset('pro')">Pro</button>
+        <button class="preset-btn" type="button" onclick="applyPreset('enterprise')">Enterprise</button>
+      </div>
 
-<label>Storage Type:</label>
-<select id="storageType">
-  <option value="0">HDD (max 4000 GB)</option>
-  <option value="1">SSD (max 2000 GB)</option>
-  <option value="2">NVMe (max 1000 GB)</option>
-</select>
+      <div class="section-title">Resources</div>
+      <div class="form-grid">
+        <div>
+          <label for="cores">Cores</label>
+          <input type="number" id="cores" value="1" min="1" max="16">
+        </div>
 
-<label>Storage Amount (GB):</label>
-<input type="number" id="storage" value="8" min="8" max="4000">
+        <div>
+          <label for="ram">RAM (GB)</label>
+          <input type="number" id="ram" value="2" min="2" max="48">
+        </div>
 
-<label>Download Bandwidth (Mbps, max 500):</label>
-<input type="number" id="bandwidth" value="10" min="10" max="500">
+        <div>
+          <label for="storageType">Storage Type</label>
+          <select id="storageType">
+            <option value="0">HDD (max 4000 GB)</option>
+            <option value="1">SSD (max 2000 GB)</option>
+            <option value="2">NVMe (max 1000 GB)</option>
+          </select>
+        </div>
 
-<label>Backup Frequency:</label>
-<select id="backup">
-  <option value="0">None</option>
-  <option value="1">Monthly</option>
-  <option value="2">Biweekly</option>
-  <option value="3">Weekly</option>
-  <option value="4">Daily</option>
-  <option value="5">Hourly</option>
-  <option value="6">Every 30 min</option>
-</select>
+        <div>
+          <label for="storage">Storage Amount (GB)</label>
+          <input type="number" id="storage" value="8" min="8" max="4000">
+        </div>
 
-<label>Number of backups to retain (max 14):</label>
-<input type="number" id="backupCount" value="1" min="1" max="14">
+        <div class="wide">
+          <label for="bandwidth">Download Bandwidth (Mbps)</label>
+          <input type="number" id="bandwidth" value="10" min="10" max="500">
+        </div>
+      </div>
 
-<label>Extra Features:</label>
-<input type="checkbox" id="monitoringPanel"> Monitoring & Control Panel (+$2.5/mo)<br>
+      <div class="section-title">Backups</div>
+      <div class="form-grid">
+        <div>
+          <label for="backup">Backup Frequency</label>
+          <select id="backup">
+            <option value="0">None</option>
+            <option value="1">Monthly</option>
+            <option value="2">Biweekly</option>
+            <option value="3">Weekly</option>
+            <option value="4">Daily</option>
+            <option value="5">Hourly</option>
+            <option value="6">Every 30 min</option>
+          </select>
+        </div>
 
-<button onclick="calculate()">Calculate Cost</button>
+        <div>
+          <label for="backupCount">Retained Backups</label>
+          <input type="number" id="backupCount" value="1" min="1" max="14">
+        </div>
+      </div>
 
-<div class="result" id="result"></div>
+      <div class="section-title">Extras</div>
+      <div class="form-grid">
+        <div class="wide">
+          <label>Feature</label>
+          <div class="check-row">
+            <input type="checkbox" id="monitoringPanel">
+            <span>Monitoring & Control Panel (+$2.50/mo)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Margin Controls</div>
+      <div class="form-grid">
+        <div class="wide">
+          <div class="range-wrap">
+            <div class="range-top">
+              <span>Profit Margin</span>
+              <span class="range-value" id="profitMarginValue">25%</span>
+            </div>
+            <input type="range" id="profitMargin" min="0" max="100" step="1" value="25">
+          </div>
+        </div>
+
+        <div class="wide">
+          <div class="range-wrap">
+            <div class="range-top">
+              <span>Annual Discount</span>
+              <span class="range-value" id="annualDiscountValue">10%</span>
+            </div>
+            <input type="range" id="annualDiscount" min="0" max="30" step="1" value="10">
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" type="button" onclick="calculate()">Calculate Price</button>
+        <button class="btn-secondary" type="button" onclick="resetCalculator()">Reset</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <h2>Price Summary</h2>
+
+      <div class="summary-card">
+        <h3>Client Price</h3>
+        <div class="price-main" id="monthlyPrice">$0.00/mo</div>
+        <div class="price-sub" id="monthlyBase">Base cost before margin: $0.00/mo</div>
+        <div class="annual" id="annualPrice">$0.00/year with annual billing</div>
+
+        <div class="badge-row" id="summaryBadges">
+          <div class="badge">0 cores</div>
+          <div class="badge">0 GB RAM</div>
+          <div class="badge">0 GB storage</div>
+        </div>
+      </div>
+
+      <div class="line-items">
+        <div class="line-item"><span>Base platform</span><span id="liBase">$0.00</span></div>
+        <div class="line-item"><span>CPU</span><span id="liCpu">$0.00</span></div>
+        <div class="line-item"><span>RAM</span><span id="liRam">$0.00</span></div>
+        <div class="line-item"><span>Storage</span><span id="liStorage">$0.00</span></div>
+        <div class="line-item"><span>Bandwidth</span><span id="liBandwidth">$0.00</span></div>
+        <div class="line-item"><span>Backups</span><span id="liBackup">$0.00</span></div>
+        <div class="line-item"><span>Monitoring & panel</span><span id="liPanel">$0.00</span></div>
+        <div class="line-item"><span>Raw monthly cost</span><span id="liRaw">$0.00</span></div>
+        <div class="line-item"><span>Margin added</span><span id="liMargin">$0.00</span></div>
+        <div class="line-item"><span>Final monthly price</span><span id="liFinal">$0.00</span></div>
+      </div>
+
+      <div class="detail-box">
+        <h3>Details</h3>
+        <div class="detail-list" id="details">
+          <div>Download / upload: 0 / 0 Mbps</div>
+          <div>Backup frequency: None</div>
+          <div>Retained backups: 0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
-const BASE_COST = 4;
-const BASE_CORE_COST = 1;
-const BASE_RAM_COST = 1;
-const BASE_BANDWIDTH_COST = 0.05;
-const BASE_STORAGE_COST = 0.075;
+const BASE_COST = 5;
+const BASE_CORE_COST = 4;
+const BASE_RAM_COST = 2.5;
+const BASE_BANDWIDTH_COST = 0.08;
+const BASE_STORAGE_COST = 0.09;
 
-const BASE_BACKUP_COST = 80;
+const BASE_BACKUP_COST = 20;
 const MAX_STORAGE = 4000;
 const CONTROL_PANEL_COST = 2.5;
 
+const ids = {
+  cores: document.getElementById('cores'),
+  ram: document.getElementById('ram'),
+  storageType: document.getElementById('storageType'),
+  storage: document.getElementById('storage'),
+  bandwidth: document.getElementById('bandwidth'),
+  backup: document.getElementById('backup'),
+  backupCount: document.getElementById('backupCount'),
+  monitoringPanel: document.getElementById('monitoringPanel'),
+  profitMargin: document.getElementById('profitMargin'),
+  annualDiscount: document.getElementById('annualDiscount'),
+  profitMarginValue: document.getElementById('profitMarginValue'),
+  annualDiscountValue: document.getElementById('annualDiscountValue'),
+  monthlyPrice: document.getElementById('monthlyPrice'),
+  monthlyBase: document.getElementById('monthlyBase'),
+  annualPrice: document.getElementById('annualPrice'),
+  summaryBadges: document.getElementById('summaryBadges'),
+  liBase: document.getElementById('liBase'),
+  liCpu: document.getElementById('liCpu'),
+  liRam: document.getElementById('liRam'),
+  liStorage: document.getElementById('liStorage'),
+  liBandwidth: document.getElementById('liBandwidth'),
+  liBackup: document.getElementById('liBackup'),
+  liPanel: document.getElementById('liPanel'),
+  liRaw: document.getElementById('liRaw'),
+  liMargin: document.getElementById('liMargin'),
+  liFinal: document.getElementById('liFinal'),
+  details: document.getElementById('details')
+};
+
+function money(n) {
+  return '$' + (Math.floor(n * 100) / 100).toFixed(2);
+}
+
+function clamp(n, min, max) {
+  return Math.min(Math.max(n, min), max);
+}
+
+function updateStorageMax() {
+  const type = parseInt(ids.storageType.value, 10);
+  let max = 4000;
+  if (type === 1) max = 2000;
+  if (type === 2) max = 1000;
+  ids.storage.max = max;
+  ids.storage.value = clamp(parseInt(ids.storage.value || '8', 10), 8, max);
+}
+
+function applyPreset(name) {
+  if (name === 'budget') {
+    ids.cores.value = 2;
+    ids.ram.value = 4;
+    ids.storageType.value = '0';
+    ids.storage.value = 120;
+    ids.bandwidth.value = 50;
+    ids.backup.value = '1';
+    ids.backupCount.value = 2;
+    ids.monitoringPanel.checked = false;
+    ids.profitMargin.value = 20;
+    ids.annualDiscount.value = 10;
+  }
+
+  if (name === 'pro') {
+    ids.cores.value = 4;
+    ids.ram.value = 8;
+    ids.storageType.value = '1';
+    ids.storage.value = 250;
+    ids.bandwidth.value = 150;
+    ids.backup.value = '3';
+    ids.backupCount.value = 3;
+    ids.monitoringPanel.checked = true;
+    ids.profitMargin.value = 30;
+    ids.annualDiscount.value = 10;
+  }
+
+  if (name === 'enterprise') {
+    ids.cores.value = 8;
+    ids.ram.value = 16;
+    ids.storageType.value = '2';
+    ids.storage.value = 500;
+    ids.bandwidth.value = 300;
+    ids.backup.value = '4';
+    ids.backupCount.value = 4;
+    ids.monitoringPanel.checked = true;
+    ids.profitMargin.value = 40;
+    ids.annualDiscount.value = 12;
+  }
+
+  updateStorageMax();
+  syncRanges();
+  calculate();
+}
+
+function syncRanges() {
+  ids.profitMarginValue.textContent = ids.profitMargin.value + '%';
+  ids.annualDiscountValue.textContent = ids.annualDiscount.value + '%';
+}
+
+function resetCalculator() {
+  ids.cores.value = 1;
+  ids.ram.value = 2;
+  ids.storageType.value = '0';
+  ids.storage.value = 8;
+  ids.bandwidth.value = 10;
+  ids.backup.value = '0';
+  ids.backupCount.value = 1;
+  ids.monitoringPanel.checked = false;
+  ids.profitMargin.value = 25;
+  ids.annualDiscount.value = 10;
+  updateStorageMax();
+  syncRanges();
+  calculate();
+}
+
 function calculate() {
-  let cores = parseInt(document.getElementById('cores').value);
-  let ram = parseInt(document.getElementById('ram').value);
-  let storage = parseInt(document.getElementById('storage').value);
-  let bandwidth = parseInt(document.getElementById('bandwidth').value);
-  let storageType = parseInt(document.getElementById('storageType').value);
-  let backupOption = parseInt(document.getElementById('backup').value);
-  let backupCount = parseInt(document.getElementById('backupCount').value);
+  let cores = clamp(parseInt(ids.cores.value || '1', 10), 1, 16);
+  let ram = clamp(parseInt(ids.ram.value || '2', 10), 2, 48);
+  let storageType = parseInt(ids.storageType.value, 10);
+  let storage = parseInt(ids.storage.value || '8', 10);
+  let bandwidth = clamp(parseInt(ids.bandwidth.value || '10', 10), 10, 500);
+  let backupOption = parseInt(ids.backup.value, 10);
+  let backupCount = clamp(parseInt(ids.backupCount.value || '1', 10), 1, 14);
+  let profitMarginPct = clamp(parseInt(ids.profitMargin.value || '25', 10), 0, 100);
+  let annualDiscountPct = clamp(parseInt(ids.annualDiscount.value || '10', 10), 0, 30);
 
-  // limits
-  cores = Math.min(Math.max(1, cores), 16);
-  ram = Math.min(Math.max(2, ram), 48);
-  bandwidth = Math.min(Math.max(10, bandwidth), 500);
-  backupCount = Math.min(Math.max(1, backupCount), 14);
+  if (storageType === 0) storage = clamp(storage, 8, 4000);
+  if (storageType === 1) storage = clamp(storage, 8, 2000);
+  if (storageType === 2) storage = clamp(storage, 8, 1000);
 
-  if (storageType === 0) storage = Math.min(storage, 4000);
-  if (storageType === 1) storage = Math.min(storage, 2000);
-  if (storageType === 2) storage = Math.min(storage, 1000);
-  storage = Math.max(8, storage);
+  ids.cores.value = cores;
+  ids.ram.value = ram;
+  ids.storage.value = storage;
+  ids.bandwidth.value = bandwidth;
+  ids.backupCount.value = backupCount;
 
   const upload = Math.floor(bandwidth / 2);
 
@@ -94,20 +608,19 @@ function calculate() {
   if (storageType === 1) storageCostMultiplier = 2;
   if (storageType === 2) storageCostMultiplier = 4;
 
-  let ramCost = ram * (BASE_RAM_COST * 1.025);
-  let coreCost = cores * (BASE_CORE_COST * 1.065);
-  let storageCost = (storage - 8) * (BASE_STORAGE_COST * 1.01) * storageCostMultiplier;
-  let bandwidthCost = bandwidth * (BASE_BANDWIDTH_COST * 1.025);
+  const baseCost = BASE_COST;
+  const cpuCost = cores * BASE_CORE_COST;
+  const ramCost = ram * BASE_RAM_COST;
+  const storageCost = (storage - 8) * BASE_STORAGE_COST * storageCostMultiplier;
+  const bandwidthCost = bandwidth * BASE_BANDWIDTH_COST;
+  const panelCost = ids.monitoringPanel.checked ? CONTROL_PANEL_COST : 0;
 
-  // FIXED backup logic (incremental, not exploding)
   let backupCost = 0;
   if (backupOption !== 0) {
-    let storageFactor = storage / MAX_STORAGE;
-    let increment = BASE_BACKUP_COST * storageFactor;
-
+    const storageTB = storage / 1000;
+    let increment = BASE_BACKUP_COST * storageTB;
     for (let i = 1; i <= backupCount; i++) {
       backupCost += increment;
-
       if (i < 4) {
         increment *= 2.05;
       } else {
@@ -116,32 +629,76 @@ function calculate() {
     }
   }
 
-  let total = BASE_COST + ramCost + coreCost + storageCost + bandwidthCost + backupCost;
+  const rawMonthly = baseCost + cpuCost + ramCost + storageCost + bandwidthCost + backupCost + panelCost;
+  const marginAmount = rawMonthly * (profitMarginPct / 100);
+  const finalMonthly = rawMonthly + marginAmount;
+  const annualPrice = finalMonthly * 12 * (1 - annualDiscountPct / 100);
 
-  if (document.getElementById('monitoringPanel').checked) {
-    total += CONTROL_PANEL_COST;
-  }
+  const storageName = storageType === 0 ? 'HDD' : storageType === 1 ? 'SSD' : 'NVMe';
+  const backupNames = ['None', 'Monthly', 'Biweekly', 'Weekly', 'Daily', 'Hourly', 'Every 30 min'];
 
-  total = Math.floor(total * 100) / 100;
-  backupCost = Math.floor(backupCost * 100) / 100;
+  ids.monthlyPrice.textContent = money(finalMonthly) + '/mo';
+  ids.monthlyBase.textContent = 'Base cost before margin: ' + money(rawMonthly) + '/mo';
+  ids.annualPrice.textContent = money(annualPrice) + '/year with annual billing';
 
-  let annualCost = Math.floor(total * 12 * 0.9 * 100) / 100;
+  ids.liBase.textContent = money(baseCost);
+  ids.liCpu.textContent = money(cpuCost);
+  ids.liRam.textContent = money(ramCost);
+  ids.liStorage.textContent = money(storageCost);
+  ids.liBandwidth.textContent = money(bandwidthCost);
+  ids.liBackup.textContent = money(backupCost);
+  ids.liPanel.textContent = money(panelCost);
+  ids.liRaw.textContent = money(rawMonthly);
+  ids.liMargin.textContent = money(marginAmount);
+  ids.liFinal.textContent = money(finalMonthly);
 
-  const backupNames = ["None","Monthly","Biweekly","Weekly","Daily","Hourly","Every 30 min"];
+  ids.summaryBadges.innerHTML = `
+    <div class="badge">${cores} cores</div>
+    <div class="badge">${ram} GB RAM</div>
+    <div class="badge">${storage} GB ${storageName}</div>
+    <div class="badge">${bandwidth}/${upload} Mbps</div>
+  `;
 
-  document.getElementById('result').innerHTML = `
-    <strong>Total Monthly Cost:</strong> $${total}<br>
-    <strong>Total Annual Cost (10% discount):</strong> $${annualCost}<br>
-    Cores: ${cores}<br>
-    RAM: ${ram} GB<br>
-    Storage: ${storage} GB (${storageType === 0 ? "HDD" : storageType === 1 ? "SSD" : "NVMe"})<br>
-    Bandwidth: ${bandwidth} Mbps down / ${upload} Mbps up<br>
-    Backup Frequency: ${backupNames[backupOption]}<br>
-    Number of backups retained: ${backupCount}<br>
-    Backup Cost: $${backupCost}<br>
-    ${document.getElementById('monitoringPanel').checked ? "Includes monitoring & control panel ($2.5)<br>" : ""}
+  ids.details.innerHTML = `
+    <div>Download / upload: ${bandwidth} / ${upload} Mbps</div>
+    <div>Backup frequency: ${backupNames[backupOption]}</div>
+    <div>Retained backups: ${backupOption === 0 ? 0 : backupCount}</div>
+    <div>Profit margin: ${profitMarginPct}%</div>
+    <div>Annual discount: ${annualDiscountPct}%</div>
   `;
 }
+
+ids.storageType.addEventListener('change', () => {
+  updateStorageMax();
+  calculate();
+});
+
+ids.profitMargin.addEventListener('input', () => {
+  syncRanges();
+  calculate();
+});
+
+ids.annualDiscount.addEventListener('input', () => {
+  syncRanges();
+  calculate();
+});
+
+[
+  ids.cores,
+  ids.ram,
+  ids.storage,
+  ids.bandwidth,
+  ids.backup,
+  ids.backupCount,
+  ids.monitoringPanel
+].forEach(el => {
+  el.addEventListener('input', calculate);
+  el.addEventListener('change', calculate);
+});
+
+updateStorageMax();
+syncRanges();
+calculate();
 </script>
 </body>
 </html>
