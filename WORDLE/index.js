@@ -26,37 +26,69 @@ function letterClicked(letter){
 }
 
 function deleteClicked(){
-  if(currentGuess.length > 0){
+  if(currentGuess.length > 0){``
     currentGuess.pop();
     updateHint();
   }
 }
 
-function submitGuess() {
-  if (currentGuess.length !== 5) return;
+function submitGuess(){
 
-  let currentGuessString = currentGuess.join("").toLowerCase();
-  let solution = wordleWord.toLowerCase();
-
-  if (!guessWords.includes(currentGuessString) && !solutionWords.includes(currentGuessString)) {
-      alert("Not in word list");
-      return;
+  if(currentGuess.length != 5){
+    return;
   }
 
-  for (let i = 0; i < 5; i++) {
-      let letterElement = document.getElementById(`guess${guessNumber}letter${i + 1}`);
-
-      if (char === solution[i]) {
-          letterElement.style.backgroundColor = "green";
-      } else if (solution.includes(currentGuessString[i])) {
-          letterElement.style.backgroundColor = "yellow";
-      } else {
-          letterElement.style.backgroundColor = "gray";
-      }
+  let currentGuessString = "";
+  for(let i = 0; i < currentGuess.length; i++){
+    currentGuessString = currentGuessString + currentGuess[i];
+  }
+  currentGuessString = currentGuessString.toLowerCase();
+  if(guessWords.includes(currentGuessString) != true){
+    return;
   }
 
+  for(let i = 0; i < currentGuessString.length; i++){
+    let found = "none";
+    if(currentGuessString[i] == wordleWord[i]){
+      document.getElementById(`guess${guessNumber}letter${i + 1}`).style.backgroundColor = "green";
+      document.getElementById(`guess${guessNumber}letter${i + 1}`).style.color = "white";
+      found = "green";
+    }
+
+    else if(wordleWord.includes(currentGuessString[i])){
+      document.getElementById(`guess${guessNumber}letter${i + 1}`).style.backgroundColor = "yellow";
+      found = "yellow";
+    }
+
+    else{
+     document.getElementById(`guess${guessNumber}letter${i + 1}`).style.backgroundColor = "gainsboro";
+    }
+
+    if(found == "green"){
+      document.getElementById(currentGuessString[i].toUpperCase()).style.backgroundColor = "green";
+      document.getElementById(currentGuessString[i].toUpperCase()).style.color = "white";
+    }
+
+    else if(found == "yellow"){
+      document.getElementById(currentGuessString[i].toUpperCase()).style.backgroundColor = "yellow";
+    }
+
+    else{
+      document.getElementById(currentGuessString[i].toUpperCase()).style.backgroundColor = "gainsboro";
+    }
+  }
   currentGuess = [];
   guessNumber++;
+  
+  if (currentGuessString === wordleWord) {
+    gameEnd();
+    return;
+  }
+
+  if(guessNumber == 7){
+    gameEnd();
+    return;
+  }
 }
 
 function updateHint(){
@@ -68,6 +100,39 @@ function updateHint(){
     document.getElementById(`guess${guessNumber}letter${i + 1}`).textContent = currentGuess[i];
   }
 }
+
+function gameEnd(){
+  document.getElementById("solution").textContent = wordleWord;
+  document.getElementById("solution").style.display = "block"
+  document.getElementById("resetButton").style.display = "block"
+}
+
+let letterList = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+
+function resetGame() {
+  wordleWord = solutionWords[Math.floor(Math.random() * solutionWords.length)];
+  
+  letterList.forEach(letter => {
+      let btn = document.getElementById(letter);
+      btn.style.backgroundColor = "";
+      btn.style.color = "black";
+  });
+
+  for(let i = 1; i <= 6; i++){
+    for(let j = 1; j <= 5; j++){
+      let cell = document.getElementById(`guess${i}letter${j}`);
+      cell.style.backgroundColor = "white";
+      cell.style.color = "black";
+      cell.textContent = "";
+    }
+  }
+
+  document.getElementById("solution").style.display = "none";
+  document.getElementById("resetButton").style.display = "none";
+  guessNumber = 1;
+  currentGuess = [];
+}
+
 
 document.addEventListener('keydown', (event) => {
   const key = event.key;

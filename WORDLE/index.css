@@ -6,13 +6,17 @@
     margin: auto;
 }
 
-.guessLetter{
+.guessLetter {
     border: 2px solid black;
     border-radius: 5px;
-    margin: 7px 7px;
+    margin: 7px;
     height: 60px;
     width: 60px;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
 
 .letterSection{
     display: flex;
@@ -40,4 +44,19 @@
 
 .letterButton:hover{
     background-color: gainsboro;
+}
+
+.solution{
+    margin: 10px auto;
+    text-align: center;
+    font-size: 24pt;
+    display: none;
+}
+
+.resetButton{
+    margin: 10px auto;
+    border: 2px black solid;
+    border-radius: 5px;
+    padding: 10px;
+    display: none;
 }
