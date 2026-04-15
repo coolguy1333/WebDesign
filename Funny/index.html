@@ -1,24 +1,881 @@
-<!DOCTYPE html>
-<html>
+﻿<!DOCTYPE html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Repeatedly Opening Windows</title>
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #000000;
+  font-family: "Times New Roman", Times, serif;
+  overflow: hidden;
+}
+
+body.popup-flash-dark {
+  background: #000000;
+  color: #ffffff;
+}
+
+#hud {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 10;
+  max-width: min(500px, calc(100vw - 24px));
+  padding: 0.7rem 0.8rem;
+  border: 2px solid currentColor;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(2px);
+}
+
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-bottom: 0.5rem;
+}
+
+#controls button {
+  border: 2px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+}
+
+.ms-setting {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.92rem;
+}
+
+.ms-setting input {
+  width: 5.5rem;
+  border: 2px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 0.25rem 0.35rem;
+}
+
+#status {
+  margin: 0 0 0.25rem;
+  font-size: 0.94rem;
+}
+
+.instructions {
+  margin: 0.1rem 0;
+  font-size: 0.85rem;
+  line-height: 1.25;
+}
+
+#scene {
+  width: min(1120px, 94vw);
+  text-align: center;
+}
+
+#headline {
+  margin: 0 0 clamp(2rem, 8vh, 4.6rem);
+  font-size: clamp(3.1rem, 10vw, 8.6rem);
+  font-weight: 400;
+  line-height: 0.98;
+}
+
+#faces {
+  display: flex;
+  justify-content: space-between;
+  gap: clamp(0.8rem, 3vw, 2.2rem);
+}
+
+.face {
+  width: clamp(140px, 18vw, 200px);
+  height: auto;
+}
+
+.face .ring,
+.face .smile {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+.face .eye {
+  fill: currentColor;
+}
+
+body.popup-mode #hud {
+  display: none;
+}
+
+@media (max-width: 800px) {
+  #scene {
+    width: min(720px, 96vw);
+  }
+
+  #headline {
+    margin-bottom: 1.4rem;
+  }
+
+  #faces {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+}
+</style>
 </head>
 <body>
 
-<button onclick="startOpeningWindows()">Start Opening Windows</button>
-<p>Click the button to start the process. Be aware that modern browsers may block pop-ups, so you might need to allow them for this page.</p>
-<!-- Triggered by user click to avoid being blocked by popup blockers -->
-<button onclick="openFullWindow()">Open Standalone Window</button>
+<div id="hud">
+  <div id="controls">
+    <button onclick="startOpeningWindows()">Start Opening Windows</button>
+    <button onclick="stopOpeningWindows()">Stop Opening Windows</button>
+    <button onclick="openFullWindow()">Open Standalone Window</button>
+    <label class="ms-setting" for="repeatMsInput">
+      Repeat ms
+      <input id="repeatMsInput" type="number" min="50" step="10" value="1000">
+    </label>
+    <label class="ms-setting" for="moveMsInput">
+      Move ms
+      <input id="moveMsInput" type="number" min="50" step="10" value="350">
+    </label>
+  </div>
+  <p id="status">Idle.</p>
+  <p class="instructions">Press Enter in any window to stop and close all popups.</p>
+  <p class="instructions">If one popup is closed while running, two replacements open.</p>
+</div>
+
+<main id="scene" aria-hidden="true">
+  <h1 id="headline">you are an idiot</h1>
+  <div id="faces">
+    <svg class="face" viewBox="0 0 220 220" role="img" aria-label="smiley face">
+      <circle class="ring" cx="110" cy="110" r="86"></circle>
+      <circle class="eye" cx="85" cy="83" r="11"></circle>
+      <circle class="eye" cx="135" cy="83" r="11"></circle>
+      <path class="smile" d="M58 130c13 22 34 33 52 33s39-11 52-33"></path>
+    </svg>
+    <svg class="face" viewBox="0 0 220 220" role="img" aria-label="smiley face">
+      <circle class="ring" cx="110" cy="110" r="86"></circle>
+      <circle class="eye" cx="85" cy="83" r="11"></circle>
+      <circle class="eye" cx="135" cy="83" r="11"></circle>
+      <path class="smile" d="M58 130c13 22 34 33 52 33s39-11 52-33"></path>
+    </svg>
+    <svg class="face" viewBox="0 0 220 220" role="img" aria-label="smiley face">
+      <circle class="ring" cx="110" cy="110" r="86"></circle>
+      <circle class="eye" cx="85" cy="83" r="11"></circle>
+      <circle class="eye" cx="135" cy="83" r="11"></circle>
+      <path class="smile" d="M58 130c13 22 34 33 52 33s39-11 52-33"></path>
+    </svg>
+  </div>
+</main>
 
 <script>
+const popupWindowWidth = 500;
+const popupWindowHeight = 350;
+const popupFeatures = `width=${popupWindowWidth},height=${popupWindowHeight},menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes`;
+const stopChannelName = "popup-stop-channel-v1";
+const stopStorageKey = "popup-stop-signal-v1";
+const popupQueryKey = "popup";
+const popupQueryValue = "1";
+const popupFlashIntervalMs = 250;
+const runtimeStateKey = "popup-runtime-state-v2";
+const leaderStateKey = "popup-runtime-leader-v2";
+const defaultRepeatMs = 1000;
+const defaultMoveMs = 500;
+const leaderHeartbeatMs = 500;
+const leaderTimeoutMs = 1000;
+
+let openTimer = null;
+let openLoopMs = null;
+let popupFlashTimer = null;
+let popupFlashDark = false;
+let moveSelfTimer = null;
+let moveSelfLoopMs = null;
+let leadershipTimer = null;
+let popupCounter = 0;
+let isStopping = false;
+let repeatIntervalMs = defaultRepeatMs;
+let moveIntervalMs = defaultMoveMs;
+let suppressInputSyncUntil = 0;
+
+const windowInstanceId = `win-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+const managedWindows = new Map();
+const statusEl = document.getElementById("status");
+const repeatMsInput = document.getElementById("repeatMsInput");
+const moveMsInput = document.getElementById("moveMsInput");
+const search = new URLSearchParams(window.location.search);
+const isPopupWindow = search.get(popupQueryKey) === popupQueryValue;
+const channel = typeof BroadcastChannel !== "undefined"
+  ? new BroadcastChannel(stopChannelName)
+  : null;
+
+function clampMs(value, fallbackMs) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) {
+    return fallbackMs;
+  }
+
+  return Math.max(1, parsed);
+}
+
+function clampCount(value) {
+  const parsed = Number.parseInt(value, 10);
+  if (!Number.isFinite(parsed)) {
+    return 0;
+  }
+
+  return Math.max(0, parsed);
+}
+
+function safeSetLocalStorage(key, value) {
+  try {
+    localStorage.setItem(key, value);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
+function safeGetLocalStorage(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+function safeRemoveLocalStorage(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    // Ignore storage limitations.
+  }
+}
+
+function getPopupUrl() {
+  const nextUrl = new URL(window.location.href);
+  nextUrl.searchParams.set(popupQueryKey, popupQueryValue);
+  return nextUrl.toString();
+}
+
+function updateStatus(message) {
+  statusEl.textContent = `${message} Open popups tracked: ${managedWindows.size}`;
+}
+
+function markInputEditing() {
+  suppressInputSyncUntil = Date.now() + 2000;
+}
+
+function isMsInputFocused() {
+  return document.activeElement === repeatMsInput || document.activeElement === moveMsInput;
+}
+
+function isEnterEvent(event) {
+  return event.key === "Enter" || event.code === "Enter" || event.code === "NumpadEnter" || event.keyCode === 13;
+}
+
+function readRuntimeState() {
+  const fallback = {
+    running: false,
+    repeatMs: defaultRepeatMs,
+    moveMs: defaultMoveMs,
+    pendingClosed: 0,
+    updatedAt: 0
+  };
+  const raw = safeGetLocalStorage(runtimeStateKey);
+  if (!raw) {
+    return fallback;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    return {
+      running: Boolean(parsed.running),
+      repeatMs: clampMs(parsed.repeatMs, defaultRepeatMs),
+      moveMs: clampMs(parsed.moveMs, defaultMoveMs),
+      pendingClosed: clampCount(parsed.pendingClosed),
+      updatedAt: Number.isFinite(parsed.updatedAt) ? parsed.updatedAt : 0
+    };
+  } catch (error) {
+    return fallback;
+  }
+}
+
+function writeRuntimeState(patch) {
+  const current = readRuntimeState();
+  const next = {
+    running: patch.running === undefined ? current.running : Boolean(patch.running),
+    repeatMs: patch.repeatMs === undefined ? current.repeatMs : clampMs(patch.repeatMs, defaultRepeatMs),
+    moveMs: patch.moveMs === undefined ? current.moveMs : clampMs(patch.moveMs, defaultMoveMs),
+    pendingClosed: patch.pendingClosed === undefined ? current.pendingClosed : clampCount(patch.pendingClosed),
+    updatedAt: Date.now()
+  };
+
+  safeSetLocalStorage(runtimeStateKey, JSON.stringify(next));
+  repeatIntervalMs = next.repeatMs;
+  moveIntervalMs = next.moveMs;
+  return next;
+}
+
+function readLeaderState() {
+  const raw = safeGetLocalStorage(leaderStateKey);
+  if (!raw) {
+    return null;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.id !== "string") {
+      return null;
+    }
+
+    return {
+      id: parsed.id,
+      ts: Number.isFinite(parsed.ts) ? parsed.ts : 0
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+function writeLeaderState() {
+  const leader = {
+    id: windowInstanceId,
+    ts: Date.now()
+  };
+  safeSetLocalStorage(leaderStateKey, JSON.stringify(leader));
+  return leader;
+}
+
+function clearLeaderIfOwned() {
+  const leader = readLeaderState();
+  if (leader && leader.id === windowInstanceId) {
+    safeRemoveLocalStorage(leaderStateKey);
+  }
+}
+
+function isCurrentLeader() {
+  const leader = readLeaderState();
+  if (!leader || leader.id !== windowInstanceId) {
+    return false;
+  }
+
+  return Date.now() - leader.ts <= leaderTimeoutMs;
+}
+
+function syncInputsWithRuntime(state) {
+  if (!repeatMsInput || !moveMsInput || isPopupWindow) {
+    return;
+  }
+
+  if (Date.now() < suppressInputSyncUntil) {
+    return;
+  }
+
+  if (document.activeElement !== repeatMsInput) {
+    repeatMsInput.value = String(state.repeatMs);
+  }
+
+  if (document.activeElement !== moveMsInput) {
+    moveMsInput.value = String(state.moveMs);
+  }
+}
+
+function getRepeatIntervalMs() {
+  if (!repeatMsInput) {
+    return defaultRepeatMs;
+  }
+
+  const clampedValue = clampMs(repeatMsInput.value, defaultRepeatMs);
+  repeatMsInput.value = String(clampedValue);
+  return clampedValue;
+}
+
+function getMoveIntervalMs() {
+  if (!moveMsInput) {
+    return defaultMoveMs;
+  }
+
+  const clampedValue = clampMs(moveMsInput.value, defaultMoveMs);
+  moveMsInput.value = String(clampedValue);
+  return clampedValue;
+}
+
+function getRandomPopupPosition() {
+  const screenWidth = window.screen && Number.isFinite(window.screen.availWidth)
+    ? window.screen.availWidth
+    : window.innerWidth;
+  const screenHeight = window.screen && Number.isFinite(window.screen.availHeight)
+    ? window.screen.availHeight
+    : window.innerHeight;
+  const maxX = Math.max(0, screenWidth - popupWindowWidth);
+  const maxY = Math.max(0, screenHeight - popupWindowHeight);
+
+  return {
+    x: Math.floor(Math.random() * (maxX + 1)),
+    y: Math.floor(Math.random() * (maxY + 1))
+  };
+}
+
+function enforcePopupSize(targetWindow) {
+  if (!targetWindow || targetWindow.closed) {
+    return;
+  }
+
+  try {
+    targetWindow.resizeTo(popupWindowWidth, popupWindowHeight);
+  } catch (error) {
+    // Some browsers block resizeTo in certain situations.
+  }
+}
+
+function moveSelfRandomly() {
+  if (!isPopupWindow || isStopping) {
+    return;
+  }
+
+  const runtime = readRuntimeState();
+  if (!runtime.running) {
+    return;
+  }
+
+  try {
+    enforcePopupSize(window);
+    const position = getRandomPopupPosition();
+    window.moveTo(position.x, position.y);
+  } catch (error) {
+    // Some browsers block moveTo in certain situations.
+  }
+}
+
+function stopSelfMoveLoop() {
+  if (moveSelfTimer) {
+    clearInterval(moveSelfTimer);
+    moveSelfTimer = null;
+  }
+  moveSelfLoopMs = null;
+}
+
+function refreshSelfMoveLoop() {
+  if (!isPopupWindow) {
+    return;
+  }
+
+  const runtime = readRuntimeState();
+  if (isStopping || !runtime.running) {
+    stopSelfMoveLoop();
+    return;
+  }
+
+  const targetMs = clampMs(runtime.moveMs, defaultMoveMs);
+  if (moveSelfTimer && moveSelfLoopMs === targetMs) {
+    return;
+  }
+
+  stopSelfMoveLoop();
+  moveSelfLoopMs = targetMs;
+  moveSelfTimer = setInterval(() => {
+    moveSelfRandomly();
+  }, moveSelfLoopMs);
+  moveSelfRandomly();
+}
+
+function stopOpenLoop() {
+  if (openTimer) {
+    clearTimeout(openTimer);
+    openTimer = null;
+  }
+  openLoopMs = null;
+}
+
+function openPopupWindow() {
+  if (isStopping) {
+    return null;
+  }
+
+  const popup = window.open(getPopupUrl(), "_blank", popupFeatures);
+  if (!popup) {
+    updateStatus("Pop-up blocked. Allow pop-ups for this page and try again.");
+    return null;
+  }
+
+  enforcePopupSize(popup);
+  window.setTimeout(() => enforcePopupSize(popup), 35);
+  window.setTimeout(() => enforcePopupSize(popup), 150);
+
+  popupCounter += 1;
+  managedWindows.set(popupCounter, popup);
+  return popup;
+}
+
+function openManagedWindow() {
+  return Boolean(openPopupWindow());
+}
+
+function queueClosedPopupReplacement() {
+  const runtime = readRuntimeState();
+  if (!runtime.running) {
+    return;
+  }
+
+  writeRuntimeState({
+    pendingClosed: runtime.pendingClosed + 1
+  });
+}
+
+function processPendingClosedPopups(runtimeSnapshot) {
+  const pendingClosed = clampCount(runtimeSnapshot.pendingClosed);
+  if (pendingClosed < 1) {
+    return;
+  }
+
+  const replacements = pendingClosed * 2;
+  for (let i = 0; i < replacements; i += 1) {
+    openPopupWindow();
+  }
+
+  writeRuntimeState({ pendingClosed: 0 });
+}
+
+function scheduleOpenTick() {
+  if (isStopping || !isCurrentLeader()) {
+    return;
+  }
+
+  openTimer = window.setTimeout(() => {
+    openTimer = null;
+    if (isStopping || !isCurrentLeader()) {
+      return;
+    }
+
+    openPopupWindow();
+    scheduleOpenTick();
+  }, repeatIntervalMs);
+}
+
+function refreshOpenLoop() {
+  if (isStopping || !isCurrentLeader()) {
+    stopOpenLoop();
+    return;
+  }
+
+  if (openTimer && openLoopMs === repeatIntervalMs) {
+    return;
+  }
+
+  stopOpenLoop();
+  openLoopMs = repeatIntervalMs;
+  scheduleOpenTick();
+}
+
+function closeTrackedPopups() {
+  for (const popup of managedWindows.values()) {
+    if (popup && !popup.closed) {
+      popup.close();
+    }
+  }
+  managedWindows.clear();
+}
+
+function sendStopSignal() {
+  if (channel) {
+    channel.postMessage({ type: "stop" });
+  }
+
+  safeSetLocalStorage(stopStorageKey, String(Date.now()));
+
+  if (window.opener && !window.opener.closed) {
+    window.opener.postMessage({ type: "stop" }, "*");
+  }
+}
+
+function stopOpeningWindows({ broadcast = false, closeSelf = false } = {}) {
+  isStopping = true;
+  writeRuntimeState({ running: false, pendingClosed: 0 });
+  stopOpenLoop();
+  stopSelfMoveLoop();
+  clearLeaderIfOwned();
+
+  if (broadcast) {
+    sendStopSignal();
+  }
+
+  closeTrackedPopups();
+  updateStatus("Stopped.");
+
+  if (closeSelf && isPopupWindow) {
+    window.close();
+  }
+}
+
+function requestStopFromEnter() {
+  if (isStopping) {
+    return;
+  }
+
+  stopOpeningWindows({ broadcast: true, closeSelf: isPopupWindow });
+}
+
+function handleExternalStopSignal() {
+  if (isStopping) {
+    return;
+  }
+
+  stopOpeningWindows({ broadcast: false, closeSelf: isPopupWindow });
+}
+
+function maintainLeadership() {
+  const runtime = readRuntimeState();
+  repeatIntervalMs = runtime.repeatMs;
+  moveIntervalMs = runtime.moveMs;
+  syncInputsWithRuntime(runtime);
+  refreshSelfMoveLoop();
+
+  if (isStopping || !runtime.running) {
+    stopOpenLoop();
+    clearLeaderIfOwned();
+    return;
+  }
+
+  const leader = readLeaderState();
+  const leaderExpired = !leader || (Date.now() - leader.ts > leaderTimeoutMs);
+
+  if (leaderExpired || leader.id === windowInstanceId) {
+    writeLeaderState();
+  }
+
+  if (isCurrentLeader()) {
+    processPendingClosedPopups(runtime);
+  }
+
+  refreshOpenLoop();
+}
+
+function startLeadershipLoop() {
+  if (leadershipTimer) {
+    return;
+  }
+
+  maintainLeadership();
+  leadershipTimer = setInterval(() => {
+    maintainLeadership();
+  }, leaderHeartbeatMs);
+}
+
+function startOpeningWindows() {
+  isStopping = false;
+  const nextState = writeRuntimeState({
+    running: true,
+    repeatMs: getRepeatIntervalMs(),
+    moveMs: getMoveIntervalMs(),
+    pendingClosed: 0
+  });
+
+  syncInputsWithRuntime(nextState);
+  writeLeaderState();
+  maintainLeadership();
+
+  const opened = openManagedWindow();
+  if (!opened) {
+    return;
+  }
+
+  updateStatus(`Started at open ${nextState.repeatMs} ms, move ${nextState.moveMs} ms.`);
+}
+
 function openFullWindow() {
-  const url = "https://example.com";
-  const windowName = "_blank";
-  
-  // These "features" force the browser to open a new window instead of a tab
-  const features = "width=800,height=600,menubar=no,toolbar=no,location=no,status=no,resizable=yes,scrollbars=yes";
-  
-  window.open(url, windowName, features);
+  isStopping = false;
+  if (openManagedWindow()) {
+    updateStatus("Opened one popup.");
+  }
+}
+
+function setupCrossWindowSignals() {
+  const stopFromEnterHandler = (event) => {
+    if (!isEnterEvent(event)) {
+      return;
+    }
+
+    if (isMsInputFocused()) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    if (typeof event.stopImmediatePropagation === "function") {
+      event.stopImmediatePropagation();
+    }
+
+    requestStopFromEnter();
+  };
+
+  if (channel) {
+    channel.addEventListener("message", (event) => {
+      if (event.data && event.data.type === "stop") {
+        handleExternalStopSignal();
+      }
+    });
+  }
+
+  window.addEventListener("storage", (event) => {
+    if (event.key === stopStorageKey) {
+      handleExternalStopSignal();
+      return;
+    }
+
+    if (event.key === runtimeStateKey || event.key === leaderStateKey) {
+      maintainLeadership();
+    }
+  });
+
+  window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "stop") {
+      handleExternalStopSignal();
+    }
+  });
+
+  window.addEventListener("keydown", stopFromEnterHandler, { capture: true });
+  document.addEventListener("keydown", stopFromEnterHandler, { capture: true });
+  window.addEventListener("keypress", stopFromEnterHandler, { capture: true });
+  document.addEventListener("keypress", stopFromEnterHandler, { capture: true });
+}
+
+function setupPopupMode() {
+  if (!isPopupWindow) {
+    return;
+  }
+
+  document.body.classList.add("popup-mode");
+  popupFlashTimer = setInterval(() => {
+    popupFlashDark = !popupFlashDark;
+    document.body.classList.toggle("popup-flash-dark", popupFlashDark);
+  }, popupFlashIntervalMs);
+  updateStatus("Popup mode active. Press Enter to stop everything.");
+}
+
+function setupRepeatMsInput() {
+  if (!repeatMsInput) {
+    return;
+  }
+
+  repeatMsInput.addEventListener("focus", () => {
+    markInputEditing();
+  });
+
+  repeatMsInput.addEventListener("input", () => {
+    markInputEditing();
+
+    const rawValue = repeatMsInput.value.trim();
+    if (!rawValue) {
+      return;
+    }
+
+    const parsedValue = Number.parseInt(rawValue, 10);
+    if (!Number.isFinite(parsedValue)) {
+      return;
+    }
+
+    writeRuntimeState({ repeatMs: Math.max(50, parsedValue) });
+    maintainLeadership();
+  });
+
+  repeatMsInput.addEventListener("change", () => {
+    markInputEditing();
+    const nextState = writeRuntimeState({
+      repeatMs: getRepeatIntervalMs()
+    });
+    maintainLeadership();
+    updateStatus(`Repeat interval ${nextState.running ? "updated" : "set"} to ${nextState.repeatMs} ms.`);
+  });
+}
+
+function setupMoveMsInput() {
+  if (!moveMsInput) {
+    return;
+  }
+
+  moveMsInput.addEventListener("focus", () => {
+    markInputEditing();
+  });
+
+  moveMsInput.addEventListener("input", () => {
+    markInputEditing();
+
+    const rawValue = moveMsInput.value.trim();
+    if (!rawValue) {
+      return;
+    }
+
+    const parsedValue = Number.parseInt(rawValue, 10);
+    if (!Number.isFinite(parsedValue)) {
+      return;
+    }
+
+    writeRuntimeState({ moveMs: Math.max(50, parsedValue) });
+    maintainLeadership();
+  });
+
+  moveMsInput.addEventListener("change", () => {
+    markInputEditing();
+    const nextState = writeRuntimeState({
+      moveMs: getMoveIntervalMs()
+    });
+    maintainLeadership();
+    updateStatus(`Move interval ${nextState.running ? "updated" : "set"} to ${nextState.moveMs} ms.`);
+  });
+}
+
+function setupUnloadHooks() {
+  window.addEventListener("beforeunload", () => {
+    if (isPopupWindow && !isStopping) {
+      const runtime = readRuntimeState();
+      if (runtime.running) {
+        queueClosedPopupReplacement();
+      }
+    }
+
+    clearLeaderIfOwned();
+    stopOpenLoop();
+    stopSelfMoveLoop();
+    if (leadershipTimer) {
+      clearInterval(leadershipTimer);
+      leadershipTimer = null;
+    }
+    if (channel) {
+      channel.close();
+    }
+  });
+}
+
+const bootRuntime = readRuntimeState();
+repeatIntervalMs = bootRuntime.repeatMs;
+moveIntervalMs = bootRuntime.moveMs;
+syncInputsWithRuntime(bootRuntime);
+
+setupCrossWindowSignals();
+setupPopupMode();
+setupRepeatMsInput();
+setupMoveMsInput();
+setupUnloadHooks();
+startLeadershipLoop();
+
+if (bootRuntime.running && !isPopupWindow) {
+  updateStatus(`Running at open ${repeatIntervalMs} ms, move ${moveIntervalMs} ms.`);
 }
 </script>
 
