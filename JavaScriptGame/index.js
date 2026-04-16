@@ -5,4 +5,10 @@ document.getElementById("scrapsClicker").addEventListener(
         scraps++;
         document.getElementById("scrapsOwned").textContent = scraps;
     }
-    )
+)
+
+document.getElementById("shopButton").addEventListener(
+    "click", () => {
+        window.location.href = "shop.html";
+    }
+)
