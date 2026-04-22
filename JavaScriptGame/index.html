@@ -13,8 +13,40 @@
             <div id="clickerContainer">
                 <input type="button" id="scrapsClicker">
                 <div class="labelRow">
-                    <div class="label">Scraps</div>
+                    <div class="label">Scraps:</div>
                     <div class="amount" id="scrapsOwned">0</div>
+                </div>
+            </div>
+
+            <div id="productionContainer">
+                <div class="productionElement">
+                    <div class="productionGraphics">
+                        <input type="button" class="productionButton" id="passiveScrapsButton" onclick="productionClicked('passiveScraps')">
+                        <progress value="0" max="100" id="passiveScrapsProgress" class="productionProgress"></progress>
+                    </div>
+                    <div class="productionText">
+                        Cost: Free! Output: 1 scrap
+                    </div>
+                </div>
+
+                <div class="productionElement">
+                    <div class="productionGraphics">
+                        <input type="button" class="productionButton" id="scrapsForArmorButton" onclick="productionClicked('scrapsForArmor')">
+                        <progress value="0" max="100" id="scrapsForArmorProgress" class="productionProgress"></progress>
+                    </div>
+                    <div class="productionText">
+                        Cost: 15 scrap Output: 1 armor
+                    </div>
+                </div>
+
+                <div class="productionElement">
+                    <div class="productionGraphics">
+                        <input type="button" class="productionButton" id="passiveArmorButton" onclick="productionClicked('passiveArmor')">
+                        <progress value="0" max="100" id="passiveArmorProgress" class="productionProgress"></progress>
+                    </div>
+                    <div class="productionText">
+                        Cost: Free! Output: 1 armor
+                    </div>
                 </div>
             </div>
         </main>
