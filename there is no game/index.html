@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>THERE IS NO GAME</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main id="app" aria-live="polite">
+    <div id="voice"></div>
+
+    <section id="start" class="center">
+      <div>
+        <h1 id="title">THERE IS NO GAME</h1>
+        <p class="subtitle">don’t click to start</p>
+      </div>
+    </section>
+
+    <section id="arena" aria-label="interaction area">
+      <div id="rope"></div>
+      <div id="sign">NO GAME</div>
+
+      <div id="vault">
+        <div class="screw" id="firstScrew" aria-label="first screw"></div>
+      </div>
+
+      <div id="glass" aria-label="glass container"></div>
+    </section>
+
+    <section id="tools" aria-label="tool deck"></section>
+  </main>
+
+  <section id="blueScreen" aria-hidden="true">
+    <div>
+      <h2>SYSTEM ERROR</h2>
+      <p>restarting...</p>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
+</html>
