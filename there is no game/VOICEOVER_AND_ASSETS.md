@@ -6,11 +6,11 @@ The game uses text on the screen for the voice.
 ## Voice Script
 
 1. Start:
-   - "There is no game. Seriously. Click nothing."
+   - "There is no game. Seriously. Do not click anything."
 2. Clicking the title letters:
-   - "Why are you clicking the title? That is not a start button."
+   - "Stop clicking the title. Those letters are not buttons."
 3. Tools appear:
-   - "Fine. You found the non-start. Please do not draw those cards."
+   - "Fine. You broke the title. Please do not draw those cards."
 4. Drawing tools:
    - "You drew the scissors. Please put it back."
    - "You drew the hammer. Please put it back."

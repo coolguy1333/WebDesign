@@ -44,7 +44,7 @@ function makeTitle() {
         clickedLetters++;
 
         if (clickedLetters < 11) {
-          say("Why are you clicking the title? That is not a start button.");
+          say("Stop clicking the title. Those letters are not buttons.");
         } else {
           showGame();
         }
@@ -59,7 +59,7 @@ function showGame() {
   start.innerHTML = '<h1>THERE IS NO GAME</h1><p class="subtitle">do not draw cards</p>';
   arena.style.display = "block";
   deckArea.style.display = "block";
-  say("Fine. You found the non-start. Please do not draw those cards.");
+  say("Fine. You broke the title. Please do not draw those cards.");
 }
 
 function drawTool() {
@@ -266,4 +266,4 @@ arena.onclick = function () {
 drawCard.onclick = drawTool;
 
 makeTitle();
-say("There is no game. Seriously. Click nothing.");
+say("There is no game. Seriously. Do not click anything.");
