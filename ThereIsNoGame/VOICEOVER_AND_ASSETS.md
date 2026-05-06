@@ -1,47 +1,45 @@
-# THERE IS NO GAME — Voice Over + Asset Plan
+# THERE IS NO GAME — Voice Over Script + Asset Plan
 
-## Voice Over Script (in order)
+## Voice Over Script (improved flow)
 
-1. **Start:**
+1. **Start**
    - "There is no game. Seriously… there is nothing here. You should probably stop."
-2. **After clicking:**
+2. **Clicking letters (early)**
    - "Why are you clicking? There’s nothing to do."
-3. **More clicking:**
+3. **Clicking letters (later)**
    - "I told you… this is not a game."
-4. **After tools appear:**
+4. **Tools unlock**
    - "Oh great. Now you have tools. That definitely won’t help."
-5. **Selecting squirrel:**
+5. **Squirrel selected**
    - "…that’s a squirrel. Why would that help?"
-6. **Cutting rope:**
+6. **Squirrel steals UI item**
+   - "HEY! The squirrel stole your sign. Why do you even have that thing?"
+7. **Cut rope**
    - "Wait— You weren’t supposed to do that."
-7. **Sign falls:**
+8. **Sign falls**
    - "That was… not intended."
-8. **Vault appears:**
+9. **Vault appears**
    - "That’s just decoration. Don’t touch it."
-9. **Unscrewing:**
+10. **First screw removed**
    - "Stop. Please stop."
-10. **Glass appears:**
+11. **Glass appears**
    - "Oh no. You broke something important."
-11. **Hammer first hit:**
+12. **Hammer first hit**
    - "That was a bad idea."
-12. **Hammer second hit:**
+13. **Hammer second hit**
    - "…and now it’s broken. Good job."
-13. **Removing screws:**
+14. **Removing screw grid**
    - "This is getting out of hand. You’re not supposed to win."
-14. **Final screw:**
+15. **Final screw appears**
    - "Don’t you dare…"
-15. **Before crash:**
+16. **Before crash**
    - "No no no no—"
-16. **Blue screen:**
+17. **Blue screen**
    - "I told you there was no game."
 
-## Suggested Image Files (optional replacements)
+## Asset List (optional)
 
-The current version uses CSS-drawn placeholders. If you want image assets, put them in:
-
-- `there is no game/assets/`
-
-Suggested files:
+Use folder: `there is no game/assets/`
 
 - `tool-scissors.png`
 - `tool-hammer.png`
@@ -49,15 +47,13 @@ Suggested files:
 - `tool-squirrel.png`
 - `rope.png`
 - `sign-no-game.png`
-- `vault-face.png`
+- `vault.png`
 - `screw.png`
 - `glass-clean.png`
 - `glass-cracked.png`
-- `bsod-bg.png` (optional)
+- `blue-screen-bg.png`
 
 ## Notes
-
-- Keep PNGs transparent where possible.
-- Recommended rough size for tools: ~128x128.
-- Recommended vault/glass area textures: ~320x260.
-- Keep style hand-drawn/sketchy to match tone.
+- Keep a hand-drawn rough style.
+- Transparent PNGs for tools are best.
+- Suggested tool size: around `128x128`.
