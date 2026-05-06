@@ -1,6 +1,7 @@
 # THERE IS NO GAME — Voice Script and Assets
 
 This version starts with a simple start screen.
+The title letters fall before the tool part starts.
 It uses plain HTML, CSS, and JavaScript.
 The design should stay simple like a first-semester web design project.
 
@@ -8,8 +9,11 @@ The design should stay simple like a first-semester web design project.
 
 1. Start screen:
    - "There is no game. Seriously. Do not press start."
-2. Start clicked:
-   - "There. The game has started. Except there is still no game."
+   - "I Told you THERE IS NOOOO GAME!"
+2. Clicking title letters:
+   - "Stop clicking the title. Those letters are not buttons."
+   - "Fine. The letters fell. Still not a game."
+   - "Please do not draw those cards."
 3. Drawing cards:
    - "You drew scissors. This is not helping."
    - "You drew hammer. This is not helping."
@@ -27,12 +31,12 @@ The design should stay simple like a first-semester web design project.
    - "Wait. You were not supposed to cut that."
 7. Sign and vault:
    - "That was not intended."
-   - "Do not touch that vault."
+   - "Do not touch the corner screws."
 8. Screws:
-   - "That screw needs a screwdriver."
+   - "Those corner screws need a screwdriver."
    - "Stop. Please stop."
-   - "Oh no. More screws."
-   - "Stop removing the screws."
+   - "Oh no. Screws around the glass."
+   - "Stop removing the glass screws."
    - "Do not touch the final screw."
 9. Hammer:
    - "That was a bad idea."

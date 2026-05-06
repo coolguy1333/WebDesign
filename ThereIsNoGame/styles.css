@@ -34,6 +34,17 @@ body {
   margin: 0;
 }
 
+#titleLetters span {
+  display: inline-block;
+  transition: 0.8s;
+  cursor: pointer;
+}
+
+#titleLetters span.fall {
+  transform: translateY(180px) rotate(20deg);
+  opacity: 0;
+}
+
 #startScreen p,
 #deckInfo {
   color: #aaa;
@@ -120,10 +131,29 @@ button:hover {
   cursor: pointer;
 }
 
-#firstScrew,
 #finalScrew {
   left: 120px;
   top: 95px;
+}
+
+.topLeft {
+  left: 15px;
+  top: 15px;
+}
+
+.topRight {
+  right: 15px;
+  top: 15px;
+}
+
+.bottomLeft {
+  left: 15px;
+  bottom: 15px;
+}
+
+.bottomRight {
+  right: 15px;
+  bottom: 15px;
 }
 
 #finalScrew {
