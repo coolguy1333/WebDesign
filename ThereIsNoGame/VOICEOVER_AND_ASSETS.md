@@ -1,59 +1,68 @@
-# THERE IS NO GAME — Voice Over Script + Asset Plan
+# THERE IS NO GAME — Voice Script and Asset List
 
-## Voice Over Script (improved flow)
+This project is supposed to stay simple, like a first-semester HTML/CSS/JavaScript project.
+The game uses text on the screen for the voice.
 
-1. **Start**
-   - "There is no game. Seriously… there is nothing here. You should probably stop."
-2. **Clicking letters (early)**
-   - "Why are you clicking? There’s nothing to do."
-3. **Clicking letters (later)**
-   - "I told you… this is not a game."
-4. **Tools unlock**
-   - "Oh great. Now you have tools. That definitely won’t help."
-5. **Squirrel selected**
-   - "…that’s a squirrel. Why would that help?"
-6. **Squirrel steals UI item**
-   - "HEY! The squirrel stole your sign. Why do you even have that thing?"
-7. **Cut rope**
-   - "Wait— You weren’t supposed to do that."
-8. **Sign falls**
-   - "That was… not intended."
-9. **Vault appears**
-   - "That’s just decoration. Don’t touch it."
-10. **First screw removed**
+## Voice Script
+
+1. Start:
+   - "There is no game. Seriously. Do not click anything."
+2. Clicking the title letters:
+   - "Stop clicking the title. Those letters are not buttons."
+3. Tools appear:
+   - "Fine. You broke the title. Please do not draw those cards."
+4. Drawing tools:
+   - "You drew the scissors. Please put it back."
+   - "You drew the hammer. Please put it back."
+   - "You drew the screwdriver. Please put it back."
+5. Drawing the squirrel:
+   - "That is a squirrel. That is not even a tool."
+6. Selecting / using the squirrel:
+   - "The squirrel is looking at the screen like it owns it."
+   - "HEY! The squirrel stole the deck counter. Why did you click it?"
+7. Wrong rope click:
+   - "That rope is decorative. Leave it alone."
+8. Cutting rope:
+   - "Wait— You were not supposed to do that."
+9. Sign falls:
+   - "That was not intended."
+10. Vault appears:
+   - "That vault is just decoration. Do not touch it."
+11. First screw:
    - "Stop. Please stop."
-11. **Glass appears**
-   - "Oh no. You broke something important."
-12. **Hammer first hit**
+12. Glass appears:
+   - "Oh no. You found the glass container."
+13. Hammer hits glass:
    - "That was a bad idea."
-13. **Hammer second hit**
-   - "…and now it’s broken. Good job."
-14. **Removing screw grid**
-   - "This is getting out of hand. You’re not supposed to win."
-15. **Final screw appears**
-   - "Don’t you dare…"
-16. **Before crash**
+   - "And now the hammer is broken. Good job."
+14. Removing screws:
+   - "Stop. You are removing the screws in neat rows. That is worse."
+15. Final screw:
+   - "Do not touch that last screw."
    - "No no no no—"
-17. **Blue screen**
+16. Blue screen:
    - "I told you there was no game."
 
-## Asset List (optional)
+## Optional Images
 
-Use folder: `there is no game/assets/`
+The current project uses simple CSS shapes, so images are not required.
+If images are added later, put them in `there is no game/assets/`.
 
-- `tool-scissors.png`
-- `tool-hammer.png`
-- `tool-screwdriver.png`
-- `tool-squirrel.png`
+Suggested image names:
+
+- `scissors.png`
+- `hammer.png`
+- `screwdriver.png`
+- `squirrel.png`
 - `rope.png`
-- `sign-no-game.png`
+- `sign.png`
 - `vault.png`
 - `screw.png`
-- `glass-clean.png`
-- `glass-cracked.png`
-- `blue-screen-bg.png`
+- `glass.png`
+- `cracked-glass.png`
 
-## Notes
-- Keep a hand-drawn rough style.
-- Transparent PNGs for tools are best.
-- Suggested tool size: around `128x128`.
+## Style Notes
+
+- Keep it dark and simple.
+- Use small PNG images if possible.
+- Do not make the code complicated just to use images.
