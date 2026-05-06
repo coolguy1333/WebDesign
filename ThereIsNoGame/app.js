@@ -1,189 +1,117 @@
-const title = document.getElementById("title");
-const start = document.getElementById("start");
+const startButton = document.getElementById("startButton");
+const startScreen = document.getElementById("startScreen");
+const gameScreen = document.getElementById("gameScreen");
 const voice = document.getElementById("voice");
-const arena = document.getElementById("arena");
 const rope = document.getElementById("rope");
 const sign = document.getElementById("sign");
 const vault = document.getElementById("vault");
 const firstScrew = document.getElementById("firstScrew");
+const finalScrew = document.getElementById("finalScrew");
 const glass = document.getElementById("glass");
 const deckArea = document.getElementById("deckArea");
 const drawCard = document.getElementById("drawCard");
 const deckInfo = document.getElementById("deckInfo");
-const tools = document.getElementById("tools");
 const blueScreen = document.getElementById("blueScreen");
+const toolButtons = document.querySelectorAll(".tool");
 
-let selectedTool = "";
-let clickedLetters = 0;
-let ropeIsCut = false;
+let tool = "";
+let nextCard = 0;
+let ropeCut = false;
 let hammerHits = 0;
-let screwsGone = 0;
-let squirrelStole = false;
+let removedScrews = 0;
+let squirrelUsed = false;
 
-const toolDeck = ["scissors", "hammer", "screwdriver", "squirrel"];
-const drawnTools = [];
-
-function say(words) {
-  voice.textContent = words;
+function say(text) {
+  voice.textContent = text;
 }
 
-function makeTitle() {
-  const words = "THERE IS NO GAME";
-  title.innerHTML = "";
-
-  for (let i = 0; i < words.length; i++) {
-    const letter = document.createElement("span");
-    letter.className = "letter";
-    letter.textContent = words[i] === " " ? "\u00A0" : words[i];
-
-    if (words[i] !== " ") {
-      letter.onclick = function () {
-        if (letter.classList.contains("done")) return;
-
-        letter.classList.add("done");
-        clickedLetters++;
-
-        if (clickedLetters < 11) {
-          say("Stop clicking the title. Those letters are not buttons.");
-        } else {
-          showGame();
-        }
-      };
-    }
-
-    title.appendChild(letter);
-  }
-}
-
-function showGame() {
-  start.innerHTML = '<h1>THERE IS NO GAME</h1><p class="subtitle">do not draw cards</p>';
-  arena.style.display = "block";
+function startGame() {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "block";
   deckArea.style.display = "block";
-  say("Fine. You broke the title. Please do not draw those cards.");
+  say("There. The game has started. Except there is still no game.");
 }
 
 function drawTool() {
-  if (toolDeck.length === 0) {
-    say("The deck is empty. Happy now?");
+  if (nextCard >= toolButtons.length) {
+    say("No cards left. That is probably your fault.");
     return;
   }
 
-  const tool = toolDeck.shift();
-  drawnTools.push(tool);
-  deckInfo.textContent = "Deck: " + toolDeck.length + " cards";
-  showTools();
+  const button = toolButtons[nextCard];
+  button.style.display = "inline-block";
+  deckInfo.textContent = "Deck: " + (toolButtons.length - nextCard - 1) + " cards";
+  say("You drew " + button.dataset.tool + ". This is not helping.");
+  nextCard++;
+}
+
+function selectTool(button) {
+  for (let i = 0; i < toolButtons.length; i++) {
+    toolButtons[i].classList.remove("active");
+  }
+
+  tool = button.dataset.tool;
+  button.classList.add("active");
 
   if (tool === "squirrel") {
-    say("That is a squirrel. That is not even a tool.");
+    say("That is a squirrel. It is not a tool.");
   } else {
-    say("You drew the " + tool + ". Please put it back.");
+    say("You selected the " + tool + ". Please do not use it.");
   }
 }
 
-function showTools() {
-  tools.innerHTML = "";
-
-  for (let i = 0; i < drawnTools.length; i++) {
-    const button = document.createElement("button");
-    button.className = "tool";
-    button.textContent = drawnTools[i];
-
-    button.onclick = function () {
-      selectedTool = drawnTools[i];
-      selectButton(button);
-
-      if (selectedTool === "squirrel") {
-        say("The squirrel is looking at the screen like it owns it.");
-      }
-    };
-
-    tools.appendChild(button);
-  }
-}
-
-function selectButton(chosenButton) {
-  const buttons = document.querySelectorAll(".tool");
-
-  for (let i = 0; i < buttons.length; i++) {
-    buttons[i].classList.remove("active");
-  }
-
-  chosenButton.classList.add("active");
-}
-
-function squirrelSteal() {
-  if (squirrelStole) {
-    say("The squirrel already stole something. It is full.");
+function stealDeckText() {
+  if (squirrelUsed) {
+    say("The squirrel already stole something.");
     return;
   }
 
-  squirrelStole = true;
-  deckInfo.textContent = "Deck: stolen by squirrel";
+  squirrelUsed = true;
+  deckInfo.textContent = "Deck: stolen";
   deckInfo.classList.add("stolen");
-  say("HEY! The squirrel stole the deck counter. Why did you click it?");
+  say("The squirrel stole the deck counter. Great. Very useful.");
 }
 
-function makeGlassScrews() {
+function makeScrews() {
   glass.innerHTML = "";
-  screwsGone = 0;
+  removedScrews = 0;
 
   for (let row = 0; row < 6; row++) {
     for (let col = 0; col < 6; col++) {
       const screw = document.createElement("div");
-      screw.className = "mini-screw";
+      screw.className = "smallScrew";
       screw.style.left = 18 + col * 46 + "px";
       screw.style.top = 18 + row * 36 + "px";
-
       screw.onclick = function (event) {
         event.stopPropagation();
-
-        if (selectedTool !== "screwdriver") {
-          say("Those screws need a screwdriver. Shocking, I know.");
-          return;
-        }
-
-        screw.remove();
-        screwsGone++;
-
-        if (screwsGone === 1) {
-          say("Stop. You are removing the screws in neat rows. That is worse.");
-        }
-
-        if (screwsGone === 36) {
-          showFinalScrew();
-        }
+        removeScrew(screw);
       };
-
       glass.appendChild(screw);
     }
   }
 }
 
-function showFinalScrew() {
-  glass.style.display = "none";
+function removeScrew(screw) {
+  if (tool !== "screwdriver") {
+    say("Those need a screwdriver.");
+    return;
+  }
 
-  const finalScrew = document.createElement("div");
-  finalScrew.className = "screw";
-  finalScrew.style.left = "calc(50% - 10px)";
-  finalScrew.style.top = "calc(50% - 10px)";
+  screw.remove();
+  removedScrews++;
 
-  finalScrew.onclick = function () {
-    if (selectedTool !== "screwdriver") {
-      say("No. Wrong tool. Still no game though.");
-      return;
-    }
+  if (removedScrews === 1) {
+    say("Stop removing the screws.");
+  }
 
-    finalScrew.remove();
-    say("No no no no—");
-
-    setTimeout(showBlueScreen, 500);
-  };
-
-  vault.appendChild(finalScrew);
-  say("Do not touch that last screw.");
+  if (removedScrews === 36) {
+    glass.style.display = "none";
+    finalScrew.style.display = "block";
+    say("Do not touch the final screw.");
+  }
 }
 
-function showBlueScreen() {
+function crash() {
   blueScreen.style.display = "grid";
   say("I told you there was no game.");
 
@@ -192,15 +120,24 @@ function showBlueScreen() {
   }, 2000);
 }
 
+startButton.onclick = startGame;
+drawCard.onclick = drawTool;
+
+for (let i = 0; i < toolButtons.length; i++) {
+  toolButtons[i].onclick = function () {
+    selectTool(toolButtons[i]);
+  };
+}
+
 rope.onclick = function () {
-  if (selectedTool !== "scissors" || ropeIsCut) {
-    say("That rope is decorative. Leave it alone.");
+  if (tool !== "scissors" || ropeCut) {
+    say("That rope is decorative.");
     return;
   }
 
-  ropeIsCut = true;
+  ropeCut = true;
   rope.style.display = "none";
-  say("Wait— You were not supposed to do that.");
+  say("Wait. You were not supposed to cut that.");
 
   setTimeout(function () {
     sign.classList.add("fall");
@@ -208,16 +145,16 @@ rope.onclick = function () {
 
     setTimeout(function () {
       vault.style.display = "block";
-      say("That vault is just decoration. Do not touch it.");
-    }, 800);
+      say("Do not touch that vault.");
+    }, 700);
   }, 300);
 };
 
 firstScrew.onclick = function (event) {
   event.stopPropagation();
 
-  if (selectedTool !== "screwdriver") {
-    say("You need something twisty for that screw.");
+  if (tool !== "screwdriver") {
+    say("That screw needs a screwdriver.");
     return;
   }
 
@@ -226,44 +163,43 @@ firstScrew.onclick = function (event) {
 
   setTimeout(function () {
     glass.style.display = "block";
-    makeGlassScrews();
-    say("Oh no. You found the glass container.");
-  }, 500);
+    makeScrews();
+    say("Oh no. More screws.");
+  }, 400);
+};
+
+finalScrew.onclick = function () {
+  if (tool !== "screwdriver") {
+    say("Wrong tool.");
+    return;
+  }
+
+  finalScrew.style.display = "none";
+  say("No no no no—");
+  setTimeout(crash, 500);
 };
 
 glass.onclick = function () {
-  if (selectedTool === "hammer") {
+  if (tool === "hammer") {
     hammerHits++;
 
     if (hammerHits === 1) {
       glass.classList.add("cracked");
       say("That was a bad idea.");
     } else {
-      const buttons = document.querySelectorAll(".tool");
-
-      for (let i = 0; i < buttons.length; i++) {
-        if (buttons[i].textContent === "hammer") {
-          buttons[i].classList.add("broken");
-        }
-      }
-
-      selectedTool = "";
-      say("And now the hammer is broken. Good job.");
+      tool = "";
+      document.querySelector('[data-tool="hammer"]').classList.add("broken");
+      say("The hammer broke. Nice job.");
     }
   }
 
-  if (selectedTool === "squirrel") {
-    squirrelSteal();
+  if (tool === "squirrel") {
+    stealDeckText();
   }
 };
 
-arena.onclick = function () {
-  if (selectedTool === "squirrel") {
-    squirrelSteal();
+gameScreen.onclick = function () {
+  if (tool === "squirrel") {
+    stealDeckText();
   }
 };
-
-drawCard.onclick = drawTool;
-
-makeTitle();
-say("There is no game. Seriously. Do not click anything.");

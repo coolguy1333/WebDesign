@@ -6,56 +6,56 @@ body {
 }
 
 #app {
-  width: 900px;
-  height: 640px;
+  width: 850px;
+  height: 620px;
   max-width: 95vw;
   margin: 25px auto;
-  border: 2px solid #777;
   background: #111;
+  border: 2px solid #777;
   position: relative;
 }
 
 #voice {
   text-align: center;
   color: #ccc;
-  padding: 10px;
-  min-height: 22px;
+  padding: 12px;
 }
 
-.center {
+#startScreen {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  place-content: center;
+  text-align: center;
 }
 
-.subtitle {
+#startScreen h1 {
+  font-size: 46px;
+  margin: 0;
+}
+
+#startScreen p,
+#deckInfo {
   color: #aaa;
 }
 
-.letter {
-  display: inline-block;
-  border: 1px solid #555;
-  padding: 5px;
-  margin: 2px;
+button {
+  background: #222;
+  color: white;
+  border: 2px solid #777;
+  padding: 9px 14px;
+  margin: 4px;
   cursor: pointer;
-  transition: .5s;
 }
 
-.done {
-  transform: translateY(300px) rotate(5000deg);
-  opacity: 0;
+button:hover {
+  background: #333;
 }
 
-#arena {
+#gameScreen {
   display: none;
   position: absolute;
-  left: 20px;
-  right: 20px;
-  top: 70px;
-  bottom: 145px;
+  inset: 70px 20px 140px 20px;
 }
 
 #rope {
@@ -81,49 +81,53 @@ body {
 }
 
 #sign.fall {
-  top: 440px;
+  top: 410px;
   opacity: 0;
 }
 
-#vault {
+#vault,
+#glass {
   display: none;
-  width: 260px;
-  height: 210px;
-  border: 2px solid #888;
   position: absolute;
   left: calc(50% - 130px);
   top: 205px;
+  width: 260px;
+  height: 210px;
+  border: 2px solid #888;
+}
+
+#glass {
+  left: calc(50% - 150px);
+  top: 190px;
+  width: 300px;
+  height: 250px;
+  border-color: #80a8ff;
+  background: rgba(120, 160, 255, 0.12);
+}
+
+#glass.cracked {
+  background: repeating-linear-gradient(135deg, rgba(180, 200, 255, .25) 0 6px, rgba(120, 160, 255, .08) 6px 12px);
 }
 
 .screw,
-.mini-screw {
+.smallScrew {
   width: 20px;
   height: 20px;
-  border-radius: 50%;
   border: 2px solid white;
+  border-radius: 50%;
   background: #666;
   position: absolute;
   cursor: pointer;
 }
 
-#firstScrew {
+#firstScrew,
+#finalScrew {
   left: 120px;
   top: 95px;
 }
 
-#glass {
+#finalScrew {
   display: none;
-  width: 300px;
-  height: 250px;
-  border: 2px solid #80a8ff;
-  background: rgba(120, 160, 255, 0.12);
-  position: absolute;
-  left: calc(50% - 150px);
-  top: 190px;
-}
-
-#glass.cracked {
-  background: repeating-linear-gradient(135deg, rgba(180, 200, 255, .25) 0 6px, rgba(120, 160, 255, .08) 6px 12px);
 }
 
 #deckArea {
@@ -135,23 +139,8 @@ body {
   bottom: 10px;
 }
 
-#drawCard,
 .tool {
-  background: #222;
-  color: white;
-  border: 2px solid #777;
-  padding: 8px 12px;
-  margin: 4px;
-  cursor: pointer;
-}
-
-#deckInfo {
-  color: #aaa;
-  margin: 5px;
-}
-
-#deckInfo.stolen {
-  color: orange;
+  display: none;
 }
 
 .tool.active {
@@ -162,6 +151,10 @@ body {
   opacity: .4;
   pointer-events: none;
   text-decoration: line-through;
+}
+
+#deckInfo.stolen {
+  color: orange;
 }
 
 #blueScreen {

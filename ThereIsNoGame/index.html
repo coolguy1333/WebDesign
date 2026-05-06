@@ -1,34 +1,52 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THERE IS NO GAME</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <main id="app">
-    <div id="voice"></div>
-    <section id="start" class="center">
-      <h1 id="title"></h1>
-      <p class="subtitle">click every letter to start</p>
+    <div id="voice">There is no game. Seriously. Do not press start.</div>
+
+    <section id="startScreen">
+      <h1>THERE IS NO GAME</h1>
+      <p>do not click start</p>
+      <button id="startButton">A random button</button>
     </section>
 
-    <section id="arena">
+    <section id="gameScreen">
       <div id="rope"></div>
       <div id="sign">NO GAME</div>
-      <div id="vault"><div class="screw" id="firstScrew"></div></div>
+
+      <div id="vault">
+        <div id="firstScrew" class="screw"></div>
+        <div id="finalScrew" class="screw"></div>
+      </div>
+
       <div id="glass"></div>
     </section>
 
     <section id="deckArea">
       <button id="drawCard">Draw Tool Card</button>
-      <div id="deckInfo">Deck: 4 cards</div>
-      <div id="tools"></div>
+      <p id="deckInfo">Deck: 4 cards</p>
+      <div id="tools">
+        <button class="tool" data-tool="scissors">scissors</button>
+        <button class="tool" data-tool="hammer">hammer</button>
+        <button class="tool" data-tool="screwdriver">screwdriver</button>
+        <button class="tool" data-tool="squirrel">squirrel</button>
+      </div>
     </section>
   </main>
 
-  <section id="blueScreen"><div><h2>SYSTEM ERROR</h2><p>restarting...</p></div></section>
+  <section id="blueScreen">
+    <div>
+      <h2>SYSTEM ERROR</h2>
+      <p>restarting...</p>
+    </div>
+  </section>
+
   <script src="app.js"></script>
 </body>
 </html>
