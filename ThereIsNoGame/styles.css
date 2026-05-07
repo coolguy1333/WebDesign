@@ -29,6 +29,12 @@ body {
   text-align: center;
 }
 
+.kicker {
+  color: #8db6ff;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
 #startScreen h1 {
   font-size: 46px;
   margin: 0;
@@ -96,8 +102,19 @@ button:hover {
   opacity: 0;
 }
 
-#vault,
-#glass {
+#storyCard {
+  width: 280px;
+  min-height: 95px;
+  padding: 14px;
+  border: 2px solid #6f88bd;
+  background: #17213a;
+  position: absolute;
+  left: calc(50% - 154px);
+  top: 300px;
+  line-height: 1.45;
+}
+
+#notebook {
   display: none;
   position: absolute;
   left: calc(50% - 130px);
@@ -105,23 +122,10 @@ button:hover {
   width: 260px;
   height: 210px;
   border: 2px solid #888;
+  background: #242424;
 }
 
-#glass {
-  left: calc(50% - 150px);
-  top: 190px;
-  width: 300px;
-  height: 250px;
-  border-color: #80a8ff;
-  background: rgba(120, 160, 255, 0.12);
-}
-
-#glass.cracked {
-  background: repeating-linear-gradient(135deg, rgba(180, 200, 255, .25) 0 6px, rgba(120, 160, 255, .08) 6px 12px);
-}
-
-.screw,
-.smallScrew {
+.screw {
   width: 20px;
   height: 20px;
   border: 2px solid white;
@@ -132,6 +136,7 @@ button:hover {
 }
 
 #finalScrew {
+  display: none;
   left: 120px;
   top: 95px;
 }
@@ -156,10 +161,6 @@ button:hover {
   bottom: 15px;
 }
 
-#finalScrew {
-  display: none;
-}
-
 #deckArea {
   display: none;
   text-align: center;
@@ -177,23 +178,25 @@ button:hover {
   outline: 2px solid #8db6ff;
 }
 
-.tool.broken {
-  opacity: .4;
-  pointer-events: none;
-  text-decoration: line-through;
-}
-
-#deckInfo.stolen {
-  color: orange;
-}
-
-#blueScreen {
+#endingScreen {
   display: none;
   position: fixed;
   inset: 0;
-  background: #124bc8;
+  background: #1c2b4a;
   color: white;
-  font-family: monospace;
+  font-family: Arial, sans-serif;
   text-align: center;
   place-items: center;
+}
+
+#endingScreen div {
+  width: 520px;
+  max-width: 88vw;
+  padding: 28px;
+  border: 2px solid #d8e3ff;
+  background: #101a33;
+}
+
+#endingScreen p {
+  line-height: 1.6;
 }
