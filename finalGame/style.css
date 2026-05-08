@@ -96,6 +96,26 @@ body {
     opacity: 0;
   }
   
+  #redButton {
+    display: none;
+    position: absolute;
+    left: calc(50% - 62px);
+    top: 275px;
+    width: 124px;
+    height: 58px;
+    border: 3px solid #ff9a9a;
+    border-radius: 999px;
+    background: #c80000;
+    color: white;
+    font-weight: bold;
+    box-shadow: 0 0 18px rgba(255, 0, 0, .65), inset 0 -7px 0 rgba(80, 0, 0, .45);
+    z-index: 1;
+  }
+
+  #redButton:hover {
+    background: #ff1616;
+  }
+
   #vault,
   #glass {
     display: none;
@@ -105,6 +125,7 @@ body {
     width: 260px;
     height: 210px;
     border: 2px solid #888;
+    z-index: 3;
   }
   
   #glass {
@@ -129,6 +150,26 @@ body {
     background: #666;
     position: absolute;
     cursor: pointer;
+    transition: transform .25s, opacity .25s;
+  }
+
+  .screw::after,
+  .smallScrew::after {
+    content: "";
+    position: absolute;
+    left: 4px;
+    right: 4px;
+    top: 8px;
+    height: 3px;
+    background: #ddd;
+    border-radius: 2px;
+  }
+
+  .screw.unscrewed,
+  .smallScrew.unscrewed {
+    opacity: 0;
+    transform: rotate(180deg) scale(.35);
+    pointer-events: none;
   }
   
   #finalScrew {
@@ -158,6 +199,13 @@ body {
   
   #finalScrew {
     display: none;
+  }
+
+  #vault.opened {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(12px) scale(.96);
+    transition: opacity .45s, transform .45s;
   }
   
   #deckArea {
