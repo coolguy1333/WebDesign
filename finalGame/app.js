@@ -8,6 +8,7 @@ const vault = document.getElementById("vault");
 const firstScrews = document.querySelectorAll(".firstScrew");
 const finalScrew = document.getElementById("finalScrew");
 const glass = document.getElementById("glass");
+const redButton = document.getElementById("redButton");
 const deckArea = document.getElementById("deckArea");
 const drawCard = document.getElementById("drawCard");
 const deckInfo = document.getElementById("deckInfo");
@@ -91,6 +92,29 @@ function stealDeckText() {
   say("The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MAY CARDS AND BREAK MY GAME!!!!!");
 }
 
+function unscrew(screw, onDone) {
+  if (tool !== "screwdriver") {
+    say("Those screws need a screwdriver.");
+    return false;
+  }
+
+  if (screw.classList.contains("unscrewed")) {
+    return false;
+  }
+
+  screw.classList.add("unscrewed");
+
+  setTimeout(function () {
+    screw.style.display = "none";
+
+    if (onDone) {
+      onDone();
+    }
+  }, 250);
+
+  return true;
+}
+
 function makeScrews() {
   glass.innerHTML = "";
   glassScrewsGone = 0;
@@ -123,23 +147,20 @@ function makeScrews() {
 }
 
 function removeGlassScrew(screw) {
-  if (tool !== "screwdriver") {
-    say("Those need a screwdriver.");
-    return;
-  }
+  unscrew(screw, function () {
+    screw.remove();
+    glassScrewsGone++;
 
-  screw.remove();
-  glassScrewsGone++;
+    if (glassScrewsGone === 1) {
+      say("Stop removing the glass screws.");
+    }
 
-  if (glassScrewsGone === 1) {
-    say("Stop removing the glass screws.");
-  }
-
-  if (glassScrewsGone === 36) {
-    glass.style.display = "none";
-    finalScrew.style.display = "block";
-    say("Do not touch the final screw.");
-  }
+    if (glassScrewsGone === 36) {
+      glass.style.display = "none";
+      finalScrew.style.display = "block";
+      say("The glass is gone, but the screw panel is still hiding something.");
+    }
+  });
 }
 
 function crash() {
@@ -183,8 +204,9 @@ rope.onclick = function () {
     say("That was not intended.");
 
     setTimeout(function () {
+      redButton.style.display = "block";
       vault.style.display = "block";
-      say("Do not touch the corner screws.");
+      say("Do not touch the corner screws. They are definitely not all removable.");
     }, 700);
   }, 300);
 };
@@ -193,33 +215,33 @@ for (let i = 0; i < firstScrews.length; i++) {
   firstScrews[i].onclick = function (event) {
     event.stopPropagation();
 
-    if (tool !== "screwdriver") {
-      say("Those corner screws need a screwdriver.");
-      return;
-    }
+    unscrew(firstScrews[i], function () {
+      vaultScrewsGone++;
+      say("Stop. Please stop.");
 
-    firstScrews[i].style.display = "none";
-    vaultScrewsGone++;
-    say("Stop. Please stop.");
-
-    if (vaultScrewsGone === 4) {
-      setTimeout(function () {
-        glass.style.display = "block";
-        makeScrews();
-        say("Oh no. Screws around the glass.");
-      }, 400);
-    }
+      if (vaultScrewsGone === 4) {
+        setTimeout(function () {
+          glass.style.display = "block";
+          makeScrews();
+          say("Oh no. Screws around the glass. Every one of them comes out.");
+        }, 400);
+      }
+    });
   };
 }
 
-finalScrew.onclick = function () {
-  if (tool !== "screwdriver") {
-    say("Wrong tool.");
-    return;
-  }
+finalScrew.onclick = function (event) {
+  event.stopPropagation();
 
-  finalScrew.style.display = "none";
-  say("No no no no—");
+  unscrew(finalScrew, function () {
+    vault.classList.add("opened");
+    say("The panel is open. Please ignore the big red button behind it.");
+  });
+};
+
+redButton.onclick = function (event) {
+  event.stopPropagation();
+  say("You pressed it. Of course you did.");
   setTimeout(crash, 500);
 };
 
