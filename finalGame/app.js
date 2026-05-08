@@ -81,14 +81,14 @@ function selectTool(button) {
 
 function stealDeckText() {
   if (squirrelUsed) {
-    say("The squirrel already stole something.");
+    say("The squirrel already stole something. (IM STILL MAD)");
     return;
   }
 
   squirrelUsed = true;
   deckInfo.textContent = "Deck: stolen";
   deckInfo.classList.add("stolen");
-  say("The squirrel stole the deck counter. Great. Very useful.");
+  say("The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MAY CARDS AND BREAK MY GAME!!!!!");
 }
 
 function makeScrews() {
