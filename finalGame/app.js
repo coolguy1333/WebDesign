@@ -14,176 +14,70 @@ const drawCard = document.getElementById("drawCard");
 const deckInfo = document.getElementById("deckInfo");
 const blueScreen = document.getElementById("blueScreen");
 const toolButtons = document.querySelectorAll(".tool");
+const letters = document.querySelectorAll("#titleLetters span");
 
-const state = {
-  stage: "title",
-  removedLetters: 0,
-  selectedTool: null,
-  nextCard: 0,
-  hammerHits: 0,
-  panelScrewsRemoved: 0,
-  glassScrewsRemoved: 0,
-  squirrelUsed: false,
-  finalScrewRemoved: false,
-  buttonPressed: false,
-};
+let tool = "";
+let nextCard = 0;
+let ropeCut = false;
+let hammerHits = 0;
+let vaultScrewsGone = 0;
+let glassScrewsGone = 0;
+let squirrelUsed = false;
+let lettersFallen = 0;
 
-const titleLines = [
-  "Hey.",
-  "Stop that.",
-  "You're ruining the title.",
-  "There is still no game.",
-  "Careful.",
-  "Those are expensive letters.",
-  "Oh come on…",
-];
-
-const screwLines = new Map([
-  [1, "Stop removing the glass screws."],
-  [5, "Please stop."],
-  [12, "This is getting out of hand."],
-  [20, "You are not supposed to win."],
-  [28, "Seriously?"],
-  [35, "No no no no—"],
-]);
-
-function say(line) {
-  narrator.textContent = line;
-  narrator.animate(
-    [
-      { transform: "translateY(0)", opacity: 0.75 },
-      { transform: "translateY(-0.18rem)", opacity: 1 },
-      { transform: "translateY(0)", opacity: 1 },
-    ],
-    { duration: 220, easing: "ease-out" }
-  );
+function say(text) {
+  voice.textContent = text;
 }
 
-function bumpScreen() {
-  document.body.classList.remove("shake");
-  void document.body.offsetWidth;
-  document.body.classList.add("shake");
+function startGame() {
+  startScreen.style.display = "none";
+  gameScreen.style.display = "block";
+  deckArea.style.display = "block";
+  say("Please do not draw those cards.");
 }
 
-function buildTitle(removable = true) {
-  title.replaceChildren();
-
-  for (let index = 0; index < titleText.length; index++) {
-    const character = titleText[index];
-
-    if (character === " ") {
-      const space = document.createElement("span");
-      space.className = "space";
-      space.textContent = "\u00A0";
-      title.append(space);
-      continue;
-    }
-
-    const letter = document.createElement(removable ? "button" : "span");
-    letter.className = "letter";
-    letter.textContent = character;
-    letter.style.animationDelay = `${index * -0.11}s`;
-
-    if (removable) {
-      letter.type = "button";
-      letter.setAttribute("aria-label", `remove letter ${character}`);
-      letter.addEventListener("click", () => removeLetter(letter), { once: true });
-    }
-
-    title.append(letter);
-  }
-}
-
-function removeLetter(letter) {
-  if (state.stage !== "title") {
+function dropLetter(letter) {
+  if (letter.classList.contains("fall")) {
     return;
   }
 
-  letter.classList.add("falling");
-  state.removedLetters++;
+  letter.classList.add("fall");
+  lettersFallen++;
 
-  const line = titleLines[Math.min(state.removedLetters - 1, titleLines.length - 1)];
-  say(line);
-
-  if (state.removedLetters === titleText.replaceAll(" ", "").length) {
-    state.stage = "reinforcing";
-    setTimeout(reinforceTitle, 950);
+  if (lettersFallen < letters.length) {
+    say("Stop clicking the title. Those letters are not buttons.");
+  } else {
+    say("Fine. The letters fell. Still not a game.");
+    setTimeout(startGame, 600);
   }
 }
 
-function reinforceTitle() {
-  titleWrap.classList.add("glitch");
-  subtitle.textContent = "do not continue";
-  startButton.classList.add("hidden");
-  say("...");
-
-  setTimeout(() => {
-    titleWrap.classList.remove("glitch");
-    titleWrap.classList.add("reinforced");
-    buildTitle(false);
-    say("There. Fixed.");
-    showToolsAndRope();
-  }, 430);
-}
-
-function showToolsAndRope() {
-  state.stage = "rope";
-  deckArea.classList.remove("hidden");
-  titleWrap.classList.add("pinned");
-  ropeScene.classList.remove("hidden");
-  setTimeout(() => say("Please do not draw those cards."), 650);
-}
-
 function drawTool() {
-  if (state.nextCard >= toolButtons.length) {
+  if (nextCard >= toolButtons.length) {
     say("No cards left. That is probably your fault.");
     return;
   }
 
-  const button = toolButtons[state.nextCard];
-  button.classList.add("revealed");
-  deckInfo.textContent = `Deck: ${toolButtons.length - state.nextCard - 1} cards`;
-  say(`You drew ${button.dataset.tool}. This is not helping.`);
-  state.nextCard++;
+  const button = toolButtons[nextCard];
+  button.style.display = "inline-block";
+  deckInfo.textContent = "Deck: " + (toolButtons.length - nextCard - 1) + " cards";
+  say("You drew " + button.dataset.tool + ". This is not helping.");
+  nextCard++;
 }
 
 function selectTool(button) {
-  if (button.classList.contains("broken")) {
-    say("That used to be a hammer.");
-    return;
+  for (let i = 0; i < toolButtons.length; i++) {
+    toolButtons[i].classList.remove("active");
   }
 
-  for (let index = 0; index < toolButtons.length; index++) {
-    toolButtons[index].classList.remove("selected");
-  }
+  tool = button.dataset.tool;
+  button.classList.add("active");
 
-  button.classList.add("selected");
-  state.selectedTool = button.dataset.tool;
-
-  if (state.selectedTool === "squirrel") {
-    say("…why do you have a squirrel?");
+  if (tool === "squirrel") {
+    say("That is a squirrel. It is not a tool.");
   } else {
-    say(`You selected the ${state.selectedTool}. Please do not use it.`);
+    say("You selected the " + tool + ". Please do not use it.");
   }
-}
-
-function wrongTool(defaultLine = "No.") {
-  if (state.selectedTool === "squirrel") {
-    const squirrelLines = [
-      "That is still a squirrel.",
-      "The squirrel cannot solve your problems.",
-      "Why are you trying that?",
-    ];
-    say(squirrelLines[Math.floor(Math.random() * squirrelLines.length)]);
-    return;
-  }
-
-  if (!state.selectedTool) {
-    say("With what, exactly?");
-    return;
-  }
-
-  say(defaultLine);
 }
 
 function stealDeckText() {
@@ -192,7 +86,7 @@ function stealDeckText() {
     return;
   }
 
-  state.squirrelUsed = true;
+  squirrelUsed = true;
   deckInfo.textContent = "Deck: stolen";
   deckInfo.classList.add("stolen");
   say("The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MAY CARDS AND BREAK MY GAME!!!!!");
@@ -221,10 +115,36 @@ function unscrew(screw, onDone) {
   return true;
 }
 
-function cutRope() {
-  if (state.stage !== "rope") {
-    return;
+function makeScrews() {
+  glass.innerHTML = "";
+  glassScrewsGone = 0;
+
+  for (let i = 0; i < 36; i++) {
+    const screw = document.createElement("div");
+    screw.className = "smallScrew";
+
+    if (i < 10) {
+      screw.style.left = 10 + i * 28 + "px";
+      screw.style.top = "10px";
+    } else if (i < 20) {
+      screw.style.left = 10 + (i - 10) * 28 + "px";
+      screw.style.top = "216px";
+    } else if (i < 28) {
+      screw.style.left = "10px";
+      screw.style.top = 38 + (i - 20) * 22 + "px";
+    } else {
+      screw.style.left = "266px";
+      screw.style.top = 38 + (i - 28) * 22 + "px";
+    }
+
+    screw.onclick = function (event) {
+      event.stopPropagation();
+      removeGlassScrew(screw);
+    };
+
+    glass.appendChild(screw);
   }
+}
 
 function removeGlassScrew(screw) {
   unscrew(screw, function () {
@@ -243,33 +163,45 @@ function removeGlassScrew(screw) {
   });
 }
 
-function getScrewCenter(screw, container) {
-  const screwBox = screw.getBoundingClientRect();
-  const containerBox = container.getBoundingClientRect();
+function crash() {
+  blueScreen.style.display = "grid";
+  say("I told you there was no game.");
 
-  return {
-    left: screwBox.left - containerBox.left + screwBox.width / 2,
-    top: screwBox.top - containerBox.top + screwBox.height / 2,
+  setTimeout(function () {
+    location.reload();
+  }, 2000);
+}
+
+startButton.onclick = function () {
+  say("No. Click the letters if you must ruin something.");
+};
+
+for (let i = 0; i < letters.length; i++) {
+  letters[i].onclick = function () {
+    dropLetter(letters[i]);
+  };
+}
+drawCard.onclick = drawTool;
+
+for (let i = 0; i < toolButtons.length; i++) {
+  toolButtons[i].onclick = function () {
+    selectTool(toolButtons[i]);
   };
 }
 
-function leaveHole(left, top, container) {
-  const hole = document.createElement("span");
-  hole.className = "hole";
-  hole.style.left = typeof left === "number" ? `${left}px` : left;
-  hole.style.top = typeof top === "number" ? `${top}px` : top;
-  container.prepend(hole);
-}
-
-function unscrew(screw, container, onDone, wrongLine = "Those screws need a screwdriver.") {
-  if (state.selectedTool !== "screwdriver") {
-    wrongTool(wrongLine);
-    return false;
+rope.onclick = function () {
+  if (tool !== "scissors" || ropeCut) {
+    say("That rope is decorative.");
+    return;
   }
 
-  if (screw.classList.contains("removing") || screw.classList.contains("removed")) {
-    return false;
-  }
+  ropeCut = true;
+  rope.style.display = "none";
+  say("Wait. You were not supposed to cut that.");
+
+  setTimeout(function () {
+    sign.classList.add("fall");
+    say("That was not intended.");
 
     setTimeout(function () {
       redButton.style.display = "block";
@@ -279,8 +211,9 @@ function unscrew(screw, container, onDone, wrongLine = "Those screws need a scre
   }, 300);
 };
 
-  setTimeout(() => {
-    screw.classList.add("hidden", "removed");
+for (let i = 0; i < firstScrews.length; i++) {
+  firstScrews[i].onclick = function (event) {
+    event.stopPropagation();
 
     unscrew(firstScrews[i], function () {
       vaultScrewsGone++;
@@ -312,126 +245,27 @@ redButton.onclick = function (event) {
   setTimeout(crash, 500);
 };
 
-    if (screwLines.has(state.glassScrewsRemoved)) {
-      say(screwLines.get(state.glassScrewsRemoved));
-    }
+glass.onclick = function () {
+  if (tool === "hammer") {
+    hammerHits++;
 
-    if (state.glassScrewsRemoved === 36) {
-      state.stage = "final";
-      setTimeout(dropGlass, 550);
+    if (hammerHits === 1) {
+      glass.classList.add("cracked");
+      say("That was a bad idea.");
+    } else {
+      tool = "";
+      document.querySelector('[data-tool="hammer"]').classList.add("broken");
+      say("The hammer broke. Nice job.");
     }
-  }, "Not with that.");
-}
-
-function hitGlass() {
-  if (state.stage !== "glass") {
-    return;
   }
 
-  if (state.selectedTool === "squirrel") {
+  if (tool === "squirrel") {
     stealDeckText();
-    return;
   }
+};
 
-  if (state.selectedTool !== "hammer") {
-    wrongTool("That glass is in the way.");
-    return;
+gameScreen.onclick = function () {
+  if (tool === "squirrel") {
+    stealDeckText();
   }
-
-  state.hammerHits++;
-  bumpScreen();
-
-  if (state.hammerHits === 1) {
-    cracks.classList.add("cracked");
-    say("That was a bad idea.");
-    return;
-  }
-
-  document.querySelector('[data-tool="hammer"]').classList.add("broken");
-
-  if (state.selectedTool === "hammer") {
-    state.selectedTool = null;
-  }
-
-  say("…and now it's broken. Good job.");
-}
-
-function dropGlass() {
-  glass.classList.add("falling");
-  bumpScreen();
-  say("The glass is gone, but the screw panel is still hiding something.");
-
-  setTimeout(() => {
-    glass.classList.add("hidden");
-    finalScrew.classList.remove("hidden");
-  }, 760);
-}
-
-function removeFinalScrew() {
-  if (state.stage !== "final" || state.finalScrewRemoved) {
-    return;
-  }
-
-  unscrew(finalScrew, panelCover, () => {
-    state.finalScrewRemoved = true;
-    panelCover.classList.add("opened");
-    bumpScreen();
-    say("The panel is open. Please ignore the big red button behind the glass and screws.");
-  }, "Absolutely not.");
-}
-
-function pressRedButton() {
-  if (!state.finalScrewRemoved || state.buttonPressed) {
-    say("That button is safely trapped behind the screw panel and the glass.");
-    return;
-  }
-
-  state.buttonPressed = true;
-  redButton.disabled = true;
-  redButton.textContent = "WHY";
-  titleWrap.classList.add("glitch");
-  bumpScreen();
-  say("You pressed it. Of course you did.");
-
-  setTimeout(() => {
-    blueScreen.classList.remove("hidden");
-    blueScreen.setAttribute("aria-hidden", "false");
-    say("…I told you there was no game.");
-  }, 650);
-
-  setTimeout(() => {
-    window.location.reload();
-  }, 2650);
-}
-
-startButton.addEventListener("click", () => {
-  say("No. Click the letters if you must ruin something.");
-});
-
-drawCard.addEventListener("click", drawTool);
-
-for (let index = 0; index < toolButtons.length; index++) {
-  toolButtons[index].addEventListener("click", () => selectTool(toolButtons[index]));
-}
-
-rope.addEventListener("click", cutRope);
-sign.addEventListener("click", cutRope);
-
-for (let index = 0; index < panelScrews.length; index++) {
-  panelScrews[index].addEventListener("click", (event) => {
-    event.stopPropagation();
-    removePanelScrew(panelScrews[index]);
-  });
-}
-
-glass.addEventListener("click", hitGlass);
-finalScrew.addEventListener("click", (event) => {
-  event.stopPropagation();
-  removeFinalScrew();
-});
-redButton.addEventListener("click", (event) => {
-  event.stopPropagation();
-  pressRedButton();
-});
-
-buildTitle();
+};

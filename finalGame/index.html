@@ -1,19 +1,29 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>THERE IS NO GAME</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main id="app" class="app" aria-live="polite">
-    <section id="stage" class="stage">
-      <div id="titleWrap" class="title-wrap">
-        <h1 id="title" class="title" aria-label="THERE IS NO GAME"></h1>
-        <p id="subtitle" class="subtitle">do not click start</p>
-        <button id="startButton" class="start-button" type="button">START GAME</button>
-      </div>
+  <main id="app">
+    <div id="voice">There is no game. Seriously. Do not press start.</div>
+
+    <section id="startScreen">
+      <h1 id="titleLetters">
+        <span>T</span><span>H</span><span>E</span><span>R</span><span>E</span>
+        <span>I</span><span>S</span>
+        <span>N</span><span>O</span>
+        <span>G</span><span>A</span><span>M</span><span>E</span>
+      </h1>
+      <p>do not click start</p>
+      <button id="startButton">START GAME</button>
+    </section>
+
+    <section id="gameScreen">
+      <div id="rope"></div>
+      <div id="sign">NO GAME</div>
 
       <button id="redButton">DO NOT PRESS</button>
 
@@ -25,49 +35,25 @@
         <div id="finalScrew" class="screw"></div>
       </div>
 
-      <div id="vaultScene" class="vault-scene hidden" aria-label="A suspicious vault panel">
-        <div id="vault" class="vault">
-          <button id="redButton" class="red-button" type="button" aria-label="do not press the red button">DO NOT PRESS</button>
-
-          <div id="panelCover" class="panel-cover">
-            <div class="vault-glow"></div>
-            <button class="screw panel-screw panel-screw-top-left" type="button" aria-label="top left panel screw"></button>
-            <button class="screw panel-screw panel-screw-top-right" type="button" aria-label="top right panel screw"></button>
-            <button class="screw panel-screw panel-screw-bottom-left" type="button" aria-label="bottom left panel screw"></button>
-            <button class="screw panel-screw panel-screw-bottom-right" type="button" aria-label="bottom right panel screw"></button>
-
-            <div id="glass" class="glass hidden" aria-label="sealed glass cover">
-              <div id="cracks" class="cracks"></div>
-              <div id="screwField" class="screw-field"></div>
-            </div>
-
-            <button id="finalScrew" class="screw final-screw hidden" type="button" aria-label="final center screw"></button>
-          </div>
-        </div>
-      </div>
+      <div id="glass"></div>
     </section>
 
-    <p id="narrator" class="narrator">There is no game. Seriously. Do not press start.</p>
-
-    <section id="deckArea" class="deck-area hidden" aria-label="tool deck">
-      <button id="drawCard" class="draw-card" type="button">Draw Tool Card</button>
+    <section id="deckArea">
+      <button id="drawCard">Draw Tool Card</button>
       <p id="deckInfo">Deck: 4 cards</p>
-      <div class="tools">
-        <button class="tool" type="button" data-tool="scissors" aria-label="Scissors"><span>✂️</span><small>Scissors</small></button>
-        <button class="tool" type="button" data-tool="hammer" aria-label="Hammer"><span>🔨</span><small>Hammer</small></button>
-        <button class="tool" type="button" data-tool="screwdriver" aria-label="Screwdriver"><span>🪛</span><small>Screwdriver</small></button>
-        <button class="tool" type="button" data-tool="squirrel" aria-label="Squirrel"><span>🐿️</span><small>Squirrel</small></button>
+      <div id="tools">
+        <button class="tool" data-tool="scissors">scissors</button>
+        <button class="tool" data-tool="hammer">hammer</button>
+        <button class="tool" data-tool="screwdriver">screwdriver</button>
+        <button class="tool" data-tool="squirrel">squirrel</button>
       </div>
     </section>
   </main>
 
-  <section id="blueScreen" class="blue-screen hidden" aria-hidden="true">
+  <section id="blueScreen">
     <div>
       <h2>SYSTEM ERROR</h2>
       <p>restarting...</p>
-      <p class="crash-narrator">…I told you there was no game.</p>
-      <pre>ANTI_GAME_EXCEPTION: player_pressed_the_red_button
-memory dump: 0000 NOPE 0001 WHY</pre>
     </div>
   </section>
 
