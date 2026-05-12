@@ -36,8 +36,6 @@
    -a "No no nO NO—"
    -b "I told you there was no game."
 
-## Optional Image Names
-
 
 
 

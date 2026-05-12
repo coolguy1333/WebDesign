@@ -1,18 +1,24 @@
-const startButton = document.getElementById("startButton");
-const startScreen = document.getElementById("startScreen");
-const gameScreen = document.getElementById("gameScreen");
-const voice = document.getElementById("voice");
-const rope = document.getElementById("rope");
-const sign = document.getElementById("sign");
-const vault = document.getElementById("vault");
-const firstScrews = document.querySelectorAll(".firstScrew");
-const finalScrew = document.getElementById("finalScrew");
-const glass = document.getElementById("glass");
-const redButton = document.getElementById("redButton");
-const deckArea = document.getElementById("deckArea");
-const drawCard = document.getElementById("drawCard");
-const deckInfo = document.getElementById("deckInfo");
-const blueScreen = document.getElementById("blueScreen");
+const titleText = "THERE IS NO GAME";
+const title = document.querySelector("#title");
+const titleWrap = document.querySelector("#titleWrap");
+const subtitle = document.querySelector("#subtitle");
+const startButton = document.querySelector("#startButton");
+const narrator = document.querySelector("#narrator");
+const deckArea = document.querySelector("#deckArea");
+const drawCard = document.querySelector("#drawCard");
+const deckInfo = document.querySelector("#deckInfo");
+const ropeScene = document.querySelector("#ropeScene");
+const rope = document.querySelector("#rope");
+const sign = document.querySelector("#sign");
+const vaultScene = document.querySelector("#vaultScene");
+const panelCover = document.querySelector("#panelCover");
+const panelScrews = document.querySelectorAll(".panel-screw");
+const glass = document.querySelector("#glass");
+const cracks = document.querySelector("#cracks");
+const screwField = document.querySelector("#screwField");
+const finalScrew = document.querySelector("#finalScrew");
+const redButton = document.querySelector("#redButton");
+const blueScreen = document.querySelector("#blueScreen");
 const toolButtons = document.querySelectorAll(".tool");
 
 const state = {
@@ -187,38 +193,15 @@ function wrongTool(defaultLine = "No.") {
 }
 
 function stealDeckText() {
-  if (squirrelUsed) {
-    say("The squirrel already stole something. (IM STILL MAD)");
+  if (state.squirrelUsed) {
+    say("The squirrel already stole something.");
     return;
   }
 
   state.squirrelUsed = true;
   deckInfo.textContent = "Deck: stolen";
   deckInfo.classList.add("stolen");
-  say("The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MAY CARDS AND BREAK MY GAME!!!!!");
-}
-
-function unscrew(screw, onDone) {
-  if (tool !== "screwdriver") {
-    say("Those screws need a screwdriver.");
-    return false;
-  }
-
-  if (screw.classList.contains("unscrewed")) {
-    return false;
-  }
-
-  screw.classList.add("unscrewed");
-
-  setTimeout(function () {
-    screw.style.display = "none";
-
-    if (onDone) {
-      onDone();
-    }
-  }, 250);
-
-  return true;
+  say("The squirrel stole the deck counter. Great. Very useful.");
 }
 
 function cutRope() {
@@ -226,21 +209,27 @@ function cutRope() {
     return;
   }
 
-function removeGlassScrew(screw) {
-  unscrew(screw, function () {
-    screw.remove();
-    glassScrewsGone++;
+  if (state.selectedTool === "squirrel") {
+    stealDeckText();
+    return;
+  }
 
-    if (glassScrewsGone === 1) {
-      say("Stop removing the glass screws.");
-    }
+  if (state.selectedTool !== "scissors") {
+    wrongTool("That won't cut it.");
+    return;
+  }
 
-    if (glassScrewsGone === 36) {
-      glass.style.display = "none";
-      finalScrew.style.display = "block";
-      say("The glass is gone, but the screw panel is still hiding something.");
-    }
-  });
+  state.stage = "panel";
+  rope.classList.add("snapped");
+  sign.classList.add("fallen");
+  bumpScreen();
+  say("Wait— You weren't supposed to do that.");
+
+  setTimeout(() => {
+    ropeScene.classList.add("hidden");
+    vaultScene.classList.remove("hidden");
+    say("Do not touch the panel screws. Every one of them is very important.");
+  }, 850);
 }
 
 function getScrewCenter(screw, container) {
@@ -271,46 +260,80 @@ function unscrew(screw, container, onDone, wrongLine = "Those screws need a scre
     return false;
   }
 
-    setTimeout(function () {
-      redButton.style.display = "block";
-      vault.style.display = "block";
-      say("Do not touch the corner screws. They are definitely not all removable.");
-    }, 700);
-  }, 300);
-};
+  const center = getScrewCenter(screw, container);
+  screw.classList.add("removing");
+  leaveHole(center.left, center.top, container);
 
   setTimeout(() => {
     screw.classList.add("hidden", "removed");
 
-    unscrew(firstScrews[i], function () {
-      vaultScrewsGone++;
-      say("Stop. Please stop.");
+    if (onDone) {
+      onDone();
+    }
+  }, 520);
 
-      if (vaultScrewsGone === 4) {
-        setTimeout(function () {
-          glass.style.display = "block";
-          makeScrews();
-          say("Oh no. Screws around the glass. Every one of them comes out.");
-        }, 400);
-      }
-    });
-  };
+  return true;
 }
 
-finalScrew.onclick = function (event) {
-  event.stopPropagation();
+function removePanelScrew(screw) {
+  if (state.stage !== "panel") {
+    return;
+  }
 
-  unscrew(finalScrew, function () {
-    vault.classList.add("opened");
-    say("The panel is open. Please ignore the big red button behind it.");
-  });
-};
+  unscrew(screw, panelCover, () => {
+    state.panelScrewsRemoved++;
+    say("Stop. Please stop.");
 
-redButton.onclick = function (event) {
-  event.stopPropagation();
-  say("You pressed it. Of course you did.");
-  setTimeout(crash, 500);
-};
+    if (state.panelScrewsRemoved === panelScrews.length) {
+      state.stage = "glass";
+      setTimeout(() => {
+        glass.classList.remove("hidden");
+        createGlassScrews();
+        say("Oh no. Screws around the glass. All of them come out too.");
+      }, 350);
+    }
+  }, "Those panel screws need a screwdriver.");
+}
+
+function createGlassScrews() {
+  screwField.replaceChildren();
+  state.glassScrewsRemoved = 0;
+
+  const rings = [
+    { count: 8, radius: 24 },
+    { count: 12, radius: 35 },
+    { count: 16, radius: 46 },
+  ];
+
+  for (let ringIndex = 0; ringIndex < rings.length; ringIndex++) {
+    const ring = rings[ringIndex];
+
+    for (let index = 0; index < ring.count; index++) {
+      const angle = (Math.PI * 2 * index) / ring.count - Math.PI / 2 + ringIndex * 0.08;
+      const x = 50 + Math.cos(angle) * ring.radius;
+      const y = 50 + Math.sin(angle) * ring.radius;
+      const screw = document.createElement("button");
+      screw.type = "button";
+      screw.className = "screw ring-screw";
+      screw.style.left = `${x}%`;
+      screw.style.top = `${y}%`;
+      screw.setAttribute("aria-label", "glass cover screw");
+      screw.addEventListener("click", (event) => {
+        event.stopPropagation();
+        removeGlassScrew(screw);
+      });
+      screwField.append(screw);
+    }
+  }
+}
+
+function removeGlassScrew(screw) {
+  if (state.stage !== "glass") {
+    return;
+  }
+
+  unscrew(screw, screwField, () => {
+    state.glassScrewsRemoved++;
 
     if (screwLines.has(state.glassScrewsRemoved)) {
       say(screwLines.get(state.glassScrewsRemoved));
