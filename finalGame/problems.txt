@@ -1,0 +1,8 @@
+red button not behind first tile
+red button not hide after click
+draw card button not hide after all picked
+card drawing not random
+need things to add audio to each voice line
+make screws take longer and screw driver go on mouse same with all tools 
+images for all not css remove all things drawn in css and add list of images
+audio labeled 1a, 1b, 1c ect.
