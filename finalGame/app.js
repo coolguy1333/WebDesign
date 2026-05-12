@@ -20,12 +20,41 @@ const finalScrew = document.querySelector("#finalScrew");
 const redButton = document.querySelector("#redButton");
 const blueScreen = document.querySelector("#blueScreen");
 const toolButtons = document.querySelectorAll(".tool");
+const imageDirectory = "images/";
+const audioDirectory = "audio/";
+const screwRemovalMs = 1250;
+const toolDeck = shuffle(Array.from(toolButtons));
+let currentVoiceAudio = null;
+let carriedTool = null;
+
+const toolImageFiles = {
+  scissors: "scissors.png",
+  hammer: "hammer.png",
+  screwdriver: "screwdriver.png",
+  squirrel: "squirrel.png",
+};
+
+const propImageFiles = {
+  rope: "rope.png",
+  sign: "sign.png",
+  vault: "vault.png",
+  screw: "screw.png",
+  glass: "glass.png",
+  crackedGlass: "cracked-glass.png",
+};
+
+const toolIcons = {
+  scissors: "✂️",
+  hammer: "🔨",
+  screwdriver: "🪛",
+  squirrel: "🐿️",
+};
 
 const state = {
   stage: "title",
   removedLetters: 0,
   selectedTool: null,
-  nextCard: 0,
+  cardsDrawn: 0,
   hammerHits: 0,
   panelScrewsRemoved: 0,
   glassScrewsRemoved: 0,
@@ -53,15 +82,88 @@ const screwLines = new Map([
   [35, "No no no no—"],
 ]);
 
-function say(line) {
+const drawVoiceIds = {
+  scissors: "3a",
+  hammer: "3b",
+  screwdriver: "3c",
+  squirrel: "3d",
+};
+
+const selectVoiceIds = {
+  scissors: "4a",
+  hammer: "4b",
+  screwdriver: "4c",
+  squirrel: "4d",
+};
+
+function shuffle(items) {
+  const shuffled = [...items];
+
+  for (let index = shuffled.length - 1; index > 0; index--) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [
+      shuffled[swapIndex],
+      shuffled[index],
+    ];
+  }
+
+  return shuffled;
+}
+
+function preloadImage(src, onLoad) {
+  const image = new Image();
+  image.addEventListener("load", () => onLoad(src));
+  image.src = src;
+}
+
+function setupImageSlots() {
+  for (const [tool, fileName] of Object.entries(toolImageFiles)) {
+    const button = document.querySelector(`[data-tool="${tool}"]`);
+    const icon = button?.querySelector("span");
+
+    preloadImage(`${imageDirectory}${fileName}`, (src) => {
+      button.classList.add("has-image");
+      icon.textContent = "";
+      icon.style.backgroundImage = `url("${src}")`;
+    });
+  }
+
+  for (const [name, fileName] of Object.entries(propImageFiles)) {
+    preloadImage(`${imageDirectory}${fileName}`, (src) => {
+      document.documentElement.style.setProperty(
+        `--image-${name}`,
+        `url("${src}")`,
+      );
+      document.documentElement.classList.add(`has-${name}-image`);
+    });
+  }
+}
+
+function playVoiceLine(voiceId) {
+  if (!voiceId) {
+    return;
+  }
+
+  if (currentVoiceAudio) {
+    currentVoiceAudio.pause();
+    currentVoiceAudio.currentTime = 0;
+  }
+
+  currentVoiceAudio = new Audio(`${audioDirectory}${voiceId}.mp3`);
+  currentVoiceAudio.volume = 0.9;
+  void currentVoiceAudio.play().catch(() => {});
+}
+
+function say(line, voiceId) {
   narrator.textContent = line;
+  playVoiceLine(voiceId);
   narrator.animate(
     [
       { transform: "translateY(0)", opacity: 0.75 },
       { transform: "translateY(-0.18rem)", opacity: 1 },
       { transform: "translateY(0)", opacity: 1 },
     ],
-    { duration: 220, easing: "ease-out" }
+    { duration: 220, easing: "ease-out" },
   );
 }
 
@@ -93,7 +195,9 @@ function buildTitle(removable = true) {
     if (removable) {
       letter.type = "button";
       letter.setAttribute("aria-label", `remove letter ${character}`);
-      letter.addEventListener("click", () => removeLetter(letter), { once: true });
+      letter.addEventListener("click", () => removeLetter(letter), {
+        once: true,
+      });
     }
 
     title.append(letter);
@@ -108,8 +212,9 @@ function removeLetter(letter) {
   letter.classList.add("falling");
   state.removedLetters++;
 
-  const line = titleLines[Math.min(state.removedLetters - 1, titleLines.length - 1)];
-  say(line);
+  const line =
+    titleLines[Math.min(state.removedLetters - 1, titleLines.length - 1)];
+  say(line, `2${String.fromCharCode(96 + Math.min(state.removedLetters, 2))}`);
 
   if (state.removedLetters === titleText.replaceAll(" ", "").length) {
     state.stage = "reinforcing";
@@ -127,7 +232,7 @@ function reinforceTitle() {
     titleWrap.classList.remove("glitch");
     titleWrap.classList.add("reinforced");
     buildTitle(false);
-    say("There. Fixed.");
+    say("There. Fixed.", "1b");
     showToolsAndRope();
   }, 430);
 }
@@ -137,25 +242,36 @@ function showToolsAndRope() {
   deckArea.classList.remove("hidden");
   titleWrap.classList.add("pinned");
   ropeScene.classList.remove("hidden");
-  setTimeout(() => say("Please do not draw those cards."), 650);
+  setTimeout(() => say("Please do not draw those cards.", "2c"), 650);
 }
 
 function drawTool() {
-  if (state.nextCard >= toolButtons.length) {
+  if (state.cardsDrawn >= toolDeck.length) {
+    drawCard.classList.add("hidden");
+    drawCard.disabled = true;
     say("No cards left. That is probably your fault.");
     return;
   }
 
-  const button = toolButtons[state.nextCard];
+  const button = toolDeck[state.cardsDrawn];
+  const remainingCards = toolDeck.length - state.cardsDrawn - 1;
   button.classList.add("revealed");
-  deckInfo.textContent = `Deck: ${toolButtons.length - state.nextCard - 1} cards`;
-  say(`You drew ${button.dataset.tool}. This is not helping.`);
-  state.nextCard++;
+  deckInfo.textContent = `Deck: ${remainingCards} cards`;
+  say(
+    `You drew ${button.dataset.tool}. This is not helping.`,
+    drawVoiceIds[button.dataset.tool],
+  );
+  state.cardsDrawn++;
+
+  if (state.cardsDrawn >= toolDeck.length) {
+    drawCard.classList.add("hidden");
+    drawCard.disabled = true;
+  }
 }
 
 function selectTool(button) {
   if (button.classList.contains("broken")) {
-    say("That used to be a hammer.");
+    say("That used to be a hammer.", "9b");
     return;
   }
 
@@ -165,11 +281,15 @@ function selectTool(button) {
 
   button.classList.add("selected");
   state.selectedTool = button.dataset.tool;
+  updateCarriedTool(state.selectedTool);
 
   if (state.selectedTool === "squirrel") {
-    say("…why do you have a squirrel?");
+    say("…why do you have a squirrel?", "4d");
   } else {
-    say(`You selected the ${state.selectedTool}. Please do not use it.`);
+    say(
+      `You selected the ${state.selectedTool}. Please do not use it.`,
+      selectVoiceIds[state.selectedTool],
+    );
   }
 }
 
@@ -180,12 +300,12 @@ function wrongTool(defaultLine = "No.") {
       "The squirrel cannot solve your problems.",
       "Why are you trying that?",
     ];
-    say(squirrelLines[Math.floor(Math.random() * squirrelLines.length)]);
+    say(squirrelLines[Math.floor(Math.random() * squirrelLines.length)], "4d");
     return;
   }
 
   if (!state.selectedTool) {
-    say("With what, exactly?");
+    say("With what, exactly?", "6a");
     return;
   }
 
@@ -194,14 +314,14 @@ function wrongTool(defaultLine = "No.") {
 
 function stealDeckText() {
   if (state.squirrelUsed) {
-    say("The squirrel already stole something.");
+    say("The squirrel already stole something.", "5a");
     return;
   }
 
   state.squirrelUsed = true;
   deckInfo.textContent = "Deck: stolen";
   deckInfo.classList.add("stolen");
-  say("The squirrel stole the deck counter. Great. Very useful.");
+  say("The squirrel stole the deck counter. Great. Very useful.", "5a");
 }
 
 function cutRope() {
@@ -223,12 +343,15 @@ function cutRope() {
   rope.classList.add("snapped");
   sign.classList.add("fallen");
   bumpScreen();
-  say("Wait— You weren't supposed to do that.");
+  say("Wait— You weren't supposed to do that.", "6b");
 
   setTimeout(() => {
     ropeScene.classList.add("hidden");
     vaultScene.classList.remove("hidden");
-    say("Do not touch the panel screws. Every one of them is very important.");
+    say(
+      "Do not touch the panel screws. Every one of them is very important.",
+      "8a",
+    );
   }, 850);
 }
 
@@ -250,13 +373,21 @@ function leaveHole(left, top, container) {
   container.prepend(hole);
 }
 
-function unscrew(screw, container, onDone, wrongLine = "Those screws need a screwdriver.") {
+function unscrew(
+  screw,
+  container,
+  onDone,
+  wrongLine = "Those screws need a screwdriver.",
+) {
   if (state.selectedTool !== "screwdriver") {
     wrongTool(wrongLine);
     return false;
   }
 
-  if (screw.classList.contains("removing") || screw.classList.contains("removed")) {
+  if (
+    screw.classList.contains("removing") ||
+    screw.classList.contains("removed")
+  ) {
     return false;
   }
 
@@ -270,7 +401,7 @@ function unscrew(screw, container, onDone, wrongLine = "Those screws need a scre
     if (onDone) {
       onDone();
     }
-  }, 520);
+  }, screwRemovalMs);
 
   return true;
 }
@@ -280,19 +411,27 @@ function removePanelScrew(screw) {
     return;
   }
 
-  unscrew(screw, panelCover, () => {
-    state.panelScrewsRemoved++;
-    say("Stop. Please stop.");
+  unscrew(
+    screw,
+    panelCover,
+    () => {
+      state.panelScrewsRemoved++;
+      say("Stop. Please stop.", "8b");
 
-    if (state.panelScrewsRemoved === panelScrews.length) {
-      state.stage = "glass";
-      setTimeout(() => {
-        glass.classList.remove("hidden");
-        createGlassScrews();
-        say("Oh no. Screws around the glass. All of them come out too.");
-      }, 350);
-    }
-  }, "Those panel screws need a screwdriver.");
+      if (state.panelScrewsRemoved === panelScrews.length) {
+        state.stage = "glass";
+        setTimeout(() => {
+          glass.classList.remove("hidden");
+          createGlassScrews();
+          say(
+            "Oh no. Screws around the glass. All of them come out too.",
+            "8c",
+          );
+        }, 350);
+      }
+    },
+    "Those panel screws need a screwdriver.",
+  );
 }
 
 function createGlassScrews() {
@@ -309,7 +448,8 @@ function createGlassScrews() {
     const ring = rings[ringIndex];
 
     for (let index = 0; index < ring.count; index++) {
-      const angle = (Math.PI * 2 * index) / ring.count - Math.PI / 2 + ringIndex * 0.08;
+      const angle =
+        (Math.PI * 2 * index) / ring.count - Math.PI / 2 + ringIndex * 0.08;
       const x = 50 + Math.cos(angle) * ring.radius;
       const y = 50 + Math.sin(angle) * ring.radius;
       const screw = document.createElement("button");
@@ -332,18 +472,23 @@ function removeGlassScrew(screw) {
     return;
   }
 
-  unscrew(screw, screwField, () => {
-    state.glassScrewsRemoved++;
+  unscrew(
+    screw,
+    screwField,
+    () => {
+      state.glassScrewsRemoved++;
 
-    if (screwLines.has(state.glassScrewsRemoved)) {
-      say(screwLines.get(state.glassScrewsRemoved));
-    }
+      if (screwLines.has(state.glassScrewsRemoved)) {
+        say(screwLines.get(state.glassScrewsRemoved), "8d");
+      }
 
-    if (state.glassScrewsRemoved === 36) {
-      state.stage = "final";
-      setTimeout(dropGlass, 550);
-    }
-  }, "Not with that.");
+      if (state.glassScrewsRemoved === 36) {
+        state.stage = "final";
+        setTimeout(dropGlass, 550);
+      }
+    },
+    "Not with that.",
+  );
 }
 
 function hitGlass() {
@@ -366,7 +511,7 @@ function hitGlass() {
 
   if (state.hammerHits === 1) {
     cracks.classList.add("cracked");
-    say("That was a bad idea.");
+    say("That was a bad idea.", "9a");
     return;
   }
 
@@ -374,15 +519,21 @@ function hitGlass() {
 
   if (state.selectedTool === "hammer") {
     state.selectedTool = null;
+    document.body.classList.remove("tool-in-hand");
+    carriedTool?.remove();
+    carriedTool = null;
   }
 
-  say("…and now it's broken. Good job.");
+  say("…and now it's broken. Good job.", "9b");
 }
 
 function dropGlass() {
   glass.classList.add("falling");
   bumpScreen();
-  say("The glass is gone, but the screw panel is still hiding something.");
+  say(
+    "The glass is gone, but the screw panel is still hiding something.",
+    "8e",
+  );
 
   setTimeout(() => {
     glass.classList.add("hidden");
@@ -395,12 +546,20 @@ function removeFinalScrew() {
     return;
   }
 
-  unscrew(finalScrew, panelCover, () => {
-    state.finalScrewRemoved = true;
-    panelCover.classList.add("opened");
-    bumpScreen();
-    say("The panel is open. Please ignore the big red button behind the glass and screws.");
-  }, "Absolutely not.");
+  unscrew(
+    finalScrew,
+    panelCover,
+    () => {
+      state.finalScrewRemoved = true;
+      panelCover.classList.add("opened");
+      bumpScreen();
+      say(
+        "The panel is open. Please ignore the big red button behind the glass and screws.",
+        "10a",
+      );
+    },
+    "Absolutely not.",
+  );
 }
 
 function pressRedButton() {
@@ -412,14 +571,16 @@ function pressRedButton() {
   state.buttonPressed = true;
   redButton.disabled = true;
   redButton.textContent = "WHY";
+  redButton.classList.add("pressed");
+  setTimeout(() => redButton.classList.add("hidden"), 240);
   titleWrap.classList.add("glitch");
   bumpScreen();
-  say("You pressed it. Of course you did.");
+  say("You pressed it. Of course you did.", "10a");
 
   setTimeout(() => {
     blueScreen.classList.remove("hidden");
     blueScreen.setAttribute("aria-hidden", "false");
-    say("…I told you there was no game.");
+    say("…I told you there was no game.", "10b");
   }, 650);
 
   setTimeout(() => {
@@ -427,14 +588,49 @@ function pressRedButton() {
   }, 2650);
 }
 
+function moveCarriedTool(event) {
+  if (!carriedTool) {
+    return;
+  }
+
+  carriedTool.style.left = `${event.clientX}px`;
+  carriedTool.style.top = `${event.clientY}px`;
+}
+
+function updateCarriedTool(tool) {
+  if (!carriedTool) {
+    carriedTool = document.createElement("div");
+    carriedTool.className = "carried-tool";
+    document.body.append(carriedTool);
+  }
+
+  carriedTool.textContent = toolIcons[tool] || "";
+  carriedTool.style.backgroundImage = "";
+
+  if (toolImageFiles[tool]) {
+    preloadImage(`${imageDirectory}${toolImageFiles[tool]}`, (src) => {
+      if (state.selectedTool === tool && carriedTool) {
+        carriedTool.textContent = "";
+        carriedTool.style.backgroundImage = `url("${src}")`;
+      }
+    });
+  }
+
+  document.body.classList.add("tool-in-hand");
+}
+
+document.addEventListener("pointermove", moveCarriedTool);
+
 startButton.addEventListener("click", () => {
-  say("No. Click the letters if you must ruin something.");
+  say("No. Click the letters if you must ruin something.", "1a");
 });
 
 drawCard.addEventListener("click", drawTool);
 
 for (let index = 0; index < toolButtons.length; index++) {
-  toolButtons[index].addEventListener("click", () => selectTool(toolButtons[index]));
+  toolButtons[index].addEventListener("click", () =>
+    selectTool(toolButtons[index]),
+  );
 }
 
 rope.addEventListener("click", cutRope);
@@ -457,4 +653,5 @@ redButton.addEventListener("click", (event) => {
   pressRedButton();
 });
 
+setupImageSlots();
 buildTitle();

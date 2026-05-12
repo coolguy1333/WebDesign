@@ -236,6 +236,60 @@ button {
   color: orange;
 }
 
+.tool.has-image span,
+.carried-tool {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.tool.has-image span {
+  width: 2rem;
+  height: 2rem;
+}
+
+.tool-in-hand,
+.tool-in-hand button {
+  cursor: none;
+}
+
+.carried-tool {
+  position: fixed;
+  z-index: 30;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  font-size: 2.25rem;
+  filter: drop-shadow(0 0.4rem 0.5rem rgba(0, 0, 0, 0.45));
+  transform: translate(0.25rem, 0.25rem) rotate(-8deg);
+}
+
+.red-button.pressed {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.76);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.has-rope-image .rope,
+.has-sign-image .wood-sign,
+.has-vault-image .panel-cover,
+.has-screw-image .screw,
+.has-glass-image .glass {
+  color: transparent;
+  text-shadow: none;
+}
+
+.has-screw-image .screw {
+  border: 0;
+}
+
+.has-screw-image .screw::after {
+  display: none;
+}
+
 .rope-scene,
 .vault-scene {
   position: absolute;
@@ -252,7 +306,9 @@ button {
   cursor: pointer;
   border: 0;
   border-radius: 999px;
-  background: repeating-linear-gradient(90deg, #6b4a2b 0 3px, #a47542 3px 6px);
+  background: var(--image-rope, repeating-linear-gradient(90deg, #6b4a2b 0 3px, #a47542 3px 6px));
+  background-position: center;
+  background-size: cover;
   box-shadow: 0 0 0.8rem rgba(255, 211, 109, 0.18);
   transform-origin: top center;
 }
@@ -273,7 +329,9 @@ button {
   letter-spacing: 0.12em;
   border: 0.35rem solid #4a2a12;
   border-radius: 0.4rem;
-  background: linear-gradient(90deg, #96602d, #c58a4a 28%, #8b5528 58%, #b97939);
+  background: var(--image-sign, linear-gradient(90deg, #96602d, #c58a4a 28%, #8b5528 58%, #b97939));
+  background-position: center;
+  background-size: cover;
   box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.45);
   transform-origin: top center;
   animation: swing 2.8s ease-in-out infinite;
@@ -321,7 +379,9 @@ button {
   place-items: center;
   border: 0.7rem solid #303948;
   border-radius: 1.2rem;
-  background: radial-gradient(circle, #253044 0 28%, #151c2b 29% 62%, #0c111d 63%);
+  background: var(--image-vault, radial-gradient(circle, #253044 0 28%, #151c2b 29% 62%, #0c111d 63%));
+  background-position: center;
+  background-size: cover;
   box-shadow: inset 0 0 3rem rgba(109, 247, 255, 0.08), 0 0 2rem rgba(0, 0, 0, 0.55);
   transition: opacity 650ms ease, transform 650ms ease;
 }
@@ -346,7 +406,9 @@ button {
   cursor: pointer;
   border: 2px solid #778397;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #f3f6ff, #8792a8 42%, #2e3647 43%);
+  background: var(--image-screw, radial-gradient(circle at 35% 30%, #f3f6ff, #8792a8 42%, #2e3647 43%));
+  background-position: center;
+  background-size: cover;
   box-shadow: 0 0 0.45rem rgba(255, 255, 255, 0.18);
 }
 
@@ -380,11 +442,11 @@ button {
 
 .screw.removing {
   pointer-events: none;
-  animation: unscrew 520ms ease forwards;
+  animation: unscrew 1250ms ease forwards;
 }
 
 .panel-screw.removing {
-  animation: panelUnscrew 520ms ease forwards;
+  animation: panelUnscrew 1250ms ease forwards;
 }
 
 .hole {
@@ -403,7 +465,9 @@ button {
   overflow: hidden;
   border: 2px solid rgba(210, 244, 255, 0.48);
   border-radius: 50%;
-  background: linear-gradient(135deg, rgba(190, 237, 255, 0.08), rgba(255, 255, 255, 0.18) 45%, rgba(141, 217, 255, 0.05));
+  background: var(--image-glass, linear-gradient(135deg, rgba(190, 237, 255, 0.08), rgba(255, 255, 255, 0.18) 45%, rgba(141, 217, 255, 0.05));
+  background-position: center;
+  background-size: cover;
   box-shadow: inset 0 0 2rem rgba(221, 250, 255, 0.16), 0 0 1.5rem rgba(109, 247, 255, 0.12);
   animation: glassLower 550ms ease forwards;
 }
@@ -423,8 +487,10 @@ button {
 .cracks.cracked {
   opacity: 1;
   background:
-    linear-gradient(32deg, transparent 48%, rgba(255, 255, 255, 0.75) 49% 50%, transparent 51%) 45% 35% / 45% 45% no-repeat,
+    var(--image-crackedGlass, linear-gradient(32deg, transparent 48%, rgba(255, 255, 255, 0.75) 49% 50%, transparent 51%) 45% 35% / 45% 45% no-repeat),
     linear-gradient(112deg, transparent 48%, rgba(255, 255, 255, 0.55) 49% 50%, transparent 51%) 50% 40% / 38% 38% no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .screw-field {
