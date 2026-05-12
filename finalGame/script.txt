@@ -24,7 +24,7 @@
    -c "That was not intended."
    -d "There is NO screws AT ALL"
 8. Screws:
-   -a "Those corner screws need to stay, IF YOU TAKE THEM SO HELP ME GOD."
+   -a "Those corner screws need to stay, IF YOU TAKE THEM SO HELP ME GOD. The game... WAIT NOT A GAME might break"
    -b "Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
    -c "Oh no. Reinforced glass with 36 SCREWS HA HA."
    -d "Stop removing the glass screws your not supposed to do that."
