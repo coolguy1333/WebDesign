@@ -311,6 +311,60 @@ button {
   color: orange;
 }
 
+.tool.has-image span,
+.carried-tool {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.tool.has-image span {
+  width: 2rem;
+  height: 2rem;
+}
+
+.tool-in-hand,
+.tool-in-hand button {
+  cursor: none;
+}
+
+.carried-tool {
+  position: fixed;
+  z-index: 30;
+  width: 3rem;
+  height: 3rem;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  font-size: 2.25rem;
+  filter: drop-shadow(0 0.4rem 0.5rem rgba(0, 0, 0, 0.45));
+  transform: translate(0.25rem, 0.25rem) rotate(-8deg);
+}
+
+.red-button.pressed {
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(0.76);
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+
+.has-rope-image .rope,
+.has-sign-image .wood-sign,
+.has-vault-image .panel-cover,
+.has-screw-image .screw,
+.has-glass-image .glass {
+  color: transparent;
+  text-shadow: none;
+}
+
+.has-screw-image .screw {
+  border: 0;
+}
+
+.has-screw-image .screw::after {
+  display: none;
+}
+
 .rope-scene,
 .vault-scene {
   position: absolute;
