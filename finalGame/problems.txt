@@ -2,7 +2,7 @@ red button not behind first tile
 red button not hide after click
 draw card button not hide after all picked
 card drawing not random
-need things to add audio to each voice line
+need things to add audio to each voice line all will be .mp3
 make screws take longer and screw driver go on mouse same with all tools 
-images for all not css remove all things drawn in css and add list of images
+images for all not css remove all things drawn in css and add list of images so i can use the images folder and put in pngs all will be .png
 audio labeled 1a, 1b, 1c ect.
