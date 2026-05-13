@@ -245,3 +245,47 @@ body {
     text-align: center;
     place-items: center;
   }
+#rope,
+#sign,
+#redButton,
+#vault,
+#glass,
+.screw,
+.smallScrew {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.screw,
+.smallScrew {
+    background-image: url("images/screw.png");
+    background-size: cover;
+}
+
+.toolIcon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 6px;
+    pointer-events: none;
+}
+
+#toolCursor {
+    display: none;
+    position: fixed;
+    width: 48px;
+    height: 48px;
+    margin-left: 14px;
+    margin-top: 14px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+#toolCursor.show {
+    display: block;
+}
