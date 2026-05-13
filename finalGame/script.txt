@@ -1,7 +1,7 @@
 1. Start screen:
    -a "There is no game. Seriously. Do not press start."
    -b "See no game."
-2. Clicking title letters:
+2. Clicking title letters / deck warning:
    -a "Stop clicking the title. Those letters are not buttons."
    -b "HEY those are EXPENSIVE!"
    -c "Still not a game."
@@ -15,24 +15,29 @@
    -a "You selected the scissors... Please do not use it."
    -b "You selected the hammer... I hope it breaks"
    -c "You selected the screwdriver? Why?."
-   -d "That is a squirrel."
+   -d "That is a squirrel. It is not a tool."
 5. Squirrel:
-   -a "The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MAY CARDS AND BREAK MY GAME!!!!!"
+   -a "The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MY CARDS AND BREAK MY GAME!!!!!"
+   -b "The squirrel already stole something. It has a tiny lawyer now."
 6. Rope:
    -a "That rope is decorative."
    -b "Wait... You can cut that??"
 7. Sign and vault:
    -c "That was not intended."
-   -d "There is NO screws AT ALL"
+   -d "There is NO screws AT ALL."
+   -e "Nice try. The vault panel is still in the way."
 8. Screws:
    -a "Those corner screws need to stay, IF YOU TAKE THEM SO HELP ME GOD. The game... WAIT NOT A GAME might break"
    -b "Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
    -c "Oh no. Reinforced glass with 36 SCREWS HA HA."
-   -d "Stop removing the glass screws your not supposed to do that."
+   -d "Stop removing the glass screws you're not supposed to do that."
    -e "Do not touch the final screw, if you don't ill give you 10 bucks!."
 9. Hammer:
    -a "That was a bad idea."
    -b "The hammer broke. Nice job. GREAT JOB, you just break everything"
-10. Ending:
+10. Ending / button escape level:
    -a "No no nO NO—"
    -b "I told you there was no game."
+   -c "The button has chosen cowardice. Click attempt 1 was denied."
+   -d "The button is doing cardio. Click attempt 2 was denied."
+   -e "Stop making the button exercise. Click attempt 3 was denied."
