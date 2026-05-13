@@ -1,4 +1,4 @@
-Fixed checklist
+Problems
 - Red button is layered behind the first vault panel and cannot be used until the panel opens.
 - Red button hides after it is clicked.
 - Draw card button hides and disables when all cards have been picked.
@@ -7,6 +7,7 @@ Fixed checklist
 - Screws take longer to remove.
 - The selected tool follows the mouse cursor while in use.
 - Tool and prop images can be supplied as .png files in finalGame/images/.
+- KEEP ALL LOOK AND STYLE THE SAME JUST ADD THIS NO CHANGES THERE
 
 Audio files
 - 1a.mp3, 1b.mp3
@@ -30,3 +31,4 @@ Image files
 - screw.png
 - glass.png
 - cracked-glass.png
+- button.png
