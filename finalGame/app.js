@@ -20,36 +20,10 @@ const finalScrew = document.querySelector("#finalScrew");
 const redButton = document.querySelector("#redButton");
 const blueScreen = document.querySelector("#blueScreen");
 const toolButtons = document.querySelectorAll(".tool");
-const imageDirectory = "images/";
 const audioDirectory = "audio/";
-const screwRemovalMs = 1250;
+const screwRemovalMs = 520;
 const toolDeck = shuffle(Array.from(toolButtons));
 let currentVoiceAudio = null;
-let carriedTool = null;
-
-const toolImageFiles = {
-  scissors: "scissors.png",
-  hammer: "hammer.png",
-  screwdriver: "screwdriver.png",
-  squirrel: "squirrel.png",
-};
-
-const propImageFiles = {
-  rope: "rope.png",
-  sign: "sign.png",
-  vault: "vault.png",
-  screw: "screw.png",
-  glass: "glass.png",
-  crackedGlass: "cracked-glass.png",
-};
-
-const toolIcons = {
-  scissors: "✂️",
-  hammer: "🔨",
-  screwdriver: "🪛",
-  squirrel: "🐿️",
-};
-
 const state = {
   stage: "title",
   removedLetters: 0,
@@ -108,35 +82,6 @@ function shuffle(items) {
   }
 
   return shuffled;
-}
-
-function preloadImage(src, onLoad) {
-  const image = new Image();
-  image.addEventListener("load", () => onLoad(src));
-  image.src = src;
-}
-
-function setupImageSlots() {
-  for (const [tool, fileName] of Object.entries(toolImageFiles)) {
-    const button = document.querySelector(`[data-tool="${tool}"]`);
-    const icon = button?.querySelector("span");
-
-    preloadImage(`${imageDirectory}${fileName}`, (src) => {
-      button.classList.add("has-image");
-      icon.textContent = "";
-      icon.style.backgroundImage = `url("${src}")`;
-    });
-  }
-
-  for (const [name, fileName] of Object.entries(propImageFiles)) {
-    preloadImage(`${imageDirectory}${fileName}`, (src) => {
-      document.documentElement.style.setProperty(
-        `--image-${name}`,
-        `url("${src}")`,
-      );
-      document.documentElement.classList.add(`has-${name}-image`);
-    });
-  }
 }
 
 function playVoiceLine(voiceId) {
@@ -281,7 +226,6 @@ function selectTool(button) {
 
   button.classList.add("selected");
   state.selectedTool = button.dataset.tool;
-  updateCarriedTool(state.selectedTool);
 
   if (state.selectedTool === "squirrel") {
     say("…why do you have a squirrel?", "4d");
@@ -519,9 +463,6 @@ function hitGlass() {
 
   if (state.selectedTool === "hammer") {
     state.selectedTool = null;
-    document.body.classList.remove("tool-in-hand");
-    carriedTool?.remove();
-    carriedTool = null;
   }
 
   say("…and now it's broken. Good job.", "9b");
@@ -588,38 +529,6 @@ function pressRedButton() {
   }, 2650);
 }
 
-function moveCarriedTool(event) {
-  if (!carriedTool) {
-    return;
-  }
-
-  carriedTool.style.left = `${event.clientX}px`;
-  carriedTool.style.top = `${event.clientY}px`;
-}
-
-function updateCarriedTool(tool) {
-  if (!carriedTool) {
-    carriedTool = document.createElement("div");
-    carriedTool.className = "carried-tool";
-    document.body.append(carriedTool);
-  }
-
-  carriedTool.textContent = toolIcons[tool] || "";
-  carriedTool.style.backgroundImage = "";
-
-  if (toolImageFiles[tool]) {
-    preloadImage(`${imageDirectory}${toolImageFiles[tool]}`, (src) => {
-      if (state.selectedTool === tool && carriedTool) {
-        carriedTool.textContent = "";
-        carriedTool.style.backgroundImage = `url("${src}")`;
-      }
-    });
-  }
-
-  document.body.classList.add("tool-in-hand");
-}
-
-document.addEventListener("pointermove", moveCarriedTool);
 
 startButton.addEventListener("click", () => {
   say("No. Click the letters if you must ruin something.", "1a");
@@ -653,5 +562,4 @@ redButton.addEventListener("click", (event) => {
   pressRedButton();
 });
 
-setupImageSlots();
 buildTitle();
