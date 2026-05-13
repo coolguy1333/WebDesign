@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>THERE IS NO GAME</title>
@@ -46,13 +46,14 @@
                 type="button"
               ></button>
             </div>
+
+            <button id="finalScrew" class="screw final-screw hidden" type="button" aria-label="final center screw"></button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <p id="narrator" class="narrator">
-        There is no game. Seriously. Do not press start.
-      </p>
+    <p id="narrator" class="narrator">There is no game. Seriously. Do not press start.</p>
 
       <section id="deckArea" class="deck-area hidden">
         <button id="drawCard" class="draw-card" type="button">
@@ -86,7 +87,18 @@ ANTI_GAME_EXCEPTION: player_pressed_the_red_button
 memory dump: 0000 NOPE 0001 WHY</pre>
       </div>
     </section>
+  </main>
 
-    <script src="app.js"></script>
-  </body>
+  <section id="blueScreen" class="blue-screen hidden" aria-hidden="true">
+    <div>
+      <h2>SYSTEM ERROR</h2>
+      <p>restarting...</p>
+      <p class="crash-narrator">…I told you there was no game.</p>
+      <pre>ANTI_GAME_EXCEPTION: player_pressed_the_red_button
+memory dump: 0000 NOPE 0001 WHY</pre>
+    </div>
+  </section>
+
+  <script src="app.js"></script>
+</body>
 </html>
