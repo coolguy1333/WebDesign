@@ -1,4 +1,13 @@
 Problems
+- tool image not centered on mouse
+- css lines still on when images exist
+- cracked glass not showing
+- make sure voice lines from script.txt match game and add more funny lines like them in scrip.txt
+- no center screw after glass
+- add one more level after vault where the button moves randomly away for the first 3 clicks
+- simplify js and css
+
+Solved
 - Red button is layered behind the first vault panel and cannot be used until the panel opens.
 - Red button hides after it is clicked.
 - Draw card button hides and disables when all cards have been picked.
