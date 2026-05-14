@@ -36,12 +36,12 @@ body {
 
 #titleLetters span {
   display: inline-block;
-  transition: 0.8s;
+  transition: 1.2s;
   cursor: pointer;
 }
 
 #titleLetters span.fall {
-  transform: translateY(180px) rotate(20deg);
+  transform: translateY(350px) rotate(720deg);
   opacity: 0;
 }
 
@@ -92,8 +92,9 @@ button:hover {
 }
 
 #rope.imageBacked {
+  width: 20px;
+  left: calc(50% - 10px);
   background-color: transparent;
-  background-size: 100% 100%;
 }
 
 #sign {
@@ -111,6 +112,7 @@ button:hover {
 
 #sign.fall {
   top: 410px;
+  transform: rotate(360deg);
   opacity: 0;
 }
 
@@ -119,10 +121,10 @@ button:hover {
   position: absolute;
   left: calc(50% - 62px);
   top: 275px;
-  width: 124px;
-  height: 58px;
+  width: 125px;
+  height: 60px;
   border: 3px solid #ff9a9a;
-  border-radius: 999px;
+  border-radius: 100px;
   background-color: #c80000;
   color: white;
   font-weight: bold;
@@ -176,9 +178,10 @@ button:hover {
   background-color: #666;
   background-image: url("images/screw.png");
   background-size: cover;
+  display: inline-block;
   position: absolute;
   cursor: pointer;
-  transition: transform .25s, opacity .25s;
+  transition: transform 1s, opacity 1s;
   z-index: 4;
 }
 
@@ -186,7 +189,7 @@ button:hover {
 .screw.unscrewed,
 .smallScrew.unscrewed {
   opacity: 0;
-  transform: rotate(180deg) scale(.35);
+  transform: rotate(720deg) scale(2);
   pointer-events: none;
 }
 
@@ -269,13 +272,14 @@ button:hover {
 
 #sign.imageBacked {
   color: white;
-  background-size: 100% 100%;
   text-shadow: 0 2px 3px #000, 0 0 7px #000;
 }
 
 #redButton.imageBacked {
+  width: 76px;
+  height: 76px;
+  left: calc(50% - 38px);
   background-color: transparent;
-  background-size: 100% 100%;
   border-color: transparent;
   border-radius: 0;
   box-shadow: none;
