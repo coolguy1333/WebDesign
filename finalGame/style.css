@@ -112,6 +112,7 @@ button:hover {
 
 #sign.fall {
   top: 410px;
+  transform: rotate(360deg);
   opacity: 0;
 }
 
