@@ -91,6 +91,12 @@ button:hover {
   cursor: pointer;
 }
 
+#rope.imageBacked {
+  width: 20px;
+  left: calc(50% - 10px);
+  background-color: transparent;
+}
+
 #sign {
   width: 170px;
   height: 70px;
@@ -262,9 +268,27 @@ button:hover {
   text-shadow: none;
 }
 
+#sign.imageBacked {
+  color: white;
+  text-shadow: 0 2px 3px #000, 0 0 7px #000;
+}
+
 #redButton.imageBacked {
+  width: 76px;
+  height: 76px;
+  left: calc(50% - 38px);
+  background-color: transparent;
   border-color: transparent;
+  border-radius: 0;
   box-shadow: none;
+}
+
+#redButton.imageBacked:hover {
+  background-color: transparent;
+}
+
+#finalScrew.finalScrewReady {
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, .8));
 }
 
 .toolIcon {
