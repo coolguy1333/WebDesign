@@ -34,9 +34,24 @@ const toolMessages = {
   },
   squirrel: {
     draw: ["You drew squirrel... Wait... Thats in the deck???", "3d"],
-    select: ["That is a squirrel. It is not a tool.", "4d"]
+    select: ["That is a squirrel wearing a tool belt made of stolen receipts.", "4d"]
   }
 };
+const letterLines = [
+  ["Stop clicking the title. Those letters are not buttons.", "2a"],
+  ["HEY those are EXPENSIVE! I rented that alphabet.", "2b"],
+  ["That letter had a family. Mostly vowels, but still.", "2e"],
+  ["Please stop alphabet vandalism before the title becomes interpretive dance.", "2f"],
+  ["I am running out of letters and emotional support pixels.", "2g"]
+];
+const screwProgressLines = [
+  [1, "Stop removing the glass screws you're not supposed to do that.", "8d"],
+  [6, "Six screws gone. The glass is now held on by spite and bad planning.", "8f"],
+  [12, "Twelve screws. Did you bring snacks for this hardware marathon?", "8g"],
+  [18, "Halfway through thirty-six screws. This is not gameplay, this is a tiny chore simulator.", "8h"],
+  [27, "Twenty-seven screws. The screwdriver is filing a complaint with management.", "8i"],
+  [35, "One glass screw left. Do not get dramatic. Actually, no, you will.", "8j"]
+];
 const imageProps = [
   [rope, "rope"],
   [sign, "sign"],
@@ -137,12 +152,11 @@ function dropLetter(letter) {
   letter.classList.add("fall");
   lettersFallen++;
 
-  if (lettersFallen === 1) {
-    say("Stop clicking the title. Those letters are not buttons.", "2a");
-  } else if (lettersFallen < letters.length) {
-    say("HEY those are EXPENSIVE!", "2b");
+  if (lettersFallen < letters.length) {
+    const line = letterLines[(lettersFallen - 1) % letterLines.length];
+    say(line[0], line[1]);
   } else {
-    say("Still not a game.", "2c");
+    say("Still not a game. Mostly because you just deleted the title.", "2c");
     setTimeout(startGame, 600);
   }
 }
@@ -182,14 +196,14 @@ function selectTool(button) {
 
 function stealDeckText() {
   if (squirrelUsed) {
-    say("The squirrel already stole something. It has a tiny lawyer now.", "5a");
+    say("The squirrel already stole something. It has a tiny lawyer, a fake mustache, and your browser history.", "5b");
     return;
   }
 
   squirrelUsed = true;
-  deckInfo.textContent = "Deck: stolen";
+  deckInfo.textContent = "Deck: stolen by squirrel";
   deckInfo.classList.add("stolen");
-  say("The squirrel stole the deck counter. Great. Just great.", "5a");
+  say("The squirrel stole the deck counter, saluted, and escaped into a tax loophole.", "5a");
 }
 
 function unscrew(screw, onDone) {
@@ -250,15 +264,19 @@ function removeGlassScrew(screw) {
     screw.remove();
     glassScrewsGone++;
 
-    if (glassScrewsGone === 1) {
-      say("Stop removing the glass screws you're not supposed to do that.", "8d");
+    for (let i = 0; i < screwProgressLines.length; i++) {
+      if (glassScrewsGone === screwProgressLines[i][0]) {
+        say(screwProgressLines[i][1], screwProgressLines[i][2]);
+        break;
+      }
     }
 
     if (glassScrewsGone === 36) {
       glass.style.display = "none";
       finalScrew.style.display = "block";
-      finalScrew.style.zIndex = "4";
-      say("Do not touch the final screw, if you don't ill give you 10 bucks!", "8e");
+      finalScrew.style.zIndex = "5";
+      finalScrew.classList.add("finalScrewReady");
+      say("Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars.", "8e");
     }
   });
 }

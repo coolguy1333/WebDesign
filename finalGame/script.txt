@@ -3,9 +3,12 @@
    -b "See no game."
 2. Clicking title letters / deck warning:
    -a "Stop clicking the title. Those letters are not buttons."
-   -b "HEY those are EXPENSIVE!"
-   -c "Still not a game."
+   -b "HEY those are EXPENSIVE! I rented that alphabet."
+   -c "Still not a game. Mostly because you just deleted the title."
    -d "Hey don't take my cards!"
+   -e "That letter had a family. Mostly vowels, but still."
+   -f "Please stop alphabet vandalism before the title becomes interpretive dance."
+   -g "I am running out of letters and emotional support pixels."
 3. Drawing cards:
    -a "You drew scissors... How will that help."
    -b "You drew hammer... Don't break the game."
@@ -15,10 +18,10 @@
    -a "You selected the scissors... Please do not use it."
    -b "You selected the hammer... I hope it breaks"
    -c "You selected the screwdriver? Why?."
-   -d "That is a squirrel. It is not a tool."
+   -d "That is a squirrel wearing a tool belt made of stolen receipts."
 5. Squirrel:
-   -a "The squirrel stole the deck counter. Great. Just great, WHY. YOU THINK YOU CAN JUST STROLL ON IN AND TAKE MY CARDS AND BREAK MY GAME!!!!!"
-   -b "The squirrel already stole something. It has a tiny lawyer now."
+   -a "The squirrel stole the deck counter, saluted, and escaped into a tax loophole."
+   -b "The squirrel already stole something. It has a tiny lawyer, a fake mustache, and your browser history."
 6. Rope:
    -a "That rope is decorative."
    -b "Wait... You can cut that??"
@@ -31,7 +34,12 @@
    -b "Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
    -c "Oh no. Reinforced glass with 36 SCREWS HA HA."
    -d "Stop removing the glass screws you're not supposed to do that."
-   -e "Do not touch the final screw, if you don't ill give you 10 bucks!."
+   -e "Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars."
+   -f "Six screws gone. The glass is now held on by spite and bad planning."
+   -g "Twelve screws. Did you bring snacks for this hardware marathon?"
+   -h "Halfway through thirty-six screws. This is not gameplay, this is a tiny chore simulator."
+   -i "Twenty-seven screws. The screwdriver is filing a complaint with management."
+   -j "One glass screw left. Do not get dramatic. Actually, no, you will."
 9. Hammer:
    -a "That was a bad idea."
    -b "The hammer broke. Nice job. GREAT JOB, you just break everything"
