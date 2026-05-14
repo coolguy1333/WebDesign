@@ -48,7 +48,7 @@ const screwProgressLines = [
   [1, "Stop removing the glass screws you're not supposed to do that.", "8d"],
   [6, "Six screws gone. The glass is now held on by spite and bad planning.", "8f"],
   [12, "Twelve screws. Did you bring snacks for this hardware marathon?", "8g"],
-  [18, "Halfway through thirty-six screws. This is not gameplay, this is a tiny chore simulator.", "8h"],
+  [18, "Halfway through thirty-six screws. This is not gameplay, this is a 9 to 5 job simulator.", "8h"],
   [27, "Twenty-seven screws. The screwdriver is filing a complaint with management.", "8i"],
   [35, "One glass screw left. Do not get dramatic. Actually, no, you will.", "8j"]
 ];
@@ -86,7 +86,6 @@ function playVoiceLine(cue) {
   voiceAudio.currentTime = 0;
   voiceAudio.src = "audio/" + cue + ".mp3";
   voiceAudio.play().catch(function () {
-    // Audio files and browser autoplay permission are optional; captions still show.
   });
 }
 

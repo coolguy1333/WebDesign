@@ -37,7 +37,7 @@
    -e "Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars."
    -f "Six screws gone. The glass is now held on by spite and bad planning."
    -g "Twelve screws. Did you bring snacks for this hardware marathon?"
-   -h "Halfway through thirty-six screws. This is not gameplay, this is a tiny chore simulator."
+   -h "Halfway through thirty-six screws. This is not gameplay, this is a 9 to 5 job simulator."
    -i "Twenty-seven screws. The screwdriver is filing a complaint with management."
    -j "One glass screw left. Do not get dramatic. Actually, no, you will."
 9. Hammer:

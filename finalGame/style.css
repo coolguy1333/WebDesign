@@ -177,9 +177,10 @@ button:hover {
   background-color: #666;
   background-image: url("images/screw.png");
   background-size: cover;
+  display: inline-block;
   position: absolute;
   cursor: pointer;
-  transition: transform .25s, opacity .25s;
+  transition: transform 1s, opacity 1s;
   z-index: 4;
 }
 
@@ -187,7 +188,7 @@ button:hover {
 .screw.unscrewed,
 .smallScrew.unscrewed {
   opacity: 0;
-  transform: rotate(180deg) scale(.35);
+  transform: rotate(720deg) scale(2);
   pointer-events: none;
 }
 

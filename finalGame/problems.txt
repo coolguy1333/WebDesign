@@ -1,4 +1,11 @@
 Problems
+- make end button lines funnyer and remove the click attempt denied
+- add more funny lines and if no action for a time have a line
+- have the final screw be the last screw before the glass is put on so 3 scrwes of the vault then the glass then the final on will be that one that was left and it should not be clickable through the glass
+- add more squrirel actions
+- make lines more funny
+- add a pause button that jsut flashes to a screen that says no with a white background and black text then after 1 sec it goes back
+- all text in comic sans
 - KEEP ALL LOOK AND STYLE THE SAME JUST ADD THIS NO CHANGES THERE
 
 Solved
