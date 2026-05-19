@@ -447,9 +447,9 @@ redButton.onclick = function (event) {
 
   if (redButtonDodges < 3) {
     const dodgeLines = [
-      ["The button has chosen cowardice. Try 1 was embarrassing.", "10c"],
-      ["The button is doing cardio. Try 2 was equally tragic.", "10d"],
-      ["Stop making the button exercise. Try 3 looked desperate.", "10e"]
+      ["The button has flown away. Try 1 was embarrassing.", "10c"],
+      ["The button is scared. Try 2 was equally tragic.", "10d"],
+      ["Stop making the button run. Try 3 looked desperate.", "10e"]
     ];
     redButtonDodges++;
     moveRedButton();
