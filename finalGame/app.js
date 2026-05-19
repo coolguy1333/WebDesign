@@ -335,8 +335,7 @@ function crash() {
   say("I told you there was no game.", "10b");
 
   setTimeout(function () {
-    blueScreen.style.display = "none";
-    endImage.style.display = "block";
+    endImage.style.display = "none";
     videoContainer.style.display = "block";
     video.currentTime = 0;
     video.play().catch(function () {
@@ -412,11 +411,11 @@ for (let i = 0; i < firstScrews.length; i++) {
   firstScrews[i].onclick = function (event) {
     event.stopPropagation();
 
-    if (vaultScrewsGone >= 3) {
+    if (vaultScrewsGone >= 3 && firstScrews[i] !== cornerFinalScrew) {
       return;
     }
 
-    if (cornerFinalScrew && firstScrews[i] === cornerFinalScrew && glass.style.display !== "none") {
+    if (firstScrews[i] === cornerFinalScrew && glass.style.display !== "none") {
       say("Nice try. That last screw is trapped behind the glass.", "8e");
       return;
     }
@@ -426,6 +425,7 @@ for (let i = 0; i < firstScrews.length; i++) {
       say("Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", "8b");
 
       if (vaultScrewsGone === 4) {
+        cornerFinalScrew = null;
         vault.classList.add("opened");
         redButton.classList.add("dodging");
         say("No no nO NO—", "10a");
