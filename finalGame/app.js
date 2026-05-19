@@ -287,6 +287,7 @@ function moveRedButton() {
   redButton.style.top = 10 + Math.floor(Math.random() * Math.max(maxTop, 1)) + "px";
 }
 
+// ADD HERE
 function crash() {
   blueScreen.style.display = "grid";
   say("I told you there was no game.", "10b");
