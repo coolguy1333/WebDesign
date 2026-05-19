@@ -3,6 +3,7 @@ Problems
 - final screw should be the one left in the corner
 - first set of screws should only be able to take 3 in any order then leave the one
 - pause button in bottom left on all screens
+- align script .txt with the lines in .js
 - KEEP ALL LOOK AND STYLE THE SAME JUST ADD THIS NO CHANGES THERE
 
 Solved
