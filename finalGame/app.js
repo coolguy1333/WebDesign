@@ -318,7 +318,6 @@ function crash() {
       }
 
       setTimeout(function () {
-        player.dispose();
         location.reload();
       }, 2000);
     }
