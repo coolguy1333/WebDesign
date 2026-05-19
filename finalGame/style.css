@@ -360,3 +360,10 @@ button:hover {
   width: 100% !important;
   height: 100% !important;
 }
+
+#pauseButton {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 20;
+}

@@ -71,6 +71,7 @@ let glassScrewsGone = 0;
 let squirrelUsed = false;
 let lettersFallen = 0;
 let redButtonDodges = 0;
+let cornerFinalScrew = null;
 let idleTimer = null;
 let canPlayTitleVoice = true;
 let nextVoiceTime = 0;
@@ -308,8 +309,11 @@ function removeGlassScrew(screw) {
 
     if (glassScrewsGone === 36) {
       glass.style.display = "none";
-      finalScrew.style.zIndex = "5";
-      say("Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars.", "8e");
+      if (cornerFinalScrew) {
+        cornerFinalScrew.style.zIndex = "5";
+        cornerFinalScrew.style.pointerEvents = "auto";
+      }
+      say("Fine. One final corner screw. Do not touch it, and I will pay you ten imaginary dollars.", "8e");
     }
   });
 }
@@ -325,35 +329,28 @@ function crash() {
   var blueScreen = document.getElementById("blueScreen");
   var videoContainer = document.getElementById("endVideo");
   var endImage = document.getElementById("endImage");
+  var video = document.getElementById("fullscreen-video");
 
   blueScreen.style.display = "block";
-  if (typeof say === "function") {
-    say("I told you there was no game.", "10b");
-  }
-
-  var player = videojs('fullscreen-video', {
-    controls: false,
-    autoplay: false,
-    muted: true
-  });
-
-  player.ready(function() {
-    player.load(); 
-  });
+  say("I told you there was no game.", "10b");
 
   setTimeout(function () {
     blueScreen.style.display = "none";
     endImage.style.display = "block";
     videoContainer.style.display = "block";
-    player.play();
-    if (player.supportsFullScreen()) {
-      player.requestFullscreen();
+    video.currentTime = 0;
+    video.play().catch(function () {
+    });
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen().catch(function () {
+      });
     }
   }, 1200);
 
-  player.one("ended", function () {
+  video.onended = function () {
     location.reload();
-  });
+  };
 }
 
 document.body.appendChild(toolCursor);
@@ -415,34 +412,52 @@ for (let i = 0; i < firstScrews.length; i++) {
   firstScrews[i].onclick = function (event) {
     event.stopPropagation();
 
+    if (vaultScrewsGone >= 3) {
+      return;
+    }
+
+    if (cornerFinalScrew && firstScrews[i] === cornerFinalScrew && glass.style.display !== "none") {
+      say("Nice try. That last screw is trapped behind the glass.", "8e");
+      return;
+    }
+
     unscrew(firstScrews[i], function () {
       vaultScrewsGone++;
       say("Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", "8b");
 
+      if (vaultScrewsGone === 4) {
+        vault.classList.add("opened");
+        redButton.classList.add("dodging");
+        say("No no nO NO—", "10a");
+      }
+
       if (vaultScrewsGone === 3) {
+        cornerFinalScrew = null;
+        for (let j = 0; j < firstScrews.length; j++) {
+          if (!firstScrews[j].classList.contains("unscrewed")) {
+            cornerFinalScrew = firstScrews[j];
+            break;
+          }
+        }
+
+        if (cornerFinalScrew) {
+          cornerFinalScrew.classList.add("finalScrewReady");
+          cornerFinalScrew.style.zIndex = "2";
+          cornerFinalScrew.style.pointerEvents = "none";
+        }
+
         setTimeout(function () {
           glass.style.display = "block";
           setImageBackground(glass, hammerHits > 0 ? "cracked-glass" : "glass");
           makeScrews();
-          finalScrew.style.display = "block";
-          finalScrew.style.zIndex = "2";
-          finalScrew.classList.add("finalScrewReady");
-          say("Oh no. Reinforced glass with 36 SCREWS and one last vault screw trapped behind it. Amazing.", "8c");
+          say("Oh no. Reinforced glass with 36 SCREWS and one last corner vault screw trapped behind it. Amazing.", "8c");
         }, 400);
       }
     });
   };
 }
 
-finalScrew.onclick = function (event) {
-  event.stopPropagation();
-  resetIdleLine();
-
-  unscrew(finalScrew, function () {
-    vault.classList.add("opened");
-    redButton.classList.add("dodging");
-    say("No no nO NO—", "10a");
-  });
+finalScrew.onclick = function () {
 };
 
 redButton.onclick = function (event) {
