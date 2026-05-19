@@ -107,7 +107,7 @@ function say(text, cue) {
 function resetIdleLine() {
   clearTimeout(idleTimer);
   idleTimer = setTimeout(function () {
-    say("You went quiet. I got suspicious and narrated anyway.", "2g");
+    say("You went quiet. I got suspicious and narrated anyway.", "12a");
   }, 12000);
 }
 

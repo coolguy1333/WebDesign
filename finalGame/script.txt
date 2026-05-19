@@ -52,4 +52,5 @@
 11. Pause button flash:
    -a "You pressed pause. I pressed no."
    -b "That was a one-second vacation to absolutely nowhere."
-
+12. Extra Lines:
+   -a You went quiet. I got suspicious and narrated anyway.
