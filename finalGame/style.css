@@ -2,7 +2,7 @@ body {
   margin: 0;
   background: #0a0a0a;
   color: white;
-  font-family: Arial, sans-serif;
+  font-family: "Comic Sans MS", "Comic Sans", cursive;
 }
 
 #app {
@@ -233,6 +233,18 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 10px;
+}
+
+#pauseFlash {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: white;
+  color: black;
+  font-size: 90px;
+  font-weight: bold;
+  z-index: 9999;
+  place-items: center;
 }
 
 .tool {

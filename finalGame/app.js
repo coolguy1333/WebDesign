@@ -13,6 +13,8 @@ const deckArea = document.getElementById("deckArea");
 const drawCard = document.getElementById("drawCard");
 const deckInfo = document.getElementById("deckInfo");
 const blueScreen = document.getElementById("blueScreen");
+const pauseButton = document.getElementById("pauseButton");
+const pauseFlash = document.getElementById("pauseFlash");
 const toolButtons = document.querySelectorAll(".tool");
 const letters = document.querySelectorAll("#titleLetters span");
 
@@ -69,6 +71,7 @@ let glassScrewsGone = 0;
 let squirrelUsed = false;
 let lettersFallen = 0;
 let redButtonDodges = 0;
+let idleTimer = null;
 
 function shuffleDeck(cards) {
   for (let i = cards.length - 1; i > 0; i--) {
@@ -92,6 +95,13 @@ function playVoiceLine(cue) {
 function say(text, cue) {
   voice.textContent = text;
   playVoiceLine(cue);
+}
+
+function resetIdleLine() {
+  clearTimeout(idleTimer);
+  idleTimer = setTimeout(function () {
+    say("You went quiet. I got suspicious and narrated anyway.", "2g");
+  }, 12000);
 }
 
 function imageUrl(name) {
@@ -203,6 +213,20 @@ function stealDeckText() {
   deckInfo.textContent = "Deck: stolen by squirrel";
   deckInfo.classList.add("stolen");
   say("The squirrel stole the deck counter, saluted, and escaped into a tax loophole.", "5a");
+}
+
+function squirrelAction() {
+  if (tool !== "squirrel") {
+    return false;
+  }
+
+  const squirrelLines = [
+    "The squirrel tightened one screw for chaos, then untightened it for art.",
+    "The squirrel filed a permit before causing nonsense.",
+    "The squirrel is now foreman of bad ideas."
+  ];
+  say(squirrelLines[Math.floor(Math.random() * squirrelLines.length)], "5b");
+  return true;
 }
 
 function unscrew(screw, onDone) {
@@ -334,24 +358,32 @@ say("There is no game. Seriously. Do not press start.", "1a");
 document.addEventListener("mousemove", updateToolCursor);
 
 startButton.onclick = function () {
+  resetIdleLine();
   say("See no game.", "1b");
 };
 
 for (let i = 0; i < letters.length; i++) {
   letters[i].onclick = function () {
     dropLetter(letters[i]);
+    resetIdleLine();
   };
 }
 
 drawCard.onclick = drawTool;
+drawCard.addEventListener("click", resetIdleLine);
 
 for (let i = 0; i < toolButtons.length; i++) {
   toolButtons[i].onclick = function () {
     selectTool(toolButtons[i]);
+    resetIdleLine();
   };
 }
 
 rope.onclick = function () {
+  resetIdleLine();
+  if (squirrelAction()) {
+    return;
+  }
   if (tool !== "scissors" || ropeCut) {
     say("That rope is decorative.", "6a");
     return;
@@ -395,6 +427,7 @@ for (let i = 0; i < firstScrews.length; i++) {
 
 finalScrew.onclick = function (event) {
   event.stopPropagation();
+  resetIdleLine();
 
   unscrew(finalScrew, function () {
     vault.classList.add("opened");
@@ -405,6 +438,7 @@ finalScrew.onclick = function (event) {
 
 redButton.onclick = function (event) {
   event.stopPropagation();
+  resetIdleLine();
 
   if (!vault.classList.contains("opened")) {
     say("Nice try. The vault panel is still in the way.", "7e");
@@ -413,9 +447,9 @@ redButton.onclick = function (event) {
 
   if (redButtonDodges < 3) {
     const dodgeLines = [
-      ["The button has chosen cowardice. Click attempt 1 was denied.", "10c"],
-      ["The button is doing cardio. Click attempt 2 was denied.", "10d"],
-      ["Stop making the button exercise. Click attempt 3 was denied.", "10e"]
+      ["The button has chosen cowardice. Try 1 was embarrassing.", "10c"],
+      ["The button is doing cardio. Try 2 was equally tragic.", "10d"],
+      ["Stop making the button exercise. Try 3 looked desperate.", "10e"]
     ];
     redButtonDodges++;
     moveRedButton();
@@ -429,6 +463,10 @@ redButton.onclick = function (event) {
 };
 
 glass.onclick = function () {
+  resetIdleLine();
+  if (squirrelAction()) {
+    return;
+  }
   if (tool !== "hammer") {
     return;
   }
@@ -449,7 +487,24 @@ glass.onclick = function () {
 };
 
 deckInfo.onclick = function () {
+  resetIdleLine();
   if (tool === "squirrel") {
     stealDeckText();
   }
 };
+
+vault.onclick = function () {
+  resetIdleLine();
+  squirrelAction();
+};
+
+pauseButton.onclick = function () {
+  resetIdleLine();
+  pauseFlash.style.display = "grid";
+  setTimeout(function () {
+    pauseFlash.style.display = "none";
+  }, 1000);
+};
+
+document.addEventListener("click", resetIdleLine);
+resetIdleLine();
