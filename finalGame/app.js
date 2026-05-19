@@ -72,6 +72,8 @@ let squirrelUsed = false;
 let lettersFallen = 0;
 let redButtonDodges = 0;
 let idleTimer = null;
+let canPlayTitleVoice = true;
+let nextVoiceTime = 0;
 
 function shuffleDeck(cards) {
   for (let i = cards.length - 1; i > 0; i--) {
@@ -84,10 +86,14 @@ function playVoiceLine(cue) {
   if (!cue) {
     return;
   }
+  if (Date.now() < nextVoiceTime) {
+    return;
+  }
 
   voiceAudio.pause();
   voiceAudio.currentTime = 0;
   voiceAudio.src = "audio/" + cue + ".mp3";
+  nextVoiceTime = Date.now() + 450;
   voiceAudio.play().catch(function () {
   });
 }
@@ -162,8 +168,11 @@ function dropLetter(letter) {
   lettersFallen++;
 
   if (lettersFallen < letters.length) {
-    const line = letterLines[(lettersFallen - 1) % letterLines.length];
-    say(line[0], line[1]);
+    if (canPlayTitleVoice) {
+      const line = letterLines[(lettersFallen - 1) % letterLines.length];
+      say(line[0], line[1]);
+    }
+    canPlayTitleVoice = !canPlayTitleVoice;
   } else {
     say("Still not a game. Mostly because you just deleted the title.", "2c");
     setTimeout(startGame, 600);
@@ -223,7 +232,10 @@ function squirrelAction() {
   const squirrelLines = [
     "The squirrel tightened one screw for chaos, then untightened it for art.",
     "The squirrel filed a permit before causing nonsense.",
-    "The squirrel is now foreman of bad ideas."
+    "The squirrel is now foreman of bad ideas.",
+    "The squirrel submitted a risk assessment that just says 'hehe'.",
+    "The squirrel brought a tape measure and no plan.",
+    "The squirrel is speedrunning OSHA violations."
   ];
   say(squirrelLines[Math.floor(Math.random() * squirrelLines.length)], "5b");
   return true;
@@ -296,9 +308,7 @@ function removeGlassScrew(screw) {
 
     if (glassScrewsGone === 36) {
       glass.style.display = "none";
-      finalScrew.style.display = "block";
       finalScrew.style.zIndex = "5";
-      finalScrew.classList.add("finalScrewReady");
       say("Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars.", "8e");
     }
   });
@@ -314,6 +324,7 @@ function moveRedButton() {
 function crash() {
   var blueScreen = document.getElementById("blueScreen");
   var videoContainer = document.getElementById("endVideo");
+  var endImage = document.getElementById("endImage");
 
   blueScreen.style.display = "block";
   if (typeof say === "function") {
@@ -330,24 +341,19 @@ function crash() {
     player.load(); 
   });
 
-  function handleCAD(event) {
-    if (event.key === 'Enter') {
-      window.removeEventListener('keydown', handleCAD);
-      blueScreen.style.display = "none";
-      videoContainer.style.display = "block";
-
-      player.play();
-      if (player.supportsFullScreen()) {
-        player.requestFullscreen();
-      }
-
-      setTimeout(function () {
-        location.reload();
-      }, 2000);
+  setTimeout(function () {
+    blueScreen.style.display = "none";
+    endImage.style.display = "block";
+    videoContainer.style.display = "block";
+    player.play();
+    if (player.supportsFullScreen()) {
+      player.requestFullscreen();
     }
-  }
+  }, 1200);
 
-  window.addEventListener('keydown', handleCAD);
+  player.one("ended", function () {
+    location.reload();
+  });
 }
 
 document.body.appendChild(toolCursor);
@@ -413,12 +419,15 @@ for (let i = 0; i < firstScrews.length; i++) {
       vaultScrewsGone++;
       say("Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", "8b");
 
-      if (vaultScrewsGone === 4) {
+      if (vaultScrewsGone === 3) {
         setTimeout(function () {
           glass.style.display = "block";
           setImageBackground(glass, hammerHits > 0 ? "cracked-glass" : "glass");
           makeScrews();
-          say("Oh no. Reinforced glass with 36 SCREWS HA HA.", "8c");
+          finalScrew.style.display = "block";
+          finalScrew.style.zIndex = "2";
+          finalScrew.classList.add("finalScrewReady");
+          say("Oh no. Reinforced glass with 36 SCREWS and one last vault screw trapped behind it. Amazing.", "8c");
         }, 400);
       }
     });
@@ -447,9 +456,9 @@ redButton.onclick = function (event) {
 
   if (redButtonDodges < 3) {
     const dodgeLines = [
-      ["The button has chosen cowardice. Try 1 was embarrassing.", "10c"],
-      ["The button is doing cardio. Try 2 was equally tragic.", "10d"],
-      ["Stop making the button exercise. Try 3 looked desperate.", "10e"]
+      ["The button panicked and dodged. Attempt 1 looked like slow motion confusion.", "10c"],
+      ["The button trained for this. Attempt 2 was a dramatic whiff.", "10d"],
+      ["The button is laughing in circles. Attempt 3 was beautifully disastrous.", "10e"]
     ];
     redButtonDodges++;
     moveRedButton();
