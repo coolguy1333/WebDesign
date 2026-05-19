@@ -287,14 +287,44 @@ function moveRedButton() {
   redButton.style.top = 10 + Math.floor(Math.random() * Math.max(maxTop, 1)) + "px";
 }
 
-// ADD HERE
 function crash() {
-  blueScreen.style.display = "grid";
-  say("I told you there was no game.", "10b");
+  var blueScreen = document.getElementById("blueScreen");
+  var videoContainer = document.getElementById("endVideo");
 
-  setTimeout(function () {
-    location.reload();
-  }, 2000);
+  blueScreen.style.display = "block";
+  if (typeof say === "function") {
+    say("I told you there was no game.", "10b");
+  }
+
+  var player = videojs('fullscreen-video', {
+    controls: false,
+    autoplay: false,
+    muted: true
+  });
+
+  player.ready(function() {
+    player.load(); 
+  });
+
+  function handleCAD(event) {
+    if (event.ctrlKey && event.altKey && event.key === 'Delete') {
+      window.removeEventListener('keydown', handleCAD);
+
+      videoContainer.style.display = "block";
+
+      player.play();
+      if (player.supportsFullScreen()) {
+        player.requestFullscreen();
+      }
+
+      setTimeout(function () {
+        player.dispose();
+        location.reload();
+      }, 2000);
+    }
+  }
+
+  window.addEventListener('keydown', handleCAD);
 }
 
 document.body.appendChild(toolCursor);
