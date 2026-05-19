@@ -307,9 +307,9 @@ function crash() {
   });
 
   function handleCAD(event) {
-    if (event.ctrlKey && event.altKey && event.key === 'Delete') {
+    if (event.key === 'Enter') {
       window.removeEventListener('keydown', handleCAD);
-
+      blueScreen.style.display = "none";
       videoContainer.style.display = "block";
 
       player.play();
