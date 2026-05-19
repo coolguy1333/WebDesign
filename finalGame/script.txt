@@ -30,11 +30,11 @@
    -d "There is NO screws AT ALL."
    -e "Nice try. The vault panel is still in the way."
 8. Screws:
-   -a "Those corner screws need to stay, IF YOU TAKE THEM SO HELP ME GOD. The game... WAIT NOT A GAME might break"
+   -a "Those corner screws need to stay, IF YOU TAKE THEM SO HELP ME GOD."
    -b "Stop. Please stop. PLEASE STOP. NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO"
-   -c "Oh no. Reinforced glass with 36 SCREWS HA HA."
+   -c "Oh no. Reinforced glass with 36 SCREWS and one last corner vault screw trapped behind it. Amazing."
    -d "Stop removing the glass screws you're not supposed to do that."
-   -e "Fine. One final center screw. Do not touch it, and I will pay you ten imaginary dollars."
+   -e "Fine. One final corner screw. Do not touch it, and I will pay you ten imaginary dollars."
    -f "Six screws gone. The glass is now held on by spite and bad planning."
    -g "Twelve screws. Did you bring snacks for this hardware marathon?"
    -h "Halfway through thirty-six screws. This is not gameplay, this is a 9 to 5 job simulator."
@@ -46,9 +46,9 @@
 10. Ending / button escape level:
    -a "No no nO NO—"
    -b "I told you there was no game."
-   -c "The button has chosen cowardice. Click attempt 1 was denied."
-   -d "The button is doing cardio. Click attempt 2 was denied."
-   -e "Stop making the button exercise. Click attempt 3 was denied."
+   -c "The button has flown away. Try 1 was embarrassing."
+   -d "The button is scared. Try 2 was equally tragic."
+   -e "Stop making the button run. Try 3 looked desperate."
 11. Pause button flash:
    -a "You pressed pause. I pressed no."
    -b "That was a one-second vacation to absolutely nowhere."
