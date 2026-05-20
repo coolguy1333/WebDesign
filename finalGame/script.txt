@@ -49,8 +49,8 @@
    -c "The button has flown away. Try 1 was embarrassing."
    -d "The button is scared. Try 2 was equally tragic."
    -e "Stop making the button run. Try 3 looked desperate."
-11. Pause button flash:
-   -a "You pressed pause. I pressed no."
-   -b "That was a one-second vacation to absolutely nowhere."
-12. Extra Lines:
-   -a You went quiet. I got suspicious and narrated anyway.
+11. Idle:
+   -a "You went quiet. I got suspicious and narrated anyway."
+
+Notes:
+- Pause flash currently does not call `say(...)` in `app.js`; no 11x pause voice lines are active.
