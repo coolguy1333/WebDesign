@@ -1,11 +1,9 @@
 Problems
-- none currently tracked in active gameplay flow.
-
-Recently fixed
-- ending video sequence now plays at the end crash flow.
-- final remaining corner screw is clickable only after glass screws are removed.
+- none
 
 Solved
+- ending video sequence now plays at the end crash flow.
+- final remaining corner screw is clickable only after glass screws are removed.
 - final screw should be the one left in the corner
 - first set of screws should only be able to take 3 in any order then leave the one
 - pause button in bottom left on all screens
