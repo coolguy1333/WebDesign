@@ -330,6 +330,11 @@ function crash() {
   var videoContainer = document.getElementById("endVideo");
   var endImage = document.getElementById("endImage");
   var video = document.getElementById("fullscreen-video");
+  
+  if (video.requestFullscreen) {
+    video.requestFullscreen().catch(function () {
+    });
+  }
 
   blueScreen.style.display = "block";
   say("I told you there was no game.", "10b");
@@ -345,7 +350,7 @@ function crash() {
       video.requestFullscreen().catch(function () {
       });
     }
-  }, 1200);
+  }, 7500);
 
   video.onended = function () {
     location.reload();
