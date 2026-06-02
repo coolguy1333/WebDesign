@@ -1,3 +1,57 @@
+main{
+    display: flex;
+}
+
 h1{
     text-align: center;
+}
+
+.winnerText{
+    text-align: center;
+    font-size: 40px;
+}
+
+.winner{
+    text-align: center;
+    font-size: 80px;
+    width: 50%;
+}
+
+.restart{
+    justify-content: center;
+    align-items: center;  
+    font-size: 30px;
+}
+
+.board{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-template-rows: repeat(3, 1fr); 
+    gap: 10px;
+    width: min-content;
+    height: min-content;
+}
+
+.boardCell{
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+    background-color: gainsboro;
+    border-radius: 5px;
+    border-color: black;
+    background-size: contain;
+}
+
+button:disabled{
+    color: inherit;
+    opacity: 1;
+}
+
+.winnerBoth{
+    display: flex;
+}
+
+.winnerImg{
+    width: 240;
+    height: 240;
 }
