@@ -47,7 +47,6 @@ async function captureAndDisplay() {
         }
   
       }, 'image/jpeg', 0.9);
-  
     } catch (error) {
       console.error("Error capturing file:", error);
     }

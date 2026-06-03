@@ -49,6 +49,9 @@ button:disabled{
 
 .winnerBoth{
     display: flex;
+    width: 240;
+    height: 240;
+    
 }
 
 .winnerImg{
