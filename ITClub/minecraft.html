@@ -40,8 +40,12 @@
                 <dt>Server address</dt>
                 <dd><span class="mono">play.mhscraft.cc</span></dd>
               </div>
+              <div>
+                <dt>Local address</dt>
+                <dd><span class="mono">192.168.10.18</span> port <strong>25565</strong></dd>
+              </div>
             </dl>
-            <p class="muted">Multiplayer &rarr; Add Server &rarr; use the name and address above.</p>
+            <p class="muted">Multiplayer &rarr; Add Server &rarr; use the public address above, or the local address if you are on the same network.</p>
           </div>
 
           <div class="card-inner">
@@ -63,8 +67,12 @@
                 <dt>Fallback address</dt>
                 <dd><span class="mono">69.9.180.19</span> port <strong>1221</strong></dd>
               </div>
+              <div>
+                <dt>Local address</dt>
+                <dd><span class="mono">192.168.10.18</span> port <strong>19132</strong></dd>
+              </div>
             </dl>
-            <p class="muted">Play &rarr; Servers &rarr; Add Server &rarr; use the name, address, and port above.</p>
+            <p class="muted">Play &rarr; Servers &rarr; Add Server &rarr; use the public address, fallback address, or local address if you are on the same network.</p>
           </div>
         </div>
 
@@ -105,7 +113,7 @@
           </div>
         </div>
 
-        <p class="small muted status-source">
+        <p class="small muted status-source" id="status-note">
           Status checks use the public Minecraft server status API. Bedrock checks the domain first, then the fallback IP.
         </p>
       </section>
