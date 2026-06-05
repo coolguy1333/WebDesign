@@ -10,14 +10,13 @@
           label: "Java domain",
         },
       ],
-      localAddress: "192.168.10.18:25565",
       statusId: "java-status",
     },
     bedrock: {
       endpoints: [
         {
           url: "https://api.mcstatus.io/v2/status/bedrock/playbe.mhscraft.cc:1221",
-          label: "Bedrock domain", 
+          label: "Bedrock domain",
           fallback: false,
         },
         {
@@ -26,7 +25,6 @@
           fallback: true,
         },
       ],
-      localAddress: "192.168.10.18:19132",
       statusId: "bedrock-status",
     },
   };
@@ -35,14 +33,11 @@
     const el = document.getElementById(id);
     if (!el) return;
 
-    el.classList.remove("ok", "bad", "local", "muted");
+    el.classList.remove("ok", "bad", "muted");
 
     if (state === true) {
       el.textContent = text || "Online";
       el.classList.add("ok");
-    } else if (state === "local") {
-      el.textContent = text || "Local only";
-      el.classList.add("local");
     } else if (state === false) {
       el.textContent = text || "Offline";
       el.classList.add("bad");
@@ -96,10 +91,6 @@
     return `Online - ${players.online}${source}`;
   }
 
-  function formatLocalOnlyStatus(server) {
-    return `Local only - ${server.localAddress}`;
-  }
-
   async function getServerStatus(server) {
     let lastResult = null;
 
@@ -140,11 +131,7 @@
     const onlineResults = results.filter((result) => result && result.online);
 
     if (onlineResults.length === 0) {
-      setBadge(
-        "overall-players",
-        "local",
-        knownResults.length > 0 ? "Local only" : "Local only?"
-      );
+      setBadge("overall-players", knownResults.length > 0 ? false : null);
       return;
     }
 
@@ -181,16 +168,16 @@
     if (!el) return;
 
     if (bedrock && bedrock.online && bedrock.endpoint && bedrock.endpoint.fallback) {
-      el.textContent = "Bedrock status is using fallback IP 69.9.180.19:1221. Local fallback is 192.168.10.18 with Java port 25565 and Bedrock port 19132.";
+      el.textContent = "Bedrock status is using fallback IP 69.9.180.19:1221.";
       return;
     }
 
     if (!java.online && !bedrock.online) {
-      el.textContent = "Public status is offline or unavailable, so the status boxes are showing local-only connection info. Local fallback only works on the same network.";
+      el.textContent = "Public status is offline or unavailable.";
       return;
     }
 
-    el.textContent = "Status checks use the public Minecraft server status API. Bedrock checks playbe.mhscraft.cc:1221 first, then 69.9.180.19:1221. Local fallback only works on the same network.";
+    el.textContent = "Status checks use the public Minecraft server status API. Bedrock checks playbe.mhscraft.cc:1221 first, then 69.9.180.19:1221.";
   }
 
   async function refreshStatus() {
@@ -199,17 +186,8 @@
       getServerStatus(SERVERS.bedrock),
     ]);
 
-    if (java.online) {
-      setBadge(SERVERS.java.statusId, java.state, formatServerStatus(java));
-    } else {
-      setBadge(SERVERS.java.statusId, "local", formatLocalOnlyStatus(SERVERS.java));
-    }
-
-    if (bedrock.online) {
-      setBadge(SERVERS.bedrock.statusId, bedrock.state, formatServerStatus(bedrock));
-    } else {
-      setBadge(SERVERS.bedrock.statusId, "local", formatLocalOnlyStatus(SERVERS.bedrock));
-    }
+    setBadge(SERVERS.java.statusId, java.state, formatServerStatus(java));
+    setBadge(SERVERS.bedrock.statusId, bedrock.state, formatServerStatus(bedrock));
 
     renderOverall([java, bedrock]);
     renderStatusNote(java, bedrock);
