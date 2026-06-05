@@ -169,6 +169,7 @@ p { margin: 0 0 1em; }
 
 .ok { color: #22c55e; }
 .bad { color: #ef4444; }
+.local { color: #38bdf8; }
 
 /* Lists */
 .feature-list { margin: 10px 0 0 18px; }
