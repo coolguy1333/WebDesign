@@ -109,6 +109,45 @@ p { margin: 0 0 1em; }
   word-break: break-word;
 }
 
+/* Server details */
+.server-addresses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.server-addresses p,
+.server-details {
+  background: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 12px;
+  margin: 0;
+  padding: 12px;
+}
+
+.server-details {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.server-details div {
+  display: grid;
+  gap: 2px;
+}
+
+.server-details dt {
+  color: #9ca3af;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.server-details dd {
+  margin: 0;
+  font-weight: 700;
+}
+
 /* Status */
 .status-grid {
   display: grid;
@@ -126,6 +165,7 @@ p { margin: 0 0 1em; }
 
 .status-title { font-weight: 700; margin-bottom: 6px; }
 .status-value { font-size: 1.1rem; font-weight: 700; }
+.status-source { margin-top: 12px; }
 
 .ok { color: #22c55e; }
 .bad { color: #ef4444; }
