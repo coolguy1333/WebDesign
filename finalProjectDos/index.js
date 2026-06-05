@@ -53,23 +53,18 @@ async function captureAndDisplay() {
 }
   
   
-
 function clicked(Xcord, Ycord){
     if(XorY == 0){
         document.getElementById(`row${Xcord}column${Ycord}`).style.backgroundImage = "url('./images/X.png')";
-        // document.getElementById(`row${Xcord}column${Ycord}`).textContent = "X";
         document.getElementById(`row${Xcord}column${Ycord}`).disabled = true;
         board[Xcord - 1][Ycord - 1] = "X"
         XorY = 1;
-        // alert(`row${Xcord}column${Ycord}` + "  " + XorY);
     }
     else{
         document.getElementById(`row${Xcord}column${Ycord}`).style.backgroundImage = "url('./images/O.png')";
-        // document.getElementById(`row${Xcord}column${Ycord}`).textContent = "O";
         document.getElementById(`row${Xcord}column${Ycord}`).disabled = true;
         board[Xcord - 1][Ycord - 1] = "O"
         XorY = 0;
-        // alert(`row${Xcord}column${Ycord}` + "  " + XorY);
     };
 
     for (let i = 0; i < 3; i++) {
