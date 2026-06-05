@@ -28,21 +28,43 @@
       <section class="card">
         <h2>Join the server</h2>
 
-        <p>
-          <strong>Server Address:</strong><br>
-          <span class="mono">play.mhsit.club</span>
-        </p>
-
         <div class="split">
           <div class="card-inner">
             <h3>Java Edition</h3>
-            <p class="muted">Multiplayer → Add Server → enter the address above.</p>
+            <dl class="server-details">
+              <div>
+                <dt>Server name</dt>
+                <dd>MHSJava</dd>
+              </div>
+              <div>
+                <dt>Server address</dt>
+                <dd><span class="mono">play.mhscraft.cc</span></dd>
+              </div>
+            </dl>
+            <p class="muted">Multiplayer &rarr; Add Server &rarr; use the name and address above.</p>
           </div>
+
           <div class="card-inner">
             <h3>Bedrock Edition</h3>
-            <p class="muted">
-              Add Server → Address: <span class="mono">play.mhsit.club</span> · Port: <strong>19132</strong>
-            </p>
+            <dl class="server-details">
+              <div>
+                <dt>Server name</dt>
+                <dd>MHSBedrock</dd>
+              </div>
+              <div>
+                <dt>Server address</dt>
+                <dd><span class="mono">playbe.mhscraft.cc</span></dd>
+              </div>
+              <div>
+                <dt>Port</dt>
+                <dd>1221</dd>
+              </div>
+              <div>
+                <dt>Fallback address</dt>
+                <dd><span class="mono">69.9.180.19</span> port <strong>1221</strong></dd>
+              </div>
+            </dl>
+            <p class="muted">Play &rarr; Servers &rarr; Add Server &rarr; use the public address or fallback address above.</p>
           </div>
         </div>
 
@@ -58,7 +80,7 @@
         <ul class="feature-list">
           <li>No griefing, stealing, or cheating.</li>
           <li>Be respectful in chat and voice.</li>
-          <li>Ask before major edits to someone else’s build.</li>
+          <li>Ask before major edits to someone else's build.</li>
           <li>Keep builds school-appropriate.</li>
         </ul>
       </section>
@@ -69,19 +91,23 @@
         <div class="status-grid" aria-label="Server status">
           <div class="status-item">
             <div class="status-title">Overall players</div>
-            <div class="status-value" id="overall-players">Checking…</div>
+            <div class="status-value" id="overall-players">Checking...</div>
           </div>
 
           <div class="status-item">
             <div class="status-title">Java</div>
-            <div class="status-value" id="java-status">Checking…</div>
+            <div class="status-value" id="java-status">Checking...</div>
           </div>
 
           <div class="status-item">
             <div class="status-title">Bedrock</div>
-            <div class="status-value" id="bedrock-status">Checking…</div>
+            <div class="status-value" id="bedrock-status">Checking...</div>
           </div>
         </div>
+
+        <p class="small muted status-source" id="status-note">
+          Status checks use the public Minecraft server status API. Bedrock checks the domain first, then the fallback IP.
+        </p>
       </section>
 
       <section class="card">
@@ -93,85 +119,10 @@
     </main>
 
     <footer>
-      © 2026 MHS IT Club ·
+      &copy; 2026 MHS IT Club &middot;
       <a href="https://discord.gg/ex3BMp4W" target="_blank" rel="noopener noreferrer">Discord</a>
     </footer>
 
-    <script>
-      const REFRESH_MS = 15000;
-      const TIMEOUT_MS = 8000;
-
-      function setBadge(el, state, text) {
-        if (!el) return;
-        el.classList.remove("ok", "bad", "muted");
-
-        if (state === true) {
-          el.textContent = text || "Online";
-          el.classList.add("ok");
-        } else if (state === false) {
-          el.textContent = text || "Offline";
-          el.classList.add("bad");
-        } else {
-          el.textContent = text || "Unavailable";
-          el.classList.add("muted");
-        }
-      }
-
-      async function fetchJsonWithTimeout(url) {
-        const controller = new AbortController();
-        const t = setTimeout(() => controller.abort(), TIMEOUT_MS);
-
-        try {
-          const res = await fetch(url, { cache: "no-store", signal: controller.signal });
-          if (!res.ok) throw new Error("HTTP " + res.status);
-          return await res.json();
-        } finally {
-          clearTimeout(t);
-        }
-      }
-
-      async function fetchJavaAndPlayers() {
-        const statusEl = document.getElementById("java-status");
-        const overallEl = document.getElementById("overall-players");
-
-        try {
-          const data = await fetchJsonWithTimeout(`/api/java?t=${Date.now()}`);
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
-
-          if (online && data.players && typeof data.players.online === "number") {
-            const max = (typeof data.players.max === "number") ? data.players.max : null;
-            const playersText = max ? `${data.players.online} / ${max}` : `${data.players.online}`;
-            setBadge(overallEl, true, playersText);
-          } else if (online) {
-            setBadge(overallEl, true, "Online");
-          } else {
-            setBadge(overallEl, false, "Offline");
-          }
-        } catch (e) {
-          setBadge(statusEl, null, "Unavailable");
-          setBadge(overallEl, null, "Unavailable");
-        }
-      }
-
-      async function fetchBedrockStatus() {
-        const statusEl = document.getElementById("bedrock-status");
-
-        try {
-          const data = await fetchJsonWithTimeout(`/api/bedrock?t=${Date.now()}`);
-          const online = Boolean(data && data.online);
-          setBadge(statusEl, online);
-        } catch (e) {
-          setBadge(statusEl, null, "Unavailable");
-        }
-      }
-
-      async function refresh() {
-        await Promise.all([fetchJavaAndPlayers(), fetchBedrockStatus()]);
-      }
-
-      refresh();
-      setInterval(refresh, REFRESH_MS);
-    </script>
+    <script src="server-status.js?v=3"></script>
   </body>
 </html>
