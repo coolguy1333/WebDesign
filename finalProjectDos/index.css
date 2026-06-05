@@ -1,26 +1,55 @@
-main{
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
     display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 20px;
+    flex-wrap: wrap;
 }
 
 h1{
     text-align: center;
 }
 
+#winPlace{
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 16px;
+}
+
 .winnerText{
     text-align: center;
     font-size: 40px;
+    margin: 0;
 }
 
 .winner{
     text-align: center;
     font-size: 80px;
-    width: 50%;
+    min-width: 90px;
+    margin: 0;
 }
 
 .restart{
+    display: flex;
     justify-content: center;
     align-items: center;  
     font-size: 30px;
+    margin: 0 auto;
 }
 
 .board{
@@ -49,12 +78,28 @@ button:disabled{
 
 .winnerBoth{
     display: flex;
-    width: 240;
-    height: 240;
-    
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 360px;
+    min-height: 180px;
+    margin: 0 auto;
 }
 
 .winnerImg{
-    width: 240;
-    height: 240;
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+}
+
+@media (max-width: 600px){
+    main{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .winnerBoth{
+        flex-direction: column;
+    }
 }
