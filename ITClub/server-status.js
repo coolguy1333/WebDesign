@@ -4,14 +4,29 @@
 
   const SERVERS = {
     java: {
-      endpoints: ["https://api.mcsrvstat.us/3/play.mhscraft.cc"],
+      endpoints: [
+        {
+          url: "https://api.mcstatus.io/v2/status/java/play.mhscraft.cc",
+          label: "Java domain",
+        },
+      ],
+      localAddress: "192.168.10.18:25565",
       statusId: "java-status",
     },
     bedrock: {
       endpoints: [
-        "https://api.mcsrvstat.us/bedrock/3/playbe.mhscraft.cc:1221",
-        "https://api.mcsrvstat.us/bedrock/3/69.9.180.19:1221",
+        {
+          url: "https://api.mcstatus.io/v2/status/bedrock/playbe.mhscraft.cc:1221",
+          label: "Bedrock domain", 
+          fallback: false,
+        },
+        {
+          url: "https://api.mcstatus.io/v2/status/bedrock/69.9.180.19:1221",
+          label: "Bedrock fallback IP",
+          fallback: true,
+        },
       ],
+      localAddress: "192.168.10.18:19132",
       statusId: "bedrock-status",
     },
   };
@@ -20,11 +35,14 @@
     const el = document.getElementById(id);
     if (!el) return;
 
-    el.classList.remove("ok", "bad", "muted");
+    el.classList.remove("ok", "bad", "local", "muted");
 
     if (state === true) {
       el.textContent = text || "Online";
       el.classList.add("ok");
+    } else if (state === "local") {
+      el.textContent = text || "Local only";
+      el.classList.add("local");
     } else if (state === false) {
       el.textContent = text || "Offline";
       el.classList.add("bad");
@@ -67,13 +85,19 @@
     if (!result.online) return "Offline";
 
     const players = getPlayers(result.data);
-    if (!players) return "Online";
+    const source = result.endpoint && result.endpoint.fallback ? " (fallback IP)" : "";
+
+    if (!players) return `Online${source}`;
 
     if (players.max !== null) {
-      return `Online - ${players.online} / ${players.max}`;
+      return `Online - ${players.online} / ${players.max}${source}`;
     }
 
-    return `Online - ${players.online}`;
+    return `Online - ${players.online}${source}`;
+  }
+
+  function formatLocalOnlyStatus(server) {
+    return `Local only - ${server.localAddress}`;
   }
 
   async function getServerStatus(server) {
@@ -81,7 +105,7 @@
 
     for (const endpoint of server.endpoints) {
       try {
-        const data = await fetchJsonWithTimeout(endpoint);
+        const data = await fetchJsonWithTimeout(endpoint.url);
         const online = Boolean(data && data.online);
 
         lastResult = {
@@ -116,14 +140,17 @@
     const onlineResults = results.filter((result) => result && result.online);
 
     if (onlineResults.length === 0) {
-      setBadge("overall-players", knownResults.length > 0 ? false : null);
+      setBadge(
+        "overall-players",
+        "local",
+        knownResults.length > 0 ? "Local only" : "Local only?"
+      );
       return;
     }
 
     let totalOnline = 0;
-    let totalMax = 0;
+    let sharedMax = null;
     let hasPlayers = false;
-    let hasMax = false;
 
     for (const result of onlineResults) {
       const players = getPlayers(result.data);
@@ -133,21 +160,37 @@
       hasPlayers = true;
 
       if (players.max !== null) {
-        totalMax += players.max;
-        hasMax = true;
+        sharedMax = sharedMax === null ? players.max : Math.max(sharedMax, players.max);
       }
     }
 
-    if (!hasPlayers) {
-      setBadge("overall-players", true, "Online");
+    if (hasPlayers) {
+      setBadge(
+        "overall-players",
+        true,
+        sharedMax !== null ? `${totalOnline} / ${sharedMax}` : String(totalOnline)
+      );
       return;
     }
 
-    setBadge(
-      "overall-players",
-      true,
-      hasMax ? `${totalOnline} / ${totalMax}` : String(totalOnline)
-    );
+    setBadge("overall-players", true, "Online");
+  }
+
+  function renderStatusNote(java, bedrock) {
+    const el = document.getElementById("status-note");
+    if (!el) return;
+
+    if (bedrock && bedrock.online && bedrock.endpoint && bedrock.endpoint.fallback) {
+      el.textContent = "Bedrock status is using fallback IP 69.9.180.19:1221. Local fallback is 192.168.10.18 with Java port 25565 and Bedrock port 19132.";
+      return;
+    }
+
+    if (!java.online && !bedrock.online) {
+      el.textContent = "Public status is offline or unavailable, so the status boxes are showing local-only connection info. Local fallback only works on the same network.";
+      return;
+    }
+
+    el.textContent = "Status checks use the public Minecraft server status API. Bedrock checks playbe.mhscraft.cc:1221 first, then 69.9.180.19:1221. Local fallback only works on the same network.";
   }
 
   async function refreshStatus() {
@@ -156,9 +199,20 @@
       getServerStatus(SERVERS.bedrock),
     ]);
 
-    setBadge(SERVERS.java.statusId, java.state, formatServerStatus(java));
-    setBadge(SERVERS.bedrock.statusId, bedrock.state, formatServerStatus(bedrock));
+    if (java.online) {
+      setBadge(SERVERS.java.statusId, java.state, formatServerStatus(java));
+    } else {
+      setBadge(SERVERS.java.statusId, "local", formatLocalOnlyStatus(SERVERS.java));
+    }
+
+    if (bedrock.online) {
+      setBadge(SERVERS.bedrock.statusId, bedrock.state, formatServerStatus(bedrock));
+    } else {
+      setBadge(SERVERS.bedrock.statusId, "local", formatLocalOnlyStatus(SERVERS.bedrock));
+    }
+
     renderOverall([java, bedrock]);
+    renderStatusNote(java, bedrock);
   }
 
   refreshStatus();
