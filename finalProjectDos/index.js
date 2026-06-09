@@ -17,8 +17,8 @@ let won = "N/A"
 
 async function captureAndDisplay() {
     const canvas = document.createElement('canvas');
-    canvas.width = 64;  
-    canvas.height = 64; 
+    canvas.width = 1000;  
+    canvas.height = 200; 
     const context = canvas.getContext('2d');
 
     try {
