@@ -20,7 +20,7 @@ async function captureAndDisplay() {
     canvas.width = 64;  
     canvas.height = 64; 
     const context = canvas.getContext('2d');
-  
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
 
@@ -45,7 +45,7 @@ async function captureAndDisplay() {
         } else {
             myImageElement.src = URL("./images/O.png");
         }
-  
+
       }, 'image/jpeg', 0.9);
     } catch (error) {
       console.error("Error capturing file:", error);
