@@ -274,3 +274,5 @@ footer {
     min-height: 520px;
   }
 }
+
+[hidden] { display: none !important; }

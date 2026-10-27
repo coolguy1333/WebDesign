@@ -80,7 +80,7 @@
     if (!result.online) return "Offline";
 
     const players = getPlayers(result.data);
-    const source = result.endpoint && result.endpoint.fallback ? " (fallback IP)" : "";
+    const source = "";
 
     if (!players) return `Online${source}`;
 
@@ -168,7 +168,7 @@
     if (!el) return;
 
     if (bedrock && bedrock.online && bedrock.endpoint && bedrock.endpoint.fallback) {
-      el.textContent = "Bedrock status is using fallback IP 69.9.180.19:1221.";
+      el.textContent = "The Bedrock domain is not responding right now. Use the fallback address shown above.";
       return;
     }
 
@@ -177,7 +177,7 @@
       return;
     }
 
-    el.textContent = "Status checks use the public Minecraft server status API. Bedrock checks playbe.mhscraft.cc:1221 first, then 69.9.180.19:1221.";
+    el.textContent = "Status checks use the public Minecraft server status API.";
   }
 
   async function refreshStatus() {
@@ -191,6 +191,10 @@
 
     renderOverall([java, bedrock]);
     renderStatusNote(java, bedrock);
+    const fallbackEl = document.getElementById("bedrock-fallback");
+    if (fallbackEl) {
+      fallbackEl.hidden = !(bedrock && bedrock.online && bedrock.endpoint && bedrock.endpoint.fallback);
+    }
   }
 
   refreshStatus();

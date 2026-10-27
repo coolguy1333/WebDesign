@@ -59,12 +59,12 @@
                 <dt>Port</dt>
                 <dd>1221</dd>
               </div>
-              <div>
+              <div id="bedrock-fallback" hidden>
                 <dt>Fallback address</dt>
                 <dd><span class="mono">69.9.180.19</span> port <strong>1221</strong></dd>
               </div>
             </dl>
-            <p class="muted">Play &rarr; Servers &rarr; Add Server &rarr; use the public address or fallback address above.</p>
+            <p class="muted">Play &rarr; Servers &rarr; Add Server &rarr; use the details above.</p>
           </div>
         </div>
 
@@ -106,7 +106,7 @@
         </div>
 
         <p class="small muted status-source" id="status-note">
-          Status checks use the public Minecraft server status API. Bedrock checks the domain first, then the fallback IP.
+          Status checks use the public Minecraft server status API.
         </p>
       </section>
 
@@ -123,6 +123,6 @@
       <a href="https://discord.gg/Kk3HrYDcv" target="_blank" rel="noopener noreferrer">Discord</a>
     </footer>
 
-    <script src="server-status.js?v=3"></script>
+    <script src="server-status.js?v=4"></script>
   </body>
 </html>
