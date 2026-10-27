@@ -6,7 +6,7 @@
     java: {
       endpoints: [
         {
-          url: "https://api.mcstatus.io/v2/status/java/play.mhscraft.cc",
+          url: "https://api.mcstatus.io/v2/status/java/je.mhscraft.cc",
           label: "Java domain",
         },
       ],
@@ -15,7 +15,7 @@
     bedrock: {
       endpoints: [
         {
-          url: "https://api.mcstatus.io/v2/status/bedrock/playbe.mhscraft.cc:1221",
+          url: "https://api.mcstatus.io/v2/status/bedrock/be.mhscraft.cc:1221",
           label: "Bedrock domain",
           fallback: false,
         },
